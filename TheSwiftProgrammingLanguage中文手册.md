@@ -8,7 +8,7 @@ The Swift Programming Language 中文手册
 ## Welcome to Swift
 
 -  [About Swift]()
--  [A Swift Tour](http://www.cocoachina.com/applenews/devnews/2014/0603/8653.html)
+-  [苹果新编程语言--Swift简介](http://www.cocoachina.com/applenews/devnews/2014/0603/8653.html)
 
 ## Language Guide
 

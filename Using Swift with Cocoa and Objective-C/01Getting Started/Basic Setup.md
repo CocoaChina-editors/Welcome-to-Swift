@@ -25,4 +25,16 @@ Swift项目的结构几乎和Objective-C项目一模一样，只有一个重要�
 现在开始，你可以开始体验在AppDelegate中写Swift代码，或者你可以创建一个Swift Class通过选择File > New > File > (iOS or OS X) > Other > Swift。
 ###理解 Swift 导入过程
 在你建立Xcode项目后，你可以在Swift里导入任意用Object-C来工作的Cocoa平台框架。
-任何
+任意Objective-C的框架（或C类库）将作为一个*module*，能直接导入到Swift中。这些包括了所有Objective-C系统框架-比如Foundation、UIKit和SpriteKit，就像系统支持公共C类库。举个例子，想导入Foundation，只要简单地添加import到你写的Swift文件的顶部。
+>SWIFT
+>
+>`import Foundation`
+
+这个import导入了所有Foundation的API，包括NSDate, NSURL, NSMutableData，并且他们的所有方法、属性和类别都可以在Swift中直接使用。
+导入过程是非常简洁的。Objective-C框架在头文件中申明API。在Swift中，那些头文件被编译成Objective-C的module，接着被导入到Swift作为Swift的API。导入决定了Objective-C的Function, Class, Method和Type如何在Swift中出现。对于Function和Method，这个过程影响他们的参数和返回值。导入过程可以做下面这些事情：
+* 重映射确定的Objective-C类型到Swift中的同等类型, 就像 id 到 AnyObject
+* 重映射确定的 Objective-C 核心类型到Swift中的替代类型， 就像NSString 到 String
+* 重映射确定的 Objective-C 概念到Swift中相匹配的概念，如 pointers 到 optionals
+
+在互用性章节，你将会了解到更多关于这些映射如何在你的Swift代码进行取舍。
+导入Swift的模型到Objective-C和从Objective-C导入Swift是非常相似的。Swift申明它的API，比如一个框架作为Swift modules。同时这些Swift modules会生成Objective-C的头文件。这些头文件可以映射回Objective-C的API

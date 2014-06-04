@@ -37,4 +37,8 @@ Swift项目的结构几乎和Objective-C项目一模一样，只有一个重要�
 * 重映射确定的 Objective-C 概念到Swift中相匹配的概念，如 pointers 到 optionals
 
 在互用性章节，你将会了解到更多关于这些映射如何在你的Swift代码进行取舍。
-导入Swift的模型到Objective-C和从Objective-C导入Swift是非常相似的。Swift申明它的API，比如一个框架作为Swift modules。同时这些Swift modules会生成Objective-C的头文件。这些头文件可以映射回Objective-C的API
+导入Swift的模型到Objective-C和从Objective-C导入Swift是非常相似的。Swift申明它的API，比如一个框架作为Swift modules。同时这些Swift modules会生成Objective-C的头文件。这些头文件可以映射回Objective-C的API中。一些Swift的API不映射回Objective-C因为他们取舍了语言特性发现这些在Objective-C中不可用。关于在Objective-C中使用Swift的更多特性，请参看[在同一项目中使用Swift和Objective-C](http://)。
+
+>注意
+>
+>你不能直接把C++代码导入Swift。解决办法是为C++代码创建一个Objective-C或者C的封装。

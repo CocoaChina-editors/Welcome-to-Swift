@@ -5,4 +5,14 @@
 
 Swift被设计用来无缝兼容Cocoa和Objective-C。在Swift中，你可以使用Objective-C的API（包括系统框架和你自定义的代码），你也可以在Objective-C中使用Swift的API。这种兼容性使Swift变成了一个简单、方便并且强大的工具集成到你的Cocoa应用开发工作流程中。
 
-这篇指南包括了三个
+这篇指南包括了三个有关兼容性的重要方面方便你更好地利用来开发Cocoa应用：
+
+* 互用性 使你将Swift和Objective-C相接合，允许在Objective-C中使用Swift的Class并且当你在写Swift代码时利用熟悉的Cocoa Class、Pattern、Practice。
+* 混合和匹配 允许你创建结合了Swift和Objective-C文件的混合语言应用，他们能更彼此进行通信。
+* 迁移 由于以上两点，从已经存在的Objective-C代码迁移到Swift是非常简单的，使得用最新的Swift特性代替你的Objective-C应用部分内容成为了可能。
+
+在你开始学习这些特性前，你需要对如何建立Swift环境来访问Cocoa系统框架有个大体了解。
+
+###建立你的Swift环境
+
+为了开始体验在Swi中访问Cocoa框架，使用Xcode的一个模板来创建一个基于Swift应用。

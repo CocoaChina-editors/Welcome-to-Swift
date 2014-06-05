@@ -14,17 +14,21 @@
 
 使用`let`来声明常量，使用`var`来声明变量。一个常量的值在编译时并不需要获取，但是你只能为它赋值一次。也就是说你可以用常量来表示这样一个值：你只需要决定一次，但是需要使用很多次。
 
-    var myVariable = 42
-    myVariable = 50
-    let myConstant = 42
+```Swift
+var myVariable = 42
+myVariable = 50
+let myConstant = 42
+```    
 
 常量或者变量的类型必须和你赋给它们的值一样。然而，声明时类型是可选的，声明的同时赋值的话，编译器会自动推断类型。在上面的例子中，编译器推断出`myVariable`是一个整数（integer）因为它的初始值是整数。
 
 如果初始值没有提供足够的信息（或者没有初始值），那你需要在变量后面声明类型，用冒号分割。
 
-    let implicitInteger = 70
-    let implicitDouble = 70.0
-    let explicitDouble: Double = 70
+```Swift
+let implicitInteger = 70
+let implicitDouble = 70.0
+let explicitDouble: Double = 70
+```
 
 > 练习：创建一个常量，显式指定类型为`Float`并指定初始值为4。
 

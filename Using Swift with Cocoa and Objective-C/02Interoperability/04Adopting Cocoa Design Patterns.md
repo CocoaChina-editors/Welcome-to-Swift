@@ -58,3 +58,35 @@ func contentsForType(typeName: String! error: NSErrorPointer) -> AnyObject! {
 ###Target-Action###
 当有特定事件发生，需要一个对象向另一个对象发送消息时，我们通常采用Cocoa的Target-Action设计模式。Swift和Objective-C中的Target-Action模型基本类似。在Swift中，你可以使用`Selector`类型达到Objective-C中selectors的效果。请在[Objective-C Selectors](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-XID_37)中查看在Swift中使用Target-Action设计模式的示例。
 
+###类型匹配与统一规范###
+在Objective-C中，你可以使用`isKindOfClass:`方法检查某个对象是否是指定类型，可以使用`conformsToProtocol:`方法检查某个对象是否遵循特定协议的规范。在Swift中，你可以使用`is`运算符完成上述的功能，或者也可以使用`as?`向下匹配指定类型。<br />
+你可以使用`is`运算符检查一个实例是否是指定的子类。如果该实例是指定的子类，那么`is`运算结果为`true`，反之为`false`。
+
+```
+if object is UIButton {
+    // object is of type UIButton
+} else {
+    // object is not of type UIButton
+}
+```
+你也可以使用`as?`运算符尝试向下匹配子类型，`as?`运算符返回不定值，结合`if-let`语句使用。
+
+```
+if let button = object as? UIButton {
+    // object is successfully cast to type UIButton and bound to button
+} else {
+    // object could not be cast to type UIButton
+}
+```
+请在[Type Casting](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html#//apple_ref/doc/uid/TP40014097-CH22)中查看更多信息。<br />
+检查匹配协议的语法与检查匹配类的语法是一样的，下面是使用`as?`检查匹配协议的示例：
+
+```
+if let dataSource = object as? UITableViewDataSource {
+    // object conforms to UITableViewDataSource and is bound to dataSource
+} else {
+    // object not conform to UITableViewDataSource
+}
+```
+注意，当做完匹配之后，`dataSource`会转换为`UITableViewDataSource`类型，所以你只能访问和调用`UITableViewDataSource`协议定义的属性和方法。当你想进行其他操作时，必须将其转换为其他的类型。<br />
+可以在[Protocols](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html#//apple_ref/doc/uid/TP40014097-CH25)查看更多相关信息。

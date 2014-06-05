@@ -28,7 +28,7 @@
 
 如果你创建一个新的Person实例，它的residence属性由于是被定义为供选的，此属性将默认初始化为空：
 
-	let john = Person();
+	let john = Person()
 
 如果你想使用声明符！强制拆包获得这个人`residence`属性`numberOfRooms`属性值，将会引发运行时错误，因为这时没有可以供拆包的`residence`值。
 
@@ -44,7 +44,7 @@
 	} else {
   	  println("Unable to retrieve the number of rooms.")
 	}
-	// 打印 "Unable to retrieve the number of rooms.”
+	// 打印 "Unable to retrieve the number of rooms."。
 
 这告诉Swift来链接供选`residence`属性，如果`residence`存在则取回`numberOfRooms`的值。
 
@@ -54,7 +54,7 @@
 
 你可以自己定义一个`Residence`实例给`john.residence`，这样他就不再为空了：
 
-	john.residence = Residence();
+	john.residence = Residence()
 
 	`john.residence` 现在有了实际存在的实例而不是nil了。如果你想使用和前面一样的供选链接来获得`numberOfRoooms`，它将返回一个包含默认值1的`Int？`：
 
@@ -63,7 +63,7 @@
 	} else {
 	    println("Unable to retrieve the number of rooms.")
 	}
-	// 打印 "John's residence has 1 room(s).
+	// 打印 "John's residence has 1 room(s)"。
 
 
 ##为供选链接定义模型类
@@ -140,7 +140,7 @@
 	} else {
 	    println("Unable to retrieve the number of rooms.")
 	}
-	// 打印 "Unable to retrieve the number of rooms.
+	// 打印 "Unable to retrieve the number of rooms。
 
 由于`john.residence`是空，所以这个供选链接和之前一样编译失败了，但是没有运行时错误。
 
@@ -163,7 +163,7 @@
 	} else {
 	    println("It was not possible to print the number of rooms.")
 	}
-	// 打印 "It was not possible to print the number of rooms.
+	// 打印 "It was not possible to print the number of rooms."。
 
 ##使用供选链接调用角标
 
@@ -178,7 +178,7 @@
 	} else {
 	    println("Unable to retrieve the first room name.")
 	}
-	// 打印 "Unable to retrieve the first room name.
+	// 打印 "Unable to retrieve the first room name."。
 
 在角标调用中供选链接的问号直接跟在`john.residence`的后面，在角标括号的前面，因为`john.residence`是供选链接试图获得的供选值。
 
@@ -194,7 +194,7 @@
 	} else {
 	    println("Unable to retrieve the first room name.")
 	}
-	// 打印 "The first room name is Living Room.
+	// 打印 "The first room name is Living Room."。
 
 ##连接多层链接
 
@@ -216,7 +216,7 @@
 	} else {
 	    println("Unable to retrieve the address.")
 	}
-	// 打印 "Unable to retrieve the address.”
+	// 打印 "Unable to retrieve the address.”。
 
 `john.residence`的值现在包含一个`Residence`实例，然而`john.residence.address`现在时`nil`，因此`john.residence?.address?.street`调用失败。
 
@@ -234,7 +234,7 @@
 	} else {
 	    println("Unable to retrieve the address.")
 	}
-	// 打印 "John's street name is Laurel Street.
+	// 打印 "John's street name is Laurel Street."。
 
 值得注意的是，“`!`”符的在定义`address`实例时的使用（`john.residence.address`）。`john.residence`属性是一个供选类型，因此你需要在它获取`address`属性之前使用`！`拆包以获得它的实际值。
 
@@ -247,14 +247,14 @@
 	if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
 	    println("John's building identifier is \(buildingIdentifier).")
 	}
-	// 打印 "John's building identifier is The Larches.
+	// 打印 "John's building identifier is The Larches."。
 
 如果你还想进一步对方法返回值执行供选链接，将供选链接问号符放在方法括号的后面：
 
 	if let upper = john.residence?.address?.buildingIdentifier()?.uppercaseString {
 	    println("John's uppercase building identifier is \(upper).")
 	}
-	// 打印 "John's uppercase building identifier is THE LARCHES.
+	// 打印 "John's uppercase building identifier is THE LARCHES."。
 
 笔记：
 

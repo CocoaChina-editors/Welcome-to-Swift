@@ -52,3 +52,9 @@ func contentsForType(typeName: String! error: NSErrorPointer) -> AnyObject! {
     // ...
 }
 ```
+###Key-Value探索###
+尽请期待。
+
+###Target-Action###
+当有特定事件发生，需要一个对象向另一个对象发送消息时，我们通常采用Cocoa的Target-Action设计模式。Swift和Objective-C中的Target-Action模型基本类似。在Swift中，你可以使用`Selector`类型达到Objective-C中selectors的效果。请在[Objective-C Selectors](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-XID_37)中查看在Swift中使用Target-Action设计模式的示例。
+

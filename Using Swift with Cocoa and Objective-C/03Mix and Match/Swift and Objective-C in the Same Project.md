@@ -152,7 +152,7 @@ Swift 将会看到所有你在 `umbrella header` 中公开暴露出来的头文�
 
 
 |           | 导入到 Swift | 导入到 Objc  |
-|---------- |:----------  |: ----------:|
+| -------------|:-----------:|:------------:| 
 |任意语言框架 | import FrameworkName | @import FrameworkName; |
 
 

@@ -24,11 +24,12 @@ Objc 和 Swift 文件可以在一个工程中并存，不管这个工程原本�
 
 ![bridgingheader_2x.png](https://raw.githubusercontent.com/haolloyin/Welcome-to-Swift/translate/Using%20Swift%20with%20Cocoa%20and%20Objective-C/03Mix%20and%20Match/bridgingheader_2x.png?raw=true)
 
-如果你同意，Xcode 会在源文件创建的同时生成头文件，并用 product 的模块名加上 `-Bridging-Header.h` 命名。关于 product 的模块名，详见 [Product 模块命名](#Product 模块命名)。
+如果你同意，Xcode 会在源文件创建的同时生成头文件，并用 product 的模块名加上 `-Bridging-Header.h` 命名。关于 product 的模块名，详见 [Naming Your Product Module](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_85)。
 
 你应该编辑这个头文件来对 Swift 暴露出 Objc 代码。
 
-##### To import Objective-C code into Swift from the same target
+#### 在同一target中将Objective-C代码导入到Swift中
+
 
 
 1.在 Objc 桥接头文件中，import 任何你想暴露给 Swift 的头文件，例如：
@@ -56,7 +57,7 @@ Objc 和 Swift 文件可以在一个工程中并存，不管这个工程原本�
 
 ### 将 Swift 导入 Objc
 
-向 Objc 中导入Swift 代码时，你依赖 Xcode 生成的头文件来向 Objc 暴露 Swift 代码。这是自动生成 Objc 头文件，它包含了你的 target 中所有 Swift 代码中定义的接口。可以把这个 Objc 头文件看作 Swift 代码的 `umbrella header`。它以 product 模块名加 `-Swift.h` 来命名。关于 product 的模块名，详见 [Product 模块命名](#Product 模块命名)。
+向 Objc 中导入Swift 代码时，你依赖 Xcode 生成的头文件来向 Objc 暴露 Swift 代码。这是自动生成 Objc 头文件，它包含了你的 target 中所有 Swift 代码中定义的接口。可以把这个 Objc 头文件看作 Swift 代码的 `umbrella header`。它以 product 模块名加 `-Swift.h` 来命名。关于 product 的模块名，详见[Naming Your Product Module](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_85)。
 
 你不需要做任何事情来生成这个头文件，只需要将它导入到你的 Objc 代码来使用它。注意这个头文件中的 Swift 接口包含了它所使用到的所有 Objc 类型。如果你在 Swift 代码中使用你自己的 Objc 类型，确保先将对应的 Objc 头文件导入到你的 Swift 代码中，然后才将 Swift 自动生成的头文件导入到 Objc .m 源文件中来访问 Swift 代码。
 
@@ -72,11 +73,12 @@ Objc 和 Swift 文件可以在一个工程中并存，不管这个工程原本�
 
 target 中任何 Swift 文件将会对 Objc .m 源文件可见，包括这个 import 语句。关于在 Objc 代码中使用 Swift 代码，详见 [Using Swift from Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_84)。
 
+|              | 导入到 Swift | 导入到 Swift  |
+| -------------|:-----------:|:------------:| 
+| Swift 代码    | 不需要import语句  | #import <ProductName/ProductModuleName-Swift.h>  |
+| Objc 代码     | 不需要import语句；需要 Objc `umbrella头文件| #import "Header.h"     |
 
-|           | 导入到 Swift | 导入到 Objc  |
-|---------- |:----------  |: ---------- |
-|Swift 代码 | 不需要import语句 | #import <ProductName/ProductModuleName-Swift.h>  |
-|Objc 代码 | 不需要import语句；需要 Objc `umbrella头文件` | #import "Header.h"|
+
 
 ## 在同个 Framework 的 target 中导入
 
@@ -121,10 +123,11 @@ Swift 将会看到所有你在 `umbrella header` 中公开暴露出来的头文�
 
 这个 import 语句所包含的 Swift 文件都可以被同个框架 target 下的 Objc .m 源文件访问。关于在 Objc 代码中使用 Swift 代码，详见 [Using Swift from Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_84)。
 
-|           | 导入到 Swift | 导入到 Objc  |
-|---------- |:----------  |: ---------- |
-|Swift 代码 | 不需要import语句 | #import <ProductName/ProductModuleName-Swift.h>  |
-|Objc 代码 | 不需要import语句；需要 Objc `umbrella头文件` | #import "Header.h"|
+|              | 导入到 Swift | 导入到 Swift  |
+| -------------|:-----------:|:------------:| 
+| Swift 代码    | 不需要import语句  | #import <ProductName/ProductModuleName-Swift.h>  |
+| Objc 代码     | 不需要import语句；需要 Objc `umbrella头文件| #import "Header.h"     |
+
 
 
 ## 导入外部 Framework
@@ -149,7 +152,7 @@ Swift 将会看到所有你在 `umbrella header` 中公开暴露出来的头文�
 
 
 |           | 导入到 Swift | 导入到 Objc  |
-|---------- |:----------  |: ---------- |
+|---------- |:----------  |: ----------:|
 |任意语言框架 | import FrameworkName | @import FrameworkName; |
 
 
@@ -190,7 +193,7 @@ Swift 的类或协议必须用 `@objc attribute` 来标记，以便在 Objc 中�
 
 例如带有范型类型作为参数，或者返回元组的方法不能在 Objc 中使用。
 
-为了避免循环引用，不要将 Swift 代码导入到 Objc 头文件中。但是你可以在 Objc 头文件中前向声明（`forward declare`）一个 Swift 类来使用它，然而，注意**不能在 Objc 中继承一个 Swift 类。**
+为了避免循环引用，不要将 Swift 代码导入到 Objc 头文件中。但是你可以在 Objc 头文件中前向声明（`forward declare`）一个 Swift 类来使用它，然而，注意**不能在 Objc 中继承一个 Swift 类**。
 
 ### 在Objective-C头文件中引用Swift类
 

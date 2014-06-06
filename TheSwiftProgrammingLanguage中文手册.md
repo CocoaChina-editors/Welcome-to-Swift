@@ -27,13 +27,13 @@ The Swift Programming Language 中文手册
 -  Inheritance
 -  Initialization
 -  [Deinitialization](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/15Deinitialization.md)
--  Automatic Reference Counting
+-  [Automatic Reference Counting](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/16Automatic%20Reference%20Counting.md)
 -  [Optional Chaining](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/17Optional%20Chaining.md)
 -  Type Casting
 -  [Nested Types](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/19Nested%20Types.md)
 -  Extensions
 -  Protocols
--  Generics
+-  [Generics](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/22Generics.md)
 -  Advanced Operators
 
 ## Language Reference

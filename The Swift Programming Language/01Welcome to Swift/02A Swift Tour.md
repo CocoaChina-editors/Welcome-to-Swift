@@ -8,23 +8,28 @@
 
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。
 
-> 注意：为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。
+> 注意：为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。<br/>
+> [Open Playground](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip)
 
 ## 简单值
 
 使用`let`来声明常量，使用`var`来声明变量。一个常量的值在编译时并不需要获取，但是你只能为它赋值一次。也就是说你可以用常量来表示这样一个值：你只需要决定一次，但是需要使用很多次。
 
-    var myVariable = 42
-    myVariable = 50
-    let myConstant = 42
+```Swift
+var myVariable = 42
+myVariable = 50
+let myConstant = 42
+```    
 
 常量或者变量的类型必须和你赋给它们的值一样。然而，声明时类型是可选的，声明的同时赋值的话，编译器会自动推断类型。在上面的例子中，编译器推断出`myVariable`是一个整数（integer）因为它的初始值是整数。
 
 如果初始值没有提供足够的信息（或者没有初始值），那你需要在变量后面声明类型，用冒号分割。
 
-    let implicitInteger = 70
-    let implicitDouble = 70.0
-    let explicitDouble: Double = 70
+```Swift
+let implicitInteger = 70
+let implicitDouble = 70.0
+let explicitDouble: Double = 70
+```
 
 > 练习：创建一个常量，显式指定类型为`Float`并指定初始值为4。
 
@@ -247,7 +252,7 @@
 
 有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
 
-你可以获取参数的数量——这个方法在非常短的闭包中很有用。一个被作为最后一个参数传入函数的时候可以直接出现在括号后面。
+你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。
 
     sort([1, 5, 3, 12, 2]) { $0 > $1 }
 

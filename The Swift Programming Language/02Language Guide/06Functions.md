@@ -79,9 +79,10 @@
 
 因为它并不需要返回一个值，该函数的定义不包括返回箭头（ - >）和返回类型。
 
-    提示
-    严格地说，sayGoodbye功能确实还返回一个值，即使没有返回值定义。函数没有定义返回类型但返
-	回了一个void返回类型的特殊值。它是一个简直是空的元组，实际上零个元素的元组，可以写为（）。
+>提示
+>
+>严格地说，sayGoodbye功能确实还返回一个值，即使没有返回值定义。函数没有定义返回类型但返
+>回了一个void返回类型的特殊值。它是一个简直是空的元组，实际上零个元素的元组，可以写为（）。
 
 当一个函数调用时它的返回值可以忽略不计：
     
@@ -99,9 +100,10 @@
 
 第一个函数`printAndCount`，打印了一个字符串，然后并以`Int`类型返回它的字符数。第二个函数`printWithoutCounting`，调用的第一个函数，但忽略它的返回值。当第二函数被调用时，字符串消息由第一函数打印了回来，去没有使用其返回值。
 
-    提示
-    返回值可以忽略不计，但对一个函数来说，它的返回值即便不使用还是一定会返回的。在函数体底部
-	返回时与定义的返回类型的函数不能相容时，如果试图这样做将导致一个编译时错误。
+>提示
+>
+>返回值可以忽略不计，但对一个函数来说，它的返回值即便不使用还是一定会返回的。在函数体底部
+>返回时与定义的返回类型的函数不能相容时，如果试图这样做将导致一个编译时错误。
 
 ### 多返回值函数 ###
 你可以使用一个元组类型作为函数的返回类型返回一个有多个值组成的一个复合作为返回值。
@@ -154,8 +156,9 @@
     	// to refer to the argument value for that parameter
 	}
 
-	注意
-	如果您为参数提供一个外部参数名称，调用该函数时外部名称必须始终被使用。
+>提示
+>
+>如果您为参数提供一个外部参数名称，调用该函数时外部名称必须始终被使用。
 
 作为一个例子，考虑下面的函数，它通过插入他们之间的第三个`"joiner"`字符串来连接两个字符串：
 
@@ -184,9 +187,10 @@
 
 使用外部参数名称使`join`函数的第二个版本功能更富有表现力,用户习惯使用`sentence-like`的方式,同时还提供了一个可读的、意图明确的函数体。
 
-	注意
-	考虑到使用外部参数名称的初衷就是为了在别人第一次阅读你的代码时并不知道你函数参数的目的是什么。
-	但当函数调用时如果每个参数的目的是明确的和毫不含糊的，你并不需要指定外部参数名称。
+>提示
+>
+>考虑到使用外部参数名称的初衷就是为了在别人第一次阅读你的代码时并不知道你函数参数的目的是什么。
+>但当函数调用时如果每个参数的目的是明确的和毫不含糊的，你并不需要指定外部参数名称。
 
 ### 外部参数名称速记 ###
 
@@ -212,9 +216,10 @@
 
 可以为任何参数设定默认值来作为函数的定义的一部分。如果默认值已经定义，调用函数时就可以省略该参数的传值。
 
-	注意
-	将使用默认值的参数放在函数的参数列表的末尾。这确保了所有调用函数的非默认参数使用相同的顺
-	序,并明确地表示在每种情况下相同的函数调用。
+>提示
+>
+>将使用默认值的参数放在函数的参数列表的末尾。这确保了所有调用函数的非默认参数使用相同的顺
+>序,并明确地表示在每种情况下相同的函数调用。
 
 这里有一个版本，是早期的`join`函数，并为参数`joiner`设置了默认值：
 
@@ -250,9 +255,10 @@
 	join("hello", "world", joiner: "-")
 	// returns "hello-world"
 
-	注意
-	你可以通过编写一个下划线(_)有选择进行这种行为,而不是一个明确的定义外部参数名称。然
-	而，在适当情况下有默认值的外部名称参数总是优先被使用。
+>提示
+>
+>你可以通过编写一个下划线(_)有选择进行这种行为,而不是一个明确的定义外部参数名称。然
+>而，在适当情况下有默认值的外部名称参数总是优先被使用。
 
 ### 可变参数 ###
 
@@ -275,12 +281,13 @@
 	// returns 10.0, which is the arithmetic mean of these three numbers
 
 
-	注意
-	函数可以最多有一个可变参数的参数，而且它必须出现在参数列表的最后以避免多参数函
-	数调用时出现歧义。
-	
-	如果函数有一个或多个参数使用默认值，并且还具有可变参数，将可变参数放在列表的
-	最末尾的所有默认值的参数之后。
+>提示
+>
+>函数可以最多有一个可变参数的参数，而且它必须出现在参数列表的最后以避免多参数函
+>数调用时出现歧义。
+>
+>如果函数有一个或多个参数使用默认值，并且还具有可变参数，将可变参数放在列表的
+>最末尾的所有默认值的参数之后。
 
 ### 常量参数和变量参数 ###
 
@@ -308,9 +315,10 @@
 
 函数首先找出有多少字符需要被添加到左边让字符串以右对齐在整个字符串中。这个值存储在本地常量`amountToPad`中。该函数然后将填充字符的`amountToPad`个字符拷贝到现有的字符串的左边，并返回结果。整个过程使用字符串变量参数进行字符串操作。
 
-	注意
-	一个变量参数的变化没有超出了每个调用函数,所以对外部函数体是不可见的。变量参数只能存在于函数调用
-	的生命周期里。
+>提示
+>
+>一个变量参数的变化没有超出了每个调用函数,所以对外部函数体是不可见的。变量参数只能存在于函数调用
+>的生命周期里。
 
 
 
@@ -320,13 +328,137 @@
 
 通过在其参数定义的开始添加`inout`关键字写用来标明输入-输出参数。一个在输入-输出参数都有一个传递给函数的值，由函数修改后，并从函数返回来替换原来的值。
 
-----------
+参数列表中只可以传递一个变量作为一个`in-out`参数。不能传递一个常数或常值作为参数，因为常量和文字不能修改。你直接在变量名前放置一个连字符（`＆`），当你把它作为一个参数传递给一个`in-out`参数，表明它可以通过该功能进行修改。
+
+>提示
+>
+>`in-out`参数不能有默认值，可变参数的参数也不能被标记为`inout`。如果您标记参数为`inout`，它不能同时被标记为`var`或`let`。
+
+这里的一个叫做swapTwoInts函数，它有两个称为a和b的输入-输出整数参数：
+	
+	func swapTwoInts(inout a: Int, inout b: Int) {
+    	let temporaryA = a
+    	a = b
+    	b = temporaryA
+	}
+
+`swapTwoInts`函数只是简单地交换`a`、`b`的值。该功能通过存储在一个临时常数称为`temporaryA`的值，指定`b`的值到`a`，然后分配`temporaryA`到`b`执行该交换。
+
+您可以调用交换函数`swapTwoInts`来交换任何int类型的变量以交换它们的值。需要注意的是他们传递给swapTwoInts执行功能时，`someInt`和`anotherInt`名称前需要加上的前缀符号：
+
+	var someInt = 3
+	var anotherInt = 107
+	swapTwoInts(&someInt, &anotherInt)
+	println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+	// prints "someInt is now 107, and anotherInt is now 3"
+
+上面的例子表明，`someInt`和`anotherInt`的原始值由swapTwoInts函数进行了修改，即使它们定义在函数定义之外。
+
+>提示
+>
+>输入输出参数与从函数返回的值是不一样的。上述`swapTwoInts`例子没有定义返回类型或返回一个值，但它仍然会修改`someInt`和`anotherInt`的值。输入输出参数是一个函数的另一个影响函数体范围之外的方式。
 
 ## 函数类型 ##
 
+每一个函数都有特定的函数类型，可以充当参数类型和函数的返回类型。
+
+例如：
+
+	func addTwoInts(a: Int, b: Int) -> Int {
+    	return a + b
+	}
+	func multiplyTwoInts(a: Int, b: Int) -> Int {
+		return a * b
+	}
+
+这个例子中定义了两个简单的数学函数`addTwoInts`和`multiplyTwoInts`。每个函数接受两个`int`值，并返回一个`int`值，执行适当的数学运算并返回结果。
+
+这两个函数的类型是`(Int, Int)->Int`。可以解读为：
+
+"这个函数类型，它有两个`int`型的参数，并返回一个`int`类型的值。"
+
+下面是另一个例子，不带任何参数或返回值的函数：
+
+	func printHelloWorld() {
+    	println("hello, world")
+	}
+
+这个函数的类型是`（）->（）`，或者"函数没有参数，并返回`void`。"函数不显式的指出一个返回值类型是`void`，在`swift`中相当于一个空元组，显示为`（）`。
+
 ### 使用函数类型 ###
+
+在`swift`中您可以像任何其他类型一样的使用函数类型。例如，你可以定义一个常量或变量为一个函数类型，并指定适当的函数给该变量：
+
+	var mathFunction: (Int, Int) -> Int = addTwoInts
+
+可以解读为：
+
+"定义一个名为`mathFunction`变量，该变量的类型为'一个函数，它接受两个`int`值，并返回一个`int`值。'设置这个新的变量来引用名为`addTwoInts`功能。"
+
+该`addTwoInts`函数具有与`mathFunction`相同类型的变量，所以这个赋值在能通过`swift`的类型检查。
+
+现在你可以调用指定的函数名称为`mathFunction`：
+
+	println("Result: \(mathFunction(2, 3))")
+	// prints "Result: 5"
+
+不同的函数相同的匹配类型可以分配给相同的变量,也同样的适用于非函数性类型:
+
+	mathFunction = multiplyTwoInts
+	println("Result: \(mathFunction(2, 3))")
+	// prints "Result: 6"
+
+与其他类型一样,你可以把它迅速推断成函数类型当你为常量或变量分配一个函数时:
+
+	let anotherMathFunction = addTwoInts
+	// anotherMathFunction is inferred to be of type (Int, Int) -> Int
+
 ### 函数类型的参数 ###
+
+您可以使用一个函数类型，如`(Int, Int)->Int`作为另一个函数的参数类型。这使你预留了一个函数的某些方面的函数实现，让调用者提供的函数时被调用。
+
+下面就以打印上面的数学函数的结果为例：
+
+	func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
+    	println("Result: \(mathFunction(a, b))")
+	}
+	printMathResult(addTwoInts, 3, 5)
+	// prints "Result: 8"
+
+
+这个例子中定义了一个名为`printMathResult`函数，它有三个参数。第一个参数名为`mathFunction`，类型为`(Int, Int)->Int`。您可以传入符合的任何函数类型作为此函数的第一个参数。第二和第三个参数`a`、`b`都是`int`类型。被用作用于提供数学函数的两个输入值。
+
+当`printMathResult`被调用时，它传递`addTwoInt`函数，以及整数值3和5。它调用的值3和5所提供的功能，并打印8的结果。
+
+printMathResult的作用是调用一个适当类型的数学函数并打印相应结果。那是什么功能的实现其实并不重要，你只要给以正确的类型匹配就行。这使printMathResult以调用者类型安全的方式转换了函数的功能。
+
 ### 函数类型的返回值 ###
+
+您可以使用一个函数类型作为另一个函数的返回类型。返回的函数-（>）即你的返回箭头后，立即写一个完整的函数类型就做到这一点。
+
+下面的例子定义了两个简单的函数调用`stepForward`和`stepBackward`。该`stepForward`函数返回一个值高于其输入值，而`stepBackward`函数返回一个值低于其输入值。这两个函数都有一个相同的类型 `(Int) -> Int`：
+
+	func stepForward(input: Int) -> Int {
+    	return input + 1
+	}
+	func stepBackward(input: Int) -> Int {
+    	return input - 1
+	}
+这里有一个`chooseStepFunction`函数，它的返回类型是"函数类型`(Int) -> Int`"。chooseStepFunction返回一个基于布尔参数的`stepBackward`或`stepForward`函数类型:
+
+	func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+    	return backwards ? stepBackward : stepForward
+	}
+
+您现在可以使用`chooseStepFunction`获取一个函数,可能是加一函数或另一个:
+
+	var currentValue = 3
+	let moveNearerToZero = chooseStepFunction(currentValue > 0)
+	// moveNearerToZero now refers to the stepBackward() function
+
+前面的例子可以判断正负的步骤决定是否需要移动一个名为使得`currentValue`变量逐步接近零。`currentValue`初始值是3，这意味着当前值`>0`，则返回`true`，`chooseStepFunction`返回`stepBackward`函数。返回函数的引用存储在一个称为`moveNearerToZero`常量里。
+
+如今`moveNearerToZero`执行了正确的功能，就可以用来计数到零：
 
 	println("Counting to zero:")
 	// Counting to zero:

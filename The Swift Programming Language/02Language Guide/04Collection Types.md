@@ -392,7 +392,7 @@ namesOfIntegers = [:]
 
 但是，数组的不可变性跟字典略有不同。尽管你不能进行任何可能会改变数组大小的操作，但是你可以给数组中的某个索引设置一个新的值。这使得Swift的数组在大小固定的情况下能够达到最佳的性能。
 
-Swift数组类型的可变性行为还会影响数组对象是如何被复制与修改的，详细信息可参见[集合类型的复制与拷贝行为]()。
+Swift数组类型的可变性行为还会影响数组对象是如何被复制与修改的，详细信息可参见[集合类型的复制与拷贝行为](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_109)。
 
 > 注意：
 > 在任何不需要改变集合大小的地方，最好将集合定义为不可变的。这么做能让Swift的编译器优化该集合的性能。

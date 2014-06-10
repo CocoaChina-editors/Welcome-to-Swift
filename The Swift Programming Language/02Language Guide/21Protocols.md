@@ -256,7 +256,7 @@
 
 *DiceGameDelegate*提供三个方法来跟踪一个游戏的进展。这三种方法已经被纳入上面*play*方法的游戏逻辑中，并且在游戏开始时被调用，至到一个新游戏开始或游戏结束。
 
-因为*delegate*属性是一个可选的*DiceGameDelegate*，*play*方法是用选项链每当在委托中调用一个方法。如果*delegate*属性是*nil*，这些委托优雅的调用失败并不报错。如果*delegate*属性是*non-nil*，委托方法被调用并且通过*SnakesAndLadders*实例的参数传递。
+因为*delegate*属性是一个可选的*DiceGameDelegate*，*play*方法是用Optional链每当在委托中调用一个方法。如果*delegate*属性是*nil*，这些委托优雅的调用失败并不报错。如果*delegate*属性是*non-nil*，委托方法被调用并且通过*SnakesAndLadders*实例的参数传递。
 
 下一个示例展示了一个称为*DiceGameTracker*的类，其采用了*DiceGameDelegate*协议。
 
@@ -378,5 +378,197 @@
 	// A 12-sided dice
 	// A hamster named Simon
 
-注意*TextRepresentable*类型的*thing*常量。它不是*Dice*类型或*DiceGame*或*Hamster*，即时实际实例幕后是其中的一个类型。尽管如此，因为它是*TextRepresentable*类型，众所周知，*TextRepresentable*有一个*asText*方法，循环中每次调用*thing.asText*是安全的。
+注意*TextRepresentable*类型的*thing*常量。它不是*Dice*或*DiceGame*或*Hamster*类型，即时实际实例幕后是其中的一个类型。尽管如此，因为它是*TextRepresentable*类型，众所周知，*TextRepresentable*有一个*asText*方法，循环中每次调用*thing.asText*是安全的。
+
+## 协议继承 ##
+
+一个协议可以继承一个或多个其他协议，可以添加进一步的需求在其继承的需求之上。协议继承的语法类似于类继承的语法，但是选项需列出多个继承协议，并用逗号分隔。
+
+	protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
+	    // protocol definition goes here
+	}
+
+
+下例是一个继承自*TextRepresentable*协议的例子：
+
+	protocol PrettyTextRepresentable: TextRepresentable {
+	    func asPrettyText() -> String
+	}
+
+这里例子定义了一个新协议*PrettyTextRepresentable*，它继承自*TextRepresentable*。任何采用*PrettyTextRepresentable*必须满足由*TextRepresentable*强制执行的所有要求，加上额外由*PrettyTextRepresentable*强制执行的需求。在此例中*PrettyTextRepresentable*添加一个单一的需求提供一个叫做*asPrettyText*的实力方法并返回一个*String*。
+
+*SnakesAndLadders*类可以被扩展去采用并符合*PrettyTextRepresentable*协议：
+	
+	extension SnakesAndLadders: PrettyTextRepresentable {
+	    func asPrettyText() -> String {
+	        var output = asText() + ":\n"
+	        for index in 1...finalSquare {
+	            switch board[index] {
+	            case let ladder where ladder > 0:
+	                output += "▲ "
+	            case let snake where snake < 0:
+	                output += "▼ "
+	            default:
+	                output += "○ "
+	            }
+	        }
+	        return output
+	    }
+	}
+这个扩展声明它采用
+*PrettyTextRepresentable*协议并提供了*SnakesAndLadders*类型协议*asPrettyText*方法的实现。任何*PrettyTextRepresentable*类型必须是*TextRepresentable*类型，所以*asPrettyText*实现首先调用*TextRepresentable*协议的*asText*方法开始输出字符串。字符串后面跟一个冒号和一个换行符，使用这个作为这个漂亮的文本表示的开始，然后遍历这个数组的方块，每个方块跟一个表情符号表示。
+
+- 如果方块的值大于0，它是*ladder*的基础，由 ▲ 表示。
+- 如果方块的值小于0，它是*snake*的头，由 ▼ 表示。
+- 如果方块的值等于0，它是未使用的方块，由 ○ 表示。 <br/>
+
+此方法实现现在可以被用于打印任何一个*SnakesAndLadders*实例的漂亮的文本描述：
+
+	println(game.asPrettyText())
+	// A game of Snakes and Ladders with 25 squares:
+	// ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
+
+
+## 协议组合 ##
+协议组合对于要求一个类型立即符合多种协议是有用的。你可以将多个协议统一到一个协议组合的单一需求中。协议组合的形式为
+*protocol<SomeProtocol, AnotherProtocol>*。你可以在一对尖括号
+(*<>*)内尽量列出多个协议，并用逗号分隔。
+
+下例是一个将两个分别叫做*Named*和*Aged*协议统一到一个单一的协议组合需求中并被当作一个函数参数的例子：
+
+	protocol Named {
+	    var name: String { get }
+	}
+	protocol Aged {
+	    var age: Int { get }
+	}
+	struct Person: Named, Aged {
+	    var name: String
+	    var age: Int
+	}
+	func wishHappyBirthday(celebrator: protocol<Named, Aged>) {
+	    println("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
+	}
+	let birthdayPerson = Person(name: "Malcolm", age: 21)
+	wishHappyBirthday(birthdayPerson)
+	// prints "Happy birthday Malcolm - you're 21!"
+
+此例定义了一个叫做*Named*的协议，只有一个可获得，类型为*String*的*name*属性。同样定义了一个叫做*Aged*的协议，只有一个可获得，类型为*Int*的*age*属性。这两个协议都采用一个叫*Person*的结构。
+
+此例还定义了一个叫做*wishHappyBirthday*的功能，改功能接受一个叫做*celebrator*的参数。此参数的类型是*protocol<Named, Aged>*，意味着“任何符合*Named*和*Aged*这两个协议的类型”。对于具体传递的参数类型是什么没关系，只要它符合这两个必须的协议。
+
+然后创建了一个叫做*birthdayPerson*的*Person*实例，并传递此新实例到*wishHappyBirthday*功能。因为*Person*符合这两个协议，这是一个有效的调用，*wishHappyBirthday*功能能够打印其生日问候。
+
+
+> **注意** <br/>
+> 协议组合不定义一个新的，永久的协议类型。相反，他们定义了一个临时的本地协议，统一了组合中所有协议的需求。<br/>
+
+##检查协议一致性##
+
+你可以使用[类型转换](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html#//apple_ref/doc/uid/TP40014097-CH22-XID_443)中描述的*is*和*as*操作去检查协议一致性，并转换为一个指定的协议。检查并转换一个协议和检查并转换一个类型有完全相同的语法：
+
+- 如果一个实例符合协议并且不返回*false*，那么*is*操作返回*true*。
+- *as*版本的向下转换操作返回此协议类型的*
+- *值，如果此实例不符合协议，那么此值是*nil*。
+- 如果*as*版本向下转换操作强制向下转换为协议类型不成功，则触发运行错误。 <br/>
+
+下例定义了一个叫做*HasArea*的协议，只有一个可获得的，类型为*Double*的*area*属性。
+
+	@objc protocol HasArea {
+	    var area: Double { get }
+	}
+
+
+> **注意** <br/>
+> 你可以检查协议一致性，只有当你的协议是由*@objc*属性标记的，像上面*HasArea*协议展示的。该属性表明协议应该暴露为在[通过Cocoa和Objective-C使用Swift](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)描述的Objective-C代码。即使你不与Objective-C交互，如果你希望能够检查协议一致性，你仍然需要使用*@objc*标记你的协议。<br/>
+> 还要注意使用*@objc*标记的协议只能通过类调用，不是结构或枚举。如果你使用*@objc*标记你的协议是为了检查协议一致性，你将只能应用此协议为*class*类型。<br/>
+
+这里有两个类，*Circle*和*Country*，两者都符合*HasArea*协议：
+
+	class Circle: HasArea {
+	    let pi = 3.1415927
+	    var radius: Double
+	    var area: Double { return pi * radius * radius }
+	    init(radius: Double) { self.radius = radius }
+	}
+	class Country: HasArea {
+	    var area: Double
+	    init(area: Double) { self.area = area }
+	}
+
+*Circle*类实现了*area*属性要求，并基于一个存储属性*radius*将此属性作为一个计算属性。*Country*类实现了*area*需求直接作为一个存储属性。两个类正确的符合了*HasArea*协议。
+
+这里有一个不符合*HasArea*协议的*Animal*类：
+
+	class Animal {
+	    var legs: Int
+	    init(legs: Int) { self.legs = legs }
+	}
+*Circle*，*Country*和*Animal*类没有一个共同的基类。尽管如此，他们都是类，所有三种类型的实力都可以用来初始化一个存储*AnyObject*类型值的数组。
+
+	let objects: AnyObject[] = [
+	    Circle(radius: 2.0),
+	    Country(area: 243_610),
+	    Animal(legs: 4)
+	]
+
+*objects*数组初始为一个迭代数组，包含一个半径为2的*Circle*实例；*Country*实例初始化为英国面积的平方公里；*Animal*实例初始化为有四条腿。
+
+*objects*数组现在可以被迭代，并且数组中每个*object*都会被检查是否符合*HasArea*协议：
+
+	for object in objects {
+	    if let objectWithArea = object as? HasArea {
+	        println("Area is \(objectWithArea.area)")
+	    } else {
+	        println("Something that doesn't have an area")
+	    }
+	}
+	// Area is 12.5663708
+	// Area is 243610.0
+	// Something that doesn't have an area
+
+每当数组中的一个对象符合*HasArea*协议，*as*操作拆开*optional*绑定到一个叫*objectWithArea*的常量,其*optional*值会返回。*objectWithArea*常量是*HasArea*类型，所以*area*属性可以被以类型安全的方式访问并打印。
+
+注意，底层对象在转换过程中没有改变。他们仍然是*Circle*，*Country*和*Animal*。然而，在存储在*objectWithArea*常量时，他们只知道是*HasArea*类型，所以他们的*area*属性可以被访问。
+
+
+##Optional协议要求##
+
+你可以为协议定义*optional*要求。这些要求不需要被符合协议的类型实现。*Optional*要求前缀使用*@optional*关键字作为协议定义的一部分。
+
+一个*optional*协议要求可以被*optional*链调用，考虑到要求没有被符合协议的类型所实现这种可能性。关于*optional*链的信息，请参照[Optional链](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html#//apple_ref/doc/uid/TP40014097-CH21-XID_312)。
+
+你通过在调用的要求名字后写一个问号来检查一个*optional*要求的实现，例如*someOptionalMethod?(someArgument)*。*Optional*属性要求，以及*optional*方法要求返回一个值，当他们被访问或调用时，将始终返回适当的的类型的一个*optional*值，反映了一个*optional*要求可能没有被实现的事实。
+
+> **注意** <br/>
+> *Optional*协议要求只有在你的协议被*@objc*属性标记时指定。即使你不与Objective-C交互，如果你希望指定*optional*要求，你仍然需要使用*@objc*标记你的协议。<br/>
+> 还要注意使用*@objc*标记的协议只能通过类调用，不是结构或枚举。如果你使用*@objc*标记你的协议是*optional*要求，你将只能应用此协议为*class*类型。<br/>
+
+下例定义了一个integer-counting类，叫做*Counter*，它使用一个外部数据源来提供增量。这个数据源是*CounterDataSource*协议定义的，它有两个*optional*要求：
+
+	@objc protocol CounterDataSource {
+	    @optional func incrementForCount(count: Int) -> Int
+	    @optional var fixedIncrement: Int { get }
+	}
+
+*CounterDataSource*协议定义了一个叫做*incrementForCount*的*optional*方法要求和一个叫做*fixedIncrement*的*optional*属性。这些需求定义了两个不同方式让数据源为*Counter*实例提供一个适当的增量。
+
+
+
+> **注意** <br/>
+> 严格的说，你可以编写一个自定义类，只要符合*CounterDataSource*，不用实现协议的要求。毕竟这两者都是*optional*。尽管技术上是允许的，但这不会成为一个很好的数据源。<br/>
+
+下例定义的*Counter*类，有一个*optional*的，类型为*CounterDataSource?*的*dataSource*属性：
+
+	@objc class Counter {
+	    var count = 0
+	    var dataSource: CounterDataSource?
+	    func increment() {
+	        if let amount = dataSource?.incrementForCount?(count) {
+	            count += amount
+	        } else if let amount = dataSource?.fixedIncrement? {
+	            count += amount
+	        }
+	    }
+	}
 

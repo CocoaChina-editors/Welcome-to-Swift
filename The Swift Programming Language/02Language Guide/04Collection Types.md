@@ -1,8 +1,8 @@
 #集合类型（Collection Types）
 
-Swift提供了两种*集合类型*来存储集合值，数组(Array)和字典(Dictionary)。数组把相同类型的值存放在一个有序链表里。字典把相同类型的值存放在一个无序集合里，这些值可以通过唯一标识符（也就是键）来引用和查找。
+Swift提供了两种*集合类型*来存放多个值——数组(Array)和字典(Dictionary)。数组把相同类型的值存放在一个有序链表里。字典把相同类型的值存放在一个无序集合里，这些值可以通过唯一标识符（也就是键）来引用和查找。
 
-在Swift里，数组和字典明确知道它们所能存放的值和键的类型。这意味着你不能误把一个错误类型的值插到数组或字典里。也意味着你可以确信从数组或字典里取得的值会是什么类型的。Swift使用显式类型的集合，这保证了你的代码会清楚地知道它们所能处理的值的类型，并让你能在代码开发阶段就发现任何输入错误。
+在Swift里，数组和字典里所能存放的值的类型是明确的。这意味着你不能误把一个错误类型的值添加到数组或字典里，也意味着你可以明白无误地知道从数组或字典里取得的值会是什么类型的。Swift集合是类型明确的，这保证了你的代码会清楚地知道它们所能处理的值的类型，并让你能在代码开发阶段就发现任何输入错误。
 
 > 注意：
 > Swift的数组在赋值给常量、变量或者传值给函数、方法时，它的行为表现和其它类型并不一样。详情参见[可变集合](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/CollectionTypes.html#//apple_ref/doc/uid/TP40014097-CH8-XID_151)和[集合类型的赋值和拷贝行为](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_109)

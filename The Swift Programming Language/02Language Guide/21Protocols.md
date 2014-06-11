@@ -572,3 +572,66 @@
 	    }
 	}
 
+*Counter*类将当前值存储在变量*count*中。*Counter*同样定义了一个方法*increment*，当每次此方法被调用时*count*变量增加。
+
+*increment*方法首先尝试通过在其数据源中寻找*incrementForCount*的方法实现来增加一个数。*increment*方法使用*optional*链来调用*incrementForCount*，并将当前*count*值当作方法的单一参数传递。
+
+注意在这里的两个不同级别的*optional*链。首先，*dataSource*有可能为*nil*，所以*dataSource*的名字后有一个问号标记表明*incrementForCount*只有*dataSource*为*non-nil*时调用。其次，即使数据源存在，也不能保证它实现了*incrementForCount*，因为它是一个*optional*要求。这就是为什么*incrementForCount*的名字后面也加了一个问号。
+
+因为*incrementForCount*调用可能失败的原因有两种，调用返回一个*optional*的*int*值。这是真的即使在*CounterDataSource*数据源中*incrementForCount*被定义为返回*non-optional*的*int*值。
+
+调用*incrementForCount*后，*optional*的*int*返回打开成一个*amount*常量，使用*optional*绑定。如果*optional*的*int*包含一个值--换言之，如果委托和方法都存在，并且方法返回一个值--拆开的*amount*被添加到存储属性*count*，增量就完成了。
+
+如果不可能从*incrementForCount*方法获取值--要么是因为*dataSource*是*nil*，要么是因为数据源没有实现*incrementForCount*--然后*increment*方法尝试从数据源*fixedIncrement*的属性获取一个值来代替。*fixedIncrement*属性也是一个*optional*要求，所以它的名字同样通过在其后加上问号来使用*optional*链，表明试图访问属性的值会失败。和之前一样，返回值是一个*optional*的*int*值，即使*CounterDataSource*协议定义*fixedIncrement*为*non-optional*的*int*属性。
+
+这里有一个简单的*CounterDataSource*实现数据源每3次查询就返回一个常量值。它通过实现*optional*的*fixedIncrement*属性要求来达到。
+
+	class ThreeSource: CounterDataSource {
+	    let fixedIncrement = 3
+	}
+
+你可以使用*ThreeSource*的实例作为一个新的*Counter*实例的数据源：
+
+	var counter = Counter()
+	counter.dataSource = ThreeSource()
+	for _ in 1...4 {
+	    counter.increment()
+	    println(counter.count)
+	}
+	// 3
+	// 6
+	// 9
+	// 12
+
+上面的代码创建了一个*Counter*实例，设置它的数据源为一个新的*ThreeSource*实例，并调用*counter*的*increment*方法四次。正如所料，每次*increment*被调用*Counter*的*count*属性就增加3。
+
+这里有一个稍微复杂点的数据源叫*TowardsZeroSource*，它使得*Counter*实例的当前*count*值能从0开始向上或向下：
+
+	class TowardsZeroSource: CounterDataSource {
+	    func incrementForCount(count: Int) -> Int {
+	        if count == 0 {
+	            return 0
+	        } else if count < 0 {
+	            return 1
+	        } else {
+	            return -1
+	        }
+	    }
+	}
+
+*TowardsZeroSource*从*CounterDataSource*协议实现了*optional*的*incrementForCout*方法并使用*count*参数值来算出把哪个方向计算在内。如果*count*已经为0，方法返回0表明没有进一步的计算发生。
+
+你可以将*Counter*实例和*TowardsZeroSource*实例一起使用来从-4计算到0。一旦*counter*达到0，不在发生其他计算：
+
+
+	counter.count = -4
+	counter.dataSource = TowardsZeroSource()
+	for _ in 1...5 {
+	    counter.increment()
+	    println(counter.count)
+	}
+	// -3
+	// -2
+	// -1
+	// 0
+	// 0

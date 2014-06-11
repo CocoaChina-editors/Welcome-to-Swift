@@ -7,10 +7,12 @@
 
 ## 协议的语法 ##
 定义协议与定义类，结构，枚举非常相似<br/>
+```js
 
     protocol SomeProtocol {
        // protocol definition goes here
     }
+```
 定制类型状态，他们采用一种特定的协议，通过将协议名方在类型名之后，用冒号分割，当作定义的一部分。可以列出多个协议，由逗号分隔：
 
     struct SomeStructure: FirstProtocol, AnotherProtocol {

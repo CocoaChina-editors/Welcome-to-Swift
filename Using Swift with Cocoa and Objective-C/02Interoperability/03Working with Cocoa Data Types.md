@@ -149,7 +149,7 @@ let memoryManagedResult = StringByAddingTwoStrings(str1, str2).takeUnretainedVal
 // memoryManagedResult is a memory managed CFString
 ```
 
-您也可以在一个非托管的对象中使用`retain()`，`release()`和`autorelease()`方法，但这种做法并不值得推荐。
+您也可以在一个非托管的对象中使用`retain()`，`release()`和`autorelease()`方法，但是这种做法并不值得推荐。
 
 
 

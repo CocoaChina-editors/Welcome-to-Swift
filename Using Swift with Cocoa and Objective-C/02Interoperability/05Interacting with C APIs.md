@@ -274,7 +274,7 @@ Swift 代码和 Objective-C 代码以不同的方式进行条件编译。Swift �
       statements
     #else
       statements
-    #endif
+    #endif 
 ````
 
-与 C 语言编译器的条件编译相反，Swift 条件编译语句必须完全是自包含和语法有效的代码块。这是因为 Swift 代码即使没有被编译，也要全部进行语法检查。
+与 C 语言编译器的条件编译相反，Swift 条件编译语句必须完全是自包含和语法有效的代码块。这是因为 Swift 代码即使没有被编译，也要全部进行语法检查。 

@@ -10,7 +10,7 @@
 -   [id 兼容性（id Compatibility）](#id_compatibility)
 -   [使用 nil](#working_with_nil)
 -   [扩展（Extensions）](#extensions)
--   [闭包（Closures）](#Closures)
+-   [闭包（Closures）](#closures)
 -   [比较对象](#object_comparison)
 -   [Swift 类型兼容性](#swift_type_compatibility)
 -   [Objective-C 选择器（Selectors）](#objective_c_selectors)

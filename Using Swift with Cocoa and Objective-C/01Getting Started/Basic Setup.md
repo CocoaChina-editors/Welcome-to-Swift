@@ -25,7 +25,6 @@ Swift 被设计用来无缝兼容 Cocoa 和 Objective-C 。在 Swift 中，你�
 
 为了开始体验在 Swift 中访问 Cocoa 框架，使用 Xcode 的一个模板来创建一个基于 Swift 应用。
 
-<a name="understanding_the_swift_import_process"></a>
 ###在 Xcode 中创建一个 Swift 项目
 
 1.选择 File > New > Project > (iOS or OS X) > Application > your *template of choice*。
@@ -37,7 +36,9 @@ Swift 被设计用来无缝兼容 Cocoa 和 Objective-C 。在 Swift 中，你�
 Swift 项目的结构几乎和 Objective-C 项目一模一样，只有一个重要的区别：Swift 没有头文件。在实现和接口之间没有显示的刻画，所以一个指定 Class 中的所有信息都存储在单独的 .swift 文件中。
 现在开始，你可以开始体验在 AppDelegate 中写 Swift 代码，或者你可以创建一个 Swift Class 通过选择 File > New > File > (iOS or OS X) > Other > Swift。
 
+<a name="understanding_the_swift_import_process"></a>
 ##理解 Swift 导入过程
+
 在你建立 Xcode 项目后，你可以在 Swift 里导入任意用 Objective-C 来工作的 Cocoa 平台框架。
 任意 Objective-C 的框架（或 C 类库）将作为一个 *module*，能直接导入到 Swift 中。这些包括了所有 Objective-C 系统框架-比如 Foundation、UIKit 和 SpriteKit，就像系统支持公共 C 类库。举个例子，想导入 Foundation，只要简单地添加 import 到你写的 Swift 文件的顶部。
 

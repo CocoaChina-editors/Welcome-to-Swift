@@ -1,6 +1,6 @@
 > 翻译：[shockinglee](https://github.com/shockinglee)
 
-> 校对：[shanyimin](https://github.com/shanyimin) [ChildhoodAndy]((https://github.com/dabing1022)
+> 校对：[shanyimin](https://github.com/shanyimin) [ChildhoodAndy](https://github.com/dabing1022)
 
 # 与 C 语言交互编程接口
 --------------------------

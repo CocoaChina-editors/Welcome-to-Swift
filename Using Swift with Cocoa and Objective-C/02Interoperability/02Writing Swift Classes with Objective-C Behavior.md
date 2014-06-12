@@ -112,7 +112,7 @@ Swift 里属性默认都是强类型的。使用`weak`关键字修饰一个属�
 
 ## 实现Core Data Managed Object子类
 
-Core Data 提供了基本存储和实现`NSManagedObject`子类的一组属性。在 Core Data 模型中，与管理对象子类相关的特性或者关系的每个属性定义之前，将`@NSmanaged`特性加入。与 Objective-C 里面的 `@dynamic`特性类似，`@NSManaged`特性告知 Swift 编译器，这个属性的存储和实现将在运行时完成。但是，与`@dynamic`不同的是，`@NSManaged`特性仅存在于 Core Data 支持中。
+Core Data 提供了基本存储和实现`NSManagedObject`子类的一组属性。在 Core Data 模型中，与管理对象子类相关的特性或者关系的每个属性定义之前，将`@NSmanaged`特性加入。与 Objective-C 里面的 `@dynamic`特性类似，`@NSManaged`特性告知 Swift 编译器，这个属性的存储和实现将在运行时完成。但是，与`@dynamic`不同的是，`@NSManaged`特性仅在 Core Data 支持中可用。
 
 
 

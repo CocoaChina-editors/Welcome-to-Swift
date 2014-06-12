@@ -5,7 +5,7 @@
 # 将 Objective-C 代码迁移到 Swift
 --------------------------------
 
-本页内容包括：
+本节内容包括：
 
 -  [为你的Objective-c代码做好迁移准备
 （Preparing Your Objective-C Code for Migration）](#preparing_your_objective-c_code_for_migration)

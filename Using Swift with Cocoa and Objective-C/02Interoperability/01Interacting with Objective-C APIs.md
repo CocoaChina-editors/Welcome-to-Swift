@@ -1,3 +1,8 @@
+> 翻译：[Creolophus](https://github.com/Creolophus)
+
+> 校正：[Evilcome](https://github.com/Evilcome) [ChildhoodAndy](https://github.com/dabing1022)
+
+
 #与 Objective-C 的 API 交互
 
 -----------------
@@ -16,7 +21,8 @@
 -   [Objective-C 选择器（Selectors）](#objective_c_selectors)
 
 **互用性**是让 Swift 和 Objective-C 相接合的一种特性，使你能够在一种语言编写的文件中使用另一种语言。当你准备开始把 Swift 融入到你的开发流程中时，你应该懂得如何利用互用性来重新定义并提高你写 Cocoa 应用的方案。
-互用性很重要的一点就是当你在写 Swift 代码时使用 Objective-C 的 API 接口。当你导入一个 Objective-C 框架后，你可以使用原生的 Swift 语法实例化它的 Class 并且与之交互。
+
+互用性很重要的一点就是允许你在写 Swift 代码时使用 Objective-C 的 API 接口。当你导入一个 Objective-C 框架后，你可以使用原生的 Swift 语法实例化它的 Class 并且与之交互。
 
 <a name="initialization"></a>
 ##初始化
@@ -38,6 +44,7 @@ let myTableView: UITableView = UITableView(frame: CGRectZero, style: .Grouped)
 ```
 
 你不需要调用 alloc，Swift 能替你处理。注意，当使用 Swift 风格的初始化函数的时候，“init”不会出现。
+
 你可以在初始化时显式的声明对象的类型，也可以忽略它，Swift 能够正确判断对象的类型。
 
 ```
@@ -76,12 +83,14 @@ if myTextField.editing {
 ```
 
 当 get 或 set 属性时，直接使用属性名称，不需要附加圆括号。注意，`darkGrayColor`后面附加了一对圆括号，这是因为`darkGrayColor`是`UIColor`的一个类方法，不是一个属性。
+
 在 Objective-C 中，一个有返回值的无参数方法可以被作为一个隐式的访问函数，并且可以与访问器使用同样的方法调用。但在 Swift 中不再能够这样做了，只有使用`@property`关键字声明的属性才会被作为属性引入。
 
 <a name="working_with_methods"></a>
 ##方法
 
 在 Swift 中调用 Objective-C 方法时，使用点语法。
+
 当 Objective-C 方法转换到 Swift 时，Objective-C 的`selector`的第一部分将会成为方法名并出现在圆括号的前面，而第一个参数将直接在括号中出现，并且没有参数名，而剩下的参数名与参数则一一对应的填入圆括号中。
 
 举个例子，你在使用 Objective-C 时会这样做：
@@ -109,6 +118,7 @@ myTableView.layoutIfNeeded()
 ##id 兼容性（id Compatibility）
 
 Swift 包含一个叫做`AnyObject`的协议类型，表示任意类型的对象，就像 Objective-C 中的`id`一样。`AnyObject`协议允许你编写类型安全的 Swift 代码同时维持无类型对象的灵活性。因为`AnyObject`协议保证了这种安全，Swift 将 id 对象导入为 AnyObject。
+
 举个例子，跟 id 一样，你可以为`AnyObject`类型的对象分配任何其他类型的对象，你也同样可以为它重新分配其他类型的对象。
 
 ```
@@ -169,6 +179,7 @@ let timeInterval = myDate.timeIntervalSinceReferenceDate
 ##使用nil
 
 在Objective-C中，对象的引用可以是值为`NULL`的原始指针（同样也是Objective-C中的`nil`）。而在Swift中，所有的值–包括结构体与对象的引用–都被保证为非空。作为替代，你将这个可以为空的值包装为optional type。当你需要宣告值为空时，你需要使用`nil`。你可以在[Optionals](http://)中了解更多。
+
 因为Objective-C不会保证一个对象的值是否非空，Swift在引入Objective-C的API的时候，确保了所有函数的返回类型与参数类型都是optional，在你使用Objective-C的API之前，你应该检查并保证该值非空。
 在某些情况下，你可能绝对确认某些Objective-C方法或者属性永远不应该返回一个nil的对象引用。为了让对象在这种情况下更加易用，Swift使用 implicitly unwrapped optionals 方法引入对象， implicitly unwrapped optionals 包含optional 类型的所有安全特性。此外，你可以直接访问对象的值而无需检查nil。当你访问这种类型的变量时， implicitly unwrapped optional 首先检查这个对象的值是否不存在，如果不存在，将会抛出运行时错误。
 
@@ -176,6 +187,7 @@ let timeInterval = myDate.timeIntervalSinceReferenceDate
 ##扩展（Extensions）
 
 Swift 的扩展和 Objective-C 的类别（Category）相似。扩展为原有的类，结构和枚举丰富了功能，包括在 Objective-C 中定义过的。你可以为系统的框架或者你自己的类型增加扩展，只需要导入合适的模块并且保证你在 Objective-C 中使用的类、结构或枚举拥有相同的名字。
+
 举个例子，你可以扩展`UIBezierPath`类来为它增加一个等边三角形，这个方法只需提供三角形的边长与起点。
 
 ```
@@ -208,6 +220,7 @@ let area = rect.area
 ```
 
 你同样可以使用扩展来为类添加协议而无需增加它的子类。如果这个协议是在 Swift 中被定义的，你可以添加 comformance 到它的结构或枚举中无论它们在 Objective-C 或在 Swift 中被定义。
+
 你不能使用扩展来覆盖 Objective-C 类型中存在的方法与属性。
 
 <a name="closures"></a>
@@ -228,6 +241,7 @@ let completionBlock: (NSData, NSError) -> Void = {data, error in /* ... */}
 ```
 
 Swift 的闭包与 Objective-C 中的 blocks 能够和睦相处，所以你可以把一个 Swift 闭包传递给一个把 block 作为参数的 Objective-C 函数。Swift 闭包与函数具有互通的类型，所以你甚至可以传递 Swift 函数的名字。
+
 闭包与 blocks 语义上想通但是在一个地方不同：变量是可以直接改变的，而不是像 block 那样会拷贝变量。换句话说，Swift 中变量的默认行为与 Objective-C 中 __block 变量一致。
 
 <a name="object_comparison"></a>
@@ -235,7 +249,9 @@ Swift 的闭包与 Objective-C 中的 blocks 能够和睦相处，所以你可�
 
 当比较两个 Swift 中的对象时，可以使用两种方式。第一种，使用（==），判断两个对象内容是否相同。第二种，使用(===)，判断常量或者变量是否为同一个对象的实例。
 
-Swift 与 Objective-C 一般使用 == 与 === 操作符来做比较。Swift 的 == 操作符为源自 NSObject 的对象提供了默认的实现。在实现 == 操作符时，Swift 调用 NSObject 定义的 isEqual: 方法。NSObject 类仅仅做了身份的比较，所以你需要在你自己的类中重新实现 isEqual: 方法。因为你可以直接传递 Swift 对象给 Objective-C 的 API，你也应该为这些对象实现自定义的 isEqual: 方法，如果你希望比较两个对象的内容是否相同而不是仅仅比较他们是不是由相同的对象派生。
+Swift 与 Objective-C 一般使用 == 与 === 操作符来做比较。Swift 的 == 操作符为源自 NSObject 的对象提供了默认的实现。在实现 == 操作符时，Swift 调用 NSObject 定义的 isEqual: 方法。
+
+NSObject 类仅仅做了身份的比较，所以你需要在你自己的类中重新实现 isEqual: 方法。因为你可以直接传递 Swift 对象给 Objective-C 的 API，你也应该为这些对象实现自定义的 isEqual: 方法，如果你希望比较两个对象的内容是否相同而不是仅仅比较他们是不是由相同的对象派生。
 
 作为实现比较函数的一部分，确保根据[Object comparison](//https://developer.apple.com/library/prerelease/ios/documentation/General/Conceptual/DevPedia-CocoaCore/ObjectComparison.html#//apple_ref/doc/uid/TP40008195-CH37)实现对象的`hash`属性。更进一步的说，如果你希望你的类能够作为字典中的键，也需要遵从`Hashable`协议以及实现`hashValues`属性。
 
@@ -248,6 +264,7 @@ Swift 与 Objective-C 一般使用 == 与 === 操作符来做比较。Swift 的 
 
 当你在 Objective-C 中使用 Swift API，编译器基本对语句做直接的翻译。例如，`Swift API func playSong(name: String)`会被解释为`- (void)playSong:(NSString *)name`。然而，有一个例外：当在 Objective-C 中使用 Swift 的初始化函数，编译器会在方法前添加“initWith”并且将原初始化函数的第一个参数首字母大写。例如，这个 Swift 初始化函数`init (songName: String, artist: String`将被翻译为` - (instancetype)initWithSongName:(NSString *)songName artist:(NSString *)artist
 `。
+
 Swift 同时也提供了一个`@objc`关键字的变体，通过它你可以自定义在 Objectiv-C 中转换的函数名。例如，如果你的 Swift 类的名字包含 Objecytive-C 中不支持的字符，你就可以为 Objective-C 提供一个可供替代的名字。如果你给 Swift 函数提供一个 Objecytive-C 名字，要记得为带参数的函数添加（:）
 
 ```

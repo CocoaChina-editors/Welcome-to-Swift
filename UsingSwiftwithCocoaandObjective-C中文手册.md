@@ -1,8 +1,6 @@
 Using Swift with Cocoa and Objective-C中文手册
 ==============================================
 
-(翻译进行中, 蓝色部分为已经翻译完，正在校正中，黑色无链接的为正在翻译)
-
 # 目录
 
 ## Getting Started
@@ -11,7 +9,7 @@ Using Swift with Cocoa and Objective-C中文手册
 
 ## Interoperability
 
--  Interacting with Objective-C APIs
+-  [Interacting with Objective-C APIs](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/Using%20Swift%20with%20Cocoa%20and%20Objective-C/02Interoperability/01Interacting%20with%20Objective-C%20APIs.md)
 
 -  [Writing Swift Classes with Objective-C Behavior](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/Using%20Swift%20with%20Cocoa%20and%20Objective-C/02Interoperability/02Writing%20Swift%20Classes%20with%20Objective-C%20Behavior.md)
 
@@ -26,4 +24,4 @@ Using Swift with Cocoa and Objective-C中文手册
 
 ## Migration
 
--  Migrating Your Objective-C Code to Swift
+-  [Migrating Your Objective-C Code to Swift](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/Using%20Swift%20with%20Cocoa%20and%20Objective-C/04Migration/Migrating%20Your%20Objective-C%20Code%20to%20Swift.md)

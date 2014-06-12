@@ -237,24 +237,24 @@ Swift编译器不包含预处理器。取而代之的是，它充分利用了编
 
 ### 简单宏
 
-在C和Objective-C，您通常使用的#define指令定义的一个基本常数，在Swift，您可以使用全局常量来代替。例如：一个全局定义*#define FADE_ANIMATION_DURATION 0.35*，在Swift可以使用*let FADE_ANIMATION_DURATION = 0.35*来更好的表述。由于简单的用于定义常量的宏会被直接被映射成Swift全局量，Swift编译器会自动引进在C或Objective-C源文件中定义的简单宏。
+在C和Objective-C，您通常使用的#define指令定义的一个宏常数，在Swift，您可以使用全局常量来代替。例如：一个全局定义*#define FADE_ANIMATION_DURATION 0.35*，在Swift可以使用*let FADE_ANIMATION_DURATION = 0.35*来更好的表述。由于简单的用于定义常量的宏会被直接被映射成Swift全局量，Swift编译器会自动引进在C或Objective-C源文件中定义的简单宏。
 
 ### 复杂宏
 
-在C和Objective-C中使用的复杂宏在Swift中并没有副本。复杂宏是那些不用来定义常量的宏，包含，函数式宏。您在C和Objective-C使用复杂的宏以避免类型检查的限制或避免重新键入大量的样板代码。然而，宏也会产生Bug和重构的困难。在Swift中你可以使用函数和泛型来达到同样的效果，没有任何的妥协。因此，在C和Objective-C源文件中定义的复杂宏在Swift是不能使用的。
+在C和Objective-C中使用的复杂宏在Swift中并没有与之对应的定义。复杂宏是那些不用来定义常量的宏，而是用来定义包含小括号（），函数的宏。您在C和Objective-C使用复杂的宏是用来避免类型检查的限制和相同代码的重复劳动。然而，宏也会产生Bug和重构的困难。在Swift中你可以直接使用函数和泛型来达到同样的效果。因此，在C和Objective-C源文件中定义的复杂宏在Swift是不能使用的。
 
 ### 编译配置
 
-Swift代码和C、Objective-C代码被有条件的编译也是用不同的方式的。SWIFT代码可以根据生成配置的评价可以有条件地编译。生成配置包括true和false字面值，命令行标志，和下表中的平台测试函数。您可以使用-D \<＃Flag＃\>指定命令行标志。
+Swift代码和Objective-C代码以不同的方式进行条件编译。SWIFT代码可以根据生成配置的评价配进行有条件的编译。生成配置包括true和false字面值，命令行标志，和下表中的平台测试函数。您可以使用-D \<＃Flag＃\>指定命令行标志。
 
 | 函数 | 有效参数 |
 | --- | --- |
 | os() | OSX, iOS |
 | arch() | x86_64, arm, arm64, i386 |
 
->注意：arm 的生成配置不会为64位arm设备返回*true*，i386 的生成配置当为32位iOS 模拟器编译代码时返回*true*。
+>注意：arch(arm) 的生成配置不会为64位arm设备返回*true*，当代码运行在为32位的ios模拟器器的时，arch(i386) 的生成配置返回*true*。
 
-一个简单的有条件编译可以像下面这段代码：
+一个简单的条件编译需要以下代码格式：
 
 ````
     #if build configuration
@@ -265,7 +265,7 @@ Swift代码和C、Objective-C代码被有条件的编译也是用不同的方式
 
 ````
 
-一个由零个或多个有效的Swift语句声明的*statements*，可以包括表达式，语句和控制流语句。您可以添加额外的构建配置要求，条件编译说明用&&和| |操作符，否定生成配置！操作符，添加条件控制块用＃elseif：
+一个由零个或多个有效的Swift语句声明的*statements*，可以包括表达式，语句和控制流语句。您可以添加额外的构建配置要求，条件编译说明用&&和| |操作符以及！操作符，添加条件控制块用＃elseif：
 
 ````
     #if build configuration && !build configuration
@@ -277,4 +277,4 @@ Swift代码和C、Objective-C代码被有条件的编译也是用不同的方式
     #endif
 ````
 
-与C语言编译器的条件编译相反，Swift条件编译语句必须完全是自包含和语法有效的代码块。这是因为即使它没有被编译的Swift代码也是被进行语法检查。
+与C语言编译器的条件编译相反，Swift条件编译语句必须完全是自包含和语法有效的代码块。这是因为Swift代码即使没有被编译，也要全部进行语法检查。

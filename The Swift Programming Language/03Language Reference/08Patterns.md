@@ -6,12 +6,18 @@
 
 你可以为通配符模式，标识符模式，以及元组模式指定一个类型注释，以约束模式只匹配符合特定类型的值。
 
-模式的语法
+> 模式的语法
+>
 > pattern → identifier-pattern­type-annotation­opt­
+>
 > pattern → value-binding-pattern­
-> pattern → tuple-pattern­type-annotation­opt­
+>
+> pattern → tuple-pattern­type-annotation­opt
+>­
 > pattern → enum-case-pattern­
+>
 > pattern → type-casting-pattern­
+>
 > pattern → expression-pattern
 
 ## 通配符模式
@@ -24,9 +30,10 @@ for _ in 1...3 {
 }
 ```
 
->通配符模式的语法
->wildcard-pattern → _­
-
+> 通配符模式的语法
+>
+> wildcard-pattern → _­
+ 
 ## 标识符模式
 
 _标识符模式_ 匹配任何值，并将匹配的值绑定到一个变量或常量上。例如，在下面的常量声明中，`someValue` 是一个匹配了 `Int` 型的值为 `42` 的标识符模式。
@@ -39,8 +46,9 @@ let someValue = 42
 
 当一个变量或常量声明左侧的模式是标识符模式时，该标识符模式是隐式的值绑定模式。
 
->标识符模式的语法
->identifier-pattern → identifier­
+> 标识符模式的语法
+>
+> identifier-pattern → identifier­
 
 ## 值绑定模式
 
@@ -60,9 +68,10 @@ case let (x, y):
 
 在上面的例子中，`let` 将元组模式 `(x, y)` 的元素分配到各个标识符模式。由于这个行为，`switch` 语句 `case let (x, y):` 和 `case (let x, let y):` 匹配的值是一样的。
 
->值绑定模式的语法
->value-binding-pattern → var­pattern­  let­pattern­
-
+> 值绑定模式的语法
+>
+> value-binding-pattern → var­pattern­  let­pattern­
+ 
 ## 元组模式
 
 _元组模式_ 是包含零个或多个模式由一个逗号分隔的列表，包含在括号中。元组模式匹配相应元组类型的值。
@@ -87,10 +96,13 @@ let (a) = 2      // a: Int = 2
 let (a): Int = 2 // a: Int = 2
 ```
 
->元组模式的语法
->tuple-pattern → (tuple-pattern-element-list opt)
->tuple-pattern-element-list → tuple-pattern-element | tuple-pattern-element, tuple-pattern-element-list
->tuple-pattern-element → pattern
+> 元组模式的语法
+>
+> tuple-pattern → (tuple-pattern-element-list opt)
+>
+> tuple-pattern-element-list → tuple-pattern-element | tuple-pattern-element, tuple-pattern-element-list
+>
+> tuple-pattern-element → pattern
 
 ## 枚举实例模式
 
@@ -98,8 +110,9 @@ _枚举实例模式_ 匹配现有的枚举类型的实例。枚举实例模式�
 
 如果你准备匹配的枚举实例有任意关联的值，则相应的枚举实例模式必须指定一个包含每个关联值元素的元组模式。使用 `switch` 语句来匹配包含关联值枚举实例的例子，请参阅 [Associated Values](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-XID_189)。
 
->枚举实例模式的语法
->enum-case-pattern → type-identifier opt . enum-case-name tuple-pattern opt
+> 枚举实例模式的语法
+>
+> enum-case-pattern → type-identifier opt . enum-case-name tuple-pattern opt
 
 ## 类型转换模式
 
@@ -116,11 +129,14 @@ pattern as type
 
 使用 `switch` 语句匹配使用 `is` 模式和 `as` 模式的值的例子，请参阅 [Type Casting for Any and AnyObject](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html#//apple_ref/doc/uid/TP40014097-CH22-XID_448)。
 
->类型转换模式的语法
->type-casting-pattern → is-pattern­  as-pattern­
->is-pattern → is­type­
->as-pattern → pattern­as­type­
-
+> 类型转换模式的语法
+>
+> type-casting-pattern → is-pattern­  as-pattern­
+>
+> is-pattern → is­type­
+>
+> as-pattern → pattern­as­type­
+ 
 ## 表达式模式
 
 _表达式模式_ 代表了一个表达式的值。表达式模式只出现在 `switch` 语句中的 case 标签中。
@@ -159,5 +175,6 @@ default:
 // 输出 "(1, 2) is near the origin."
 ```
 
->表达式模式的语法
->expression-pattern → expression­
+> 表达式模式的语法
+>
+> expression-pattern → expression­

@@ -9,7 +9,7 @@ Swift也提供一种简单便捷的覆盖方法来连接Foundation的数据类�
 ##字符串
 Swift会在`String`类型和`NSString`类型中自动转换。这意味着在可以使用`NSString`对象的地方，您可以使用一个属于Swift的`String`类型代替它，这样做会同时拥有它们数据类型的特点，`String`类型的插值，基于Swift设计的APIs以及`NSString`类更广的适用范围。因此，您几乎不必再在你的代码中使用`NSString`类。事实上，当Swift接入Objective-C APIs时，它将把所有`NSString`类型替换为`String`类型。当您在您的Objective-C代码中使用Swift类时，接入的API会将所有`String`类型替换成`NSString`类型。
 
-为了允许字符串转换，只需接入Foundation。举个例子，您在Swift的一个字符串中调用了`capitalizedString`--一个`NSString`类的方法，此后Swift会自动将`String`转换为一个`NSString`对象并调用方法。这个方法甚至会返回一个Swift的`String`类型，因为它在接入的时候被替换了。
+为了转换字符串，需要接入Foundation。举个例子，您在Swift的一个字符串中调用了`capitalizedString`--一个`NSString`类的方法，此后Swift会自动将`String`转换为一个`NSString`对象并调用方法。这个方法甚至会返回一个Swift的`String`类型，因为它在接入的时候已经被替换了。
 
 ```
 import Foundation
@@ -28,7 +28,7 @@ if let integerValue = (myString as String).toInt()){
 ```
 
 ###本地化
-在Objective-C中，常用`NSLocalizedString`类的宏来定位一个字符串。这集合的宏包括`NSLocalizedStringFromTableInBundle`和`NSLocalizedStringWithDefaultValue`。而在Swift中，只用一个函数就可以实现跟整个`NSLocalizedString`集一样的功能--`NSLocalizedString(key:tableName:bundle:value:comment:)`。这个`NSLocalizedString`函数分别为`tableName`，`bundle`和`value`参数提供了一个默认值。你可以用它来替换宏。
+在Objective-C中，常用`NSLocalizedString`类的宏来定位一个字符串。这集合的宏包括`NSLocalizedStringFromTableInBundle`和`NSLocalizedStringWithDefaultValue`。而在Swift中，只用一个函数就可以实现跟整个`NSLocalizedString`集一样的功能--`NSLocalizedString(key:tableName:bundle:value:comment:)`。这个`NSLocalizedString`函数分别为`tableName`，`bundle`和`value`参数提供了一个值。你可以用它来替换宏。
 
 ##数字
 Swift会自动将已确定的数字类型`Int`和`Float`转换为`NSNumber`。这样的转换允许你基于其中一种类型创建一个`NSNumber`：
@@ -85,15 +85,15 @@ for aView: UIView! in foundationArray {
 let schoolSupplies: NSArray = ["Pencil", "Eraser", "Notebkko"]
 // schoolSupplies is an NSArray object containing NSString objects
 ```
-上面的例子中，Swift数组包含包含三个`String`字符串。由于从`String`类型转换为`NSString`类，数组字面量被转换成一个`NSArray`对象，并成功分配给`schoolSupplies`变量。
+上面的例子中，Swift数组包含包含三个`String`字符串字面量。从`String`类型转换为`NSString`类时，数组字面量会被转换成一个`NSArray`对象，并分配给`schoolSupplies`变量。
 
-当您在Objective-C代码中使用Swift类或者协议时，接入的API会将全部所有类型的Swift数组代替为`NSArray`。若您将一个`NSArray`对象传递给Swift的API并要求数组元素为一个新的类型，运行时就会产生错误。如果Swift API返回一个不能被转换为`NSArray`类型的Swift数组，错误也会产生。
+当您在Objective-C代码中使用Swift类或者协议时，接入的API会将全部所有类型的Swift数组代替为`NSArray`。若您将一个`NSArray`对象传递给Swift的API并要求数组元素为一个新的类型，运行时就会产生错误。如果Swift API返回一个不能被转换为`NSArray`类型的Swift数组，错误也会随之产生。
 
 ###字典
 敬请期待
 
 ##Foundation数据类型
-Swift也提供一种简单便捷的覆盖方法来连接定义再Foundation框架中的数据类型。在`NSSize`和`NSPoint`中使用覆盖方法，在剩下的Swift语言中，你能在它的句法中感受到自然和统一。比如，你可以使用如下语法创建一个`NSSize`类型的结构:
+Swift提供一种简单便捷的覆盖方法来连接定义在Foundation框架内部的数据类型，比如`NSSize`和`NSPoint`这两个类。在剩下的Swift语言中，你能在它的句法中感受到自然和统一。比如，你可以使用如下语法创建一个`NSSize`类型的结构:
 
 ```
 let size = NSSize(width: 20, height: 40)
@@ -106,7 +106,7 @@ let rect = NSRect(x: 50, y: 50, width: 100, height: 100)
 let width = rect.width    // equivalent of NSWidth(rect)
 let maxX = rect.maxY      // equivalent of NSMaxY(rect)
 ```
-Swift可以将`NSUInteger`和`NSInteger`转换为`Int`类型。这些类型都会在Foundation APIs中变为`Int`类型。在Swift中`Int`常被尽可能地用以连贯性，同时当你要求一个无符号整数类型时，`UInt`类型总是可使用的。
+Swift可以将`NSUInteger`和`NSInteger`转换为`Int`类型。这些类型都会在Foundation APIs中变为`Int`类型。在Swift中`Int`常被尽可能地用以连贯性，同时当你要求一个无符号整数类型时，`UInt`类型总是可用的。
 
 ##Foundation函数
 在Swift中，`NSLog`可在系统控制台输出信息。您可以像在Objective-C中使用过的语法格式那样使用此函数。
@@ -114,23 +114,23 @@ Swift可以将`NSUInteger`和`NSInteger`转换为`Int`类型。这些类型都�
 ```
 NSLog("%.7f", pi)         // Logs "3.1415927" to the console
 ```
-同时，Swift也提供像`print`和`println`那样的输出函数。这些函数简单，粗暴，多效，多归于Swift的字符插入法。这些函数不会在系统控制台输出信息，但在需要的时候却是存在可用的。
+同时，Swift也提供像`print`和`println`那样的输出函数。这些函数简单，粗暴，多效，多归于Swift的字符插入法。上面提到的两个函数不会在系统控制台输出信息，但在需要调用的时候却是可用的。
 
 Swift中不再存在`NSAssert`函数，取而代之的是`assert`函数。
 
 ##Core Foundation
-Swift中的Core Foundation类型是一个成熟的类。当出现内存管理注释时，Swift会自动地管理Core Foundation对象的内存，这其中包括你实例化了的Core Foundation对象。在Swift中，你可以自由变换Fundation和Core Foundation类型。你也可以
+Swift中的Core Foundation类型是一个成熟的类。当出现内存管理注释时，Swift会自动地管理Core Foundation对象的内存，这其中包括你实例化了的Core Foundation对象。在Swift中，你可以自由变换Fundation和Core Foundation类型。（You can also bridge some toll-free bridged Core Foundation types to Swift standard library types if you cast to a bridging Foundation type first.）
 
 ###重定义类型
 当Swift导入Core Foundation类型时，编译器会重映射导入的类型名字。编译器会从每个类型名字的末端移除*Ref*，这是因为所有的Swift类都属于引用类型，因此后缀是多余的。
 
-Core Foundation中的`CFTypeRef`类型会对`Anyobject`类型重映射。所以你以前使用的`CFTypeRef`，现在该换成`AnyObject`了。
+Core Foundation中的`CFTypeRef`类型会对`Anyobject`类型重映射。所以你以前使用的`CFTypeRef`类，现在该换成`AnyObject`了。
 
 ###内存管理对象
-在Swift中，从annotated APIs返回的Core Foundation对象能够自动进行内存管理--你不再需要调用自身的`CFRetain`，`CFRelease`，或者`CFAutorelease`函数。如果你从自身的C函数和Objective-C方法中返回一个Core Foundation对象，你需要用`CF_RETURNS_RETAINED`或者`CF_RETURNS_NOT_RETAINED`注释这个对象。当Swift代码中包含这些APIs时，编译器会在编译时自动调用内存管理。如果你只调用那些不会间接返回Core Foundation对象的annotated APIs，那么现在你可以跳过本节的剩余部分了。否则，让我们继续学习那些难管理的Core Foundation对象吧。
+在Swift中，从annotated APIs返回的Core Foundation对象能够自动进行内存管理--你不再需要调用自身的`CFRetain`，`CFRelease`，或者`CFAutorelease`函数。如果你从自身的C函数和Objective-C方法中返回一个Core Foundation对象，你需要用`CF_RETURNS_RETAINED`或者`CF_RETURNS_NOT_RETAINED`注释这个对象。当Swift代码中包含这些APIs时，编译器会在编译时自动调用内存管理。如果你只调用那些不会间接返回Core Foundation对象的annotated APIs，那么现在你可以跳过本节的剩余部分了。否则，下面我们继续学习那些非托管的Core Foundation对象。
 
-###Unmanaged Objects
-当Swift导入还尚未被注释的APIs时，编译器将不会自动地对返回的Core Foundation对象进行内存管理。Swift将这些返回的Core Foundation对象封闭在一个`Unmanaged<T>`结构中。那些间接返回Core Foundation的对象也是难以管理的。举个例子，这里有一个unannotated的C函数:
+###非托管对象
+当在Swift导入unannoated APIs时，编译器将不会自动地对返回的Core Foundation对象进行内存管理。Swift将这些返回的Core Foundation对象封闭在一个`Unmanaged<T>`结构中。那些间接返回Core Foundation的对象也是难以管理的。举个例子，这里有一个unannotated的C函数:
 
 ```
 CFStringRef StringByAddingTwoStrings(CFStringRef string1, CFStringRef string2)
@@ -141,8 +141,8 @@ CFStringRef StringByAddingTwoStrings(CFStringRef string1, CFStringRef string2)
 ```
 func StringByAddingTwoStrings(CFString!, CFString!) -> Unmanaged<CFString>!
 ```
-假设您从unannotated APIs接收了一个难以管理的对象，在使用它之前，你必须要将它转换为一个能够内存管理的对象。在这方面，Swift可以帮你进行内存管理而不用自己动手。同时，`Unmanaged<T>`结构也提供了两个方法来把一个难以管理的对象转换为一个可内存管理的对象--`takeUnretainedValue()`方法和`takeRetainedValue()`方法。这两个方法会返回原始的，开放的对象类型。您可以根据您实际调用的APIs返回的unretained或retained的对象，来选择哪一方法更合适。
-比如，假设这里有一个C函数，这个函数在返回值前不会释放`CFString`对象。在使用这个对象前，您使用takeUnretainedValue()函数，以将它转换为一个能够内存管理的对象。
+假设您从unannotated APIs接收了一个非托管的对象，在使用它之前，你必须要将它转换为能够内存托管的对象。在这方面，Swift可以帮你进行内存管理而不用自己动手。同时，`Unmanaged<T>`结构也提供了两个方法来把非托管对象转换为可托管对象--`takeUnretainedValue()`方法和`takeRetainedValue()`方法。这两个方法会返回原始的，非封闭的对象类型。您可以根据您实际调用的APIs返回的unretained或retained的对象，来选择哪一方法更合适。
+比如，假设这里有一个C函数，这个函数在返回值前不会释放`CFString`对象。在使用这个对象前，您需要调用`takeUnretainedValue()`函数，以将它转换为一个能够内存管理托管的对象。
 
 ```
 let memoryManagedResult = StringByAddingTwoStrings(str1, str2).takeUnretainedValue()

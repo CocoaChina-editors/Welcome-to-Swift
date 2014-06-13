@@ -15,7 +15,7 @@
 
 使用`let`来声明常量，使用`var`来声明变量。一个常量的值在编译时并不需要获取，但是你只能为它赋值一次。也就是说你可以用常量来表示这样一个值：你只需要决定一次，但是需要使用很多次。
 
-```Swift
+```swift
 var myVariable = 42
 myVariable = 50
 let myConstant = 42
@@ -25,7 +25,7 @@ let myConstant = 42
 
 如果初始值没有提供足够的信息（或者没有初始值），那你需要在变量后面声明类型，用冒号分割。
 
-```Swift
+```swift
 let implicitInteger = 70
 let implicitDouble = 70.0
 let explicitDouble: Double = 70

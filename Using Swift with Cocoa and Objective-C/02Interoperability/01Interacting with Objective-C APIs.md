@@ -12,14 +12,14 @@ initWithFrame:CGRectZero style:UITableViewStyleGrouped];
 ```
 在Swift中，你应该这样做：
 
-```
+```swift
 let myTableView: UITableView = UITableView(frame: CGRectZero, style: .Grouped)
 ```
 
 你不需要调用alloc，Swift能替你处理。注意，当使用Swift风格的初始化函数的时候，”init”不会出现。
 你可以在初始化时显式的声明对象的类型，也可以忽略它，Swift能够正确判断对象的类型。
 
-```
+```swift
 //Swift
 let myTextField = UITextField(frame: CGRect(0.0, 0.0, 200.0, 40.0))
 ```
@@ -32,7 +32,7 @@ UIColor *color = [UIColor colorWithRed:0.5 green:0.0 blue:0.5 alpha:1.0];
 ```
 
 在Swift中，你应该这样做：
-```
+```swift
 //Swift
 let color = UIColor(red: 0.5, green: 0.0, blue: 0.5, alpha: 1.0)
 ```
@@ -40,7 +40,7 @@ let color = UIColor(red: 0.5, green: 0.0, blue: 0.5, alpha: 1.0)
 ##访问属性
 在Swift中访问和设置Objective-C对象的属性时，使用点语法
 
-```
+```swift
 ///Swift
 myTextField.textColor = UIColor.darkGrayColor()
 myTextField.text = "Hello world"
@@ -57,21 +57,21 @@ if myTextField.editing {
 
 举个例子，你在使用Objective-C时会这样做：
 
-```
+```swift
 //Objective-C
 [myTableView insertSubview:mySubview atIndex:2];
 ```
 
 在Swift中，你应该这样做：
 
-```
+```swift
 //Swift
 myTableView.insertSubview(mySubview, atIndex: 2)
 ```
 
 如果你调用一个无参方法，仍必须在方法名后面加上一对圆括号
 
-```
+```swift
 //Swift
 myTableView.layoutIfNeeded()
 ```
@@ -80,14 +80,14 @@ myTableView.layoutIfNeeded()
 Swift包含一个叫做`AnyObject`的协议类型，表示任意类型的对象，就像Objective-C中的`id`一样。`AnyObject`协议允许你编写类型安全的Swift代码同时维持无类型对象的灵活性。因为`AnyObject`协议保证了这种安全，Swift将id对象导入为AnyObject。
 举个例子，跟id一样，你可以为`AnyObject`类型的对象分配任何其他类型的对象，你也同样可以为它重新分配其他类型的对象。
 
-```
+```swift
 //Swift
 var myObject: AnyObject = UITableViewCell()
 myObject = NSDate()
 ```
 你也可以在调用Objective-C方法或者访问属性时不将它转换为具体类的类型。这包括了Objcive-C中标记为@objc的方法。
 
-```
+```swift
 //Swift
 let futureDate = myObject.dateByAddingTimeInterval(10)
 let timeSinceNow = myObject.timeIntervalSinceNow
@@ -95,7 +95,7 @@ let timeSinceNow = myObject.timeIntervalSinceNow
 
 然而，由于直到运行时才知道`AnyObject`的对象类型，所以有可能在不经意间写出不安全代码。另外，与Objective-C不同的是，如果你调用方法或者访问的属性AnyObject 对象没有声明，将会报运行时错误。比如下面的代码在运行时将会报出一个unrecognized selector error错误：
 
-```
+```swift
 //Swift
 myObject.characterAtIndex(5)
 // crash, myObject does't respond to that method
@@ -104,17 +104,17 @@ myObject.characterAtIndex(5)
 
 举个例子，在下面的代码中，第一和第二行代码将不会被执行因为`length`属性和`characterAtIndex:`方法不存在于NSDate对象中。`myLength`常量会被推测成可选的`Int`类型并且被赋值为`nil`。同样你可以使用`if-let`声明来有条件的展开这个方法的返回值，从而判断对象是否能执行这个方法。就像第三行做的一样。
 
-```
+```swift
 //Swift
 let myLength = myObject.length?
 let myChar = myObject.characterAtIndex?(5)
 if let fifthCharacter = myObject.characterAtIndex(5) {
     println("Found \(fifthCharacter) at index 5")
 }
-```
+```swift
 对于Swift中的强制类型转换，从AnyObject类型的对象转换成明确的类型并不会保证成功，所以它会返回一个可选的值。而你需通过检查该值的类型来确认转换是否成功。
 
-```
+```swift
 //Swift
 let userDefaults = NSUserDefaults.standardUserDefaults()
 let lastRefreshDate: AnyObject? = userDefaults.objectForKey("LastRefreshDate")
@@ -125,7 +125,7 @@ if let date = lastRefreshDate as? NSDate {
 
 当然，如果你能确定这个对象的类型（并且确定不是`nil`），你可以添加`as`操作符强制调用。
 
-```
+```swift
 //Swift
 let myDate = lastRefreshDate as NSDate
 let timeInterval = myDate.timeIntervalSinceReferenceDate
@@ -140,7 +140,7 @@ let timeInterval = myDate.timeIntervalSinceReferenceDate
 ##扩展（Extensions）
 Swift的扩展和Objective-C的类别（Category）相似。扩展为原有的类，结构和枚举丰富了功能，包括在Objective-C中定义过的。你可以为系统的框架或者你自己的类型增加扩展，只需要导入合适的模块并且保证你在Objective-C中使用的类、结构或枚举拥有相同的名字。
 举个例子，你可以扩展`UIBezierPath`类来为它增加一个等边三角形，这个方法只需提供三角形的边长与起点。
-```
+```swift
 //Swift
 extension UIBezierPath {
     convenience init(triangleSideLength: Float, origin: CGPoint) {
@@ -157,7 +157,7 @@ extension UIBezierPath {
 
 你也可以使用扩展来增加属性（包括类的属性与静态属性）。然而，这些属性必须是通过计算才能获取的，扩展不会为类，结构体，枚举存储属性。下面这个例子为`CGRect`类增加了一个叫`area`的属性。
 
-```
+```swift
 //Swift
 extension CGRect {
     var area: CGFloat {
@@ -174,13 +174,13 @@ let area = rect.area
 
 ##闭包（Closures）
 Objective-C中的`blocks`会被自动导入为Swift中的闭包。例如，下面是一个Objective-C 中的block 变量：
-```
+```swift
 //Objective-C
 void (^completionBlock)(NSData *, NSError *) = ^(NSData *data, NSError *error) {/* ... */}
 ```
 而它在Swift中的形式为
 
-```
+```swift
 //Swift
 let completionBlock: (NSData, NSError) -> Void = {data, error in /* ... */}
 ```
@@ -204,7 +204,7 @@ Swift与Objective-C一般使用 == 与 === 操作符来做比较。Swift的==操
 `。
 Swift 同时也提供了一个`@objc`关键字的变体，通过它你可以自定义在Objectiv-C中转换的函数名。例如，如果你的Swift 类的名字包含Objecytive-C中不支持的字符，你就可以为Objective-C提供一个可供替代的名字。如果你给Swift函数提供一个Objcetiv-C名字，要记得为带参数的函数添加（:）
 
-```
+```swift
 //Swift
 @objc(Squirrel)
 class Белка {
@@ -220,7 +220,7 @@ class Белка {
 ##Objective-C选择器(Selectors)
 一个Objective-C 选择器类型指向一个Objective-C的方法名。在Swift时代， Objective-C 的选择器被`Selector`结构体替代。你可以通过字符串创建一个选择器，比如`let mySelector: Selector = "tappedButton:"`。因为字符串能够自动转换为选择器，所以你可以把字符串直接传递给接受选择器的方法。
 
-```
+```swift
 //Swift
 import UIKit
 class MyViewController: UIViewController {

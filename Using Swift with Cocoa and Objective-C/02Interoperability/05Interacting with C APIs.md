@@ -109,10 +109,10 @@ Swift 尽可能避免让您直接访问指针。然而，当您需要直接操�
 
 ### C 可变指针
 
-当一个函数被声明为接受`CMutablePointer\<Type\>`参数时，这个函数可以接受下列任何一个类型作为参数：
+当一个函数被声明为接受`CMutablePointer<Type>`参数时，这个函数可以接受下列任何一个类型作为参数：
 
 * `nil`，作为空指针传入
-* 一个`CMutablePointer\<Type\>`类型的值
+* 一个`CMutablePointer<Type>`类型的值
 * 一个操作数是 Type 类型的左值的输入输出表达式，作为这个左值的内存地址传入
 * 一个输入输出 Type[] 值，作为一个数组的起始指针传入，并且它的生命周期将在这个调用期间被延长
 
@@ -137,7 +137,7 @@ takesAMutablePointer(&x)
 takesAMutablePointer(&a)
 ```
 
-当函数被声明使用一个`CMutableVoidPointer`参数，那么这个函数接受任何和`CMutablePointer\<Type\>`相似类型的Type操作数。
+当函数被声明使用一个`CMutableVoidPointer`参数，那么这个函数接受任何和`CMutablePointer<Type>`相似类型的Type操作数。
 
 如果您这样定义了一个函数：
 
@@ -164,10 +164,10 @@ takesAMutableVoidPointer(&b)
 
 ### C 常指针
 
-当一个函数被声明为接受`CConstPointer\<Type\>`参数时，这个函数可以接受下列任何一个类型作为参数：
+当一个函数被声明为接受`CConstPointer<Type>`参数时，这个函数可以接受下列任何一个类型作为参数：
 
 -  `nil`，作为空指针传入
--  一个`CMutablePointer\<Type\>`, `CMutableVoidPointer`, `CConstPointer\<Type\>`, `CConstVoidPointer`,  或者在必要情况下转换成`CConstPointer\<Type\>`的`AutoreleasingUnsafePointer\<Type\>`值
+-  一个`CMutablePointer<Type>`, `CMutableVoidPointer`, `CConstPointer<Type>`, `CConstVoidPointer`,  或者在必要情况下转换成`CConstPointer<Type>`的`AutoreleasingUnsafePointer<Type>`值
 -  一个操作数是 Type 类型的左值的输入输出表达式，作为这个左值的内存地址传入
 -  一个`Type[]`数组值，作为一个数组的起始指针传入，并且它的生命周期将在这个调用期间被延长
 
@@ -192,7 +192,7 @@ takesAConstPointer(&x)
 takesAConstPointer([1.0, 2.0, 3.0])
 ```
 
-当函数被声明使用一个`CConstVoidPointer`参数，那么这个函数接受任何和`CConstPointer\<Type\>` 相似类型的`Type`操作数。
+当函数被声明使用一个`CConstVoidPointer`参数，那么这个函数接受任何和`CConstPointer<Type>` 相似类型的`Type`操作数。
 ￼
 如果您这样定义了一个函数：
 
@@ -219,10 +219,10 @@ takesAConstVoidPointer([1, 2, 3])
 
 ### 自动释放不安全指针
 
-当一个函数被声明为接受`AutoreleasingUnsafePointer\<Type\>`参数时，这个函数可以接受下列任何一个类型作为参数：
+当一个函数被声明为接受`AutoreleasingUnsafePointer<Type>`参数时，这个函数可以接受下列任何一个类型作为参数：
 
 * `nil`，作为空指针传入
-* 一个`AutoreleasingUnsafePointer\<Type\>`值
+* 一个`AutoreleasingUnsafePointer<Type>`值
 * 其操作数是原始的，复制到一个临时的没有所有者的缓冲区的一个输入输出表达式，该缓冲区的地址传递给调用，并返回时，缓冲区中的值加载，保存，并重新分配到操作数。
 
 **注意：这个列表没有包含数组。**

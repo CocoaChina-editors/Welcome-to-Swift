@@ -31,14 +31,14 @@
 
 举个例子，你在使用 Objective-C 时会这样做：
 
-```
+```objective-c
 //Objective-C
 UITableView *myTableView = [[UITableView alloc] 
 initWithFrame:CGRectZero style:UITableViewStyleGrouped];
 ```
 在 Swift 中，你应该这样做：
 
-```
+```swift
 //Swift
 let myTableView: UITableView = UITableView(frame: CGRectZero, style: .Grouped)
 ```
@@ -47,7 +47,7 @@ let myTableView: UITableView = UITableView(frame: CGRectZero, style: .Grouped)
 
 你可以在初始化时显式的声明对象的类型，也可以忽略它，Swift 能够正确判断对象的类型。
 
-```
+```swift
 //Swift
 let myTextField = UITextField(frame: CGRect(0.0, 0.0, 200.0, 40.0))
 ```
@@ -56,14 +56,14 @@ let myTextField = UITextField(frame: CGRect(0.0, 0.0, 200.0, 40.0))
 
 为了统一和简易，Objective-C 的工厂方法也在 Swift 中映射为方便的初始化方法。这种映射能够让他们使用同样简洁明了的初始化方法。例如，在 Objective-C 中你可能会像下面这样调用一个工厂方法：
 
-```
+```objective-c
 //Objective-C
 UIColor *color = [UIColor colorWithRed:0.5 green:0.0 blue:0.5 alpha:1.0];
 ```
 
 在 Swift 中，你应该这样做：
 
-```
+```swift
 //Swift
 let color = UIColor(red: 0.5, green: 0.0, blue: 0.5, alpha: 1.0)
 ```
@@ -73,8 +73,8 @@ let color = UIColor(red: 0.5, green: 0.0, blue: 0.5, alpha: 1.0)
 
 在 Swift 中访问和设置 Objective-C 对象的属性时，使用点语法
 
-```
-///Swift
+```swift
+//Swift
 myTextField.textColor = UIColor.darkGrayColor()
 myTextField.text = "Hello world"
 if myTextField.editing {
@@ -95,21 +95,21 @@ if myTextField.editing {
 
 举个例子，你在使用 Objective-C 时会这样做：
 
-```
+```objective-c
 //Objective-C
 [myTableView insertSubview:mySubview atIndex:2];
 ```
 
 在 Swift 中，你应该这样做：
 
-```
+```swift
 //Swift
 myTableView.insertSubview(mySubview, atIndex: 2)
 ```
 
 如果你调用一个无参方法，仍必须在方法名后面加上一对圆括号
 
-```
+```swift
 //Swift
 myTableView.layoutIfNeeded()
 ```
@@ -121,7 +121,7 @@ Swift 包含一个叫做`AnyObject`的协议类型，表示任意类型的对象
 
 举个例子，跟 id 一样，你可以为`AnyObject`类型的对象分配任何其他类型的对象，你也同样可以为它重新分配其他类型的对象。
 
-```
+```swift
 //Swift
 var myObject: AnyObject = UITableViewCell()
 myObject = NSDate()
@@ -129,7 +129,7 @@ myObject = NSDate()
 
 你也可以在调用 Objective-C 方法或者访问属性时不将它转换为具体类的类型。这包括了 Objcive-C 中标记为 @objc 的方法。
 
-```
+```swift
 //Swift
 let futureDate = myObject.dateByAddingTimeInterval(10)
 let timeSinceNow = myObject.timeIntervalSinceNow
@@ -137,17 +137,17 @@ let timeSinceNow = myObject.timeIntervalSinceNow
 
 然而，由于直到运行时才知道`AnyObject`的对象类型，所以有可能在不经意间写出不安全代码。另外，与 Objective-C 不同的是，如果你调用方法或者访问的属性 AnyObject 对象没有声明，将会报运行时错误。比如下面的代码在运行时将会报出一个 unrecognized selector error 错误：
 
-```
+```swift
 //Swift
 myObject.characterAtIndex(5)
 // crash, myObject does't respond to that method
 ```
 
-但是，你可以通过 Swift 的 optinals 特性来排除这个 Objective-C 中常见的错误，当你用`AnyObject`对象调用一个 Objective-C 方法时，这次调用将会变成一次隐式展开 optional（implicitly unwrapped optional）的行为。你可以通过 optional 特性来决定 AnyObject 类型的对象是否调用该方法，同样的，你可以把这种特性应用在属性上。
+但是，你可以通过 Swift 的 optionals 特性来排除这个 Objective-C 中常见的错误，当你用`AnyObject`对象调用一个 Objective-C 方法时，这次调用将会变成一次隐式展开 optional（implicitly unwrapped optional）的行为。你可以通过 optional 特性来决定 AnyObject 类型的对象是否调用该方法，同样的，你可以把这种特性应用在属性上。
 
 举个例子，在下面的代码中，第一和第二行代码将不会被执行因为`length`属性和`characterAtIndex:`方法不存在于 NSDate 对象中。`myLength`常量会被推测成可选的`Int`类型并且被赋值为`nil`。同样你可以使用`if-let`声明来有条件的展开这个方法的返回值，从而判断对象是否能执行这个方法。就像第三行做的一样。
 
-```
+```swift
 //Swift
 let myLength = myObject.length?
 let myChar = myObject.characterAtIndex?(5)
@@ -158,7 +158,7 @@ if let fifthCharacter = myObject.characterAtIndex(5) {
 
 对于 Swift 中的强制类型转换，从 AnyObject 类型的对象转换成明确的类型并不会保证成功，所以它会返回一个可选的值。而你需通过检查该值的类型来确认转换是否成功。
 
-```
+```swift
 //Swift
 let userDefaults = NSUserDefaults.standardUserDefaults()
 let lastRefreshDate: AnyObject? = userDefaults.objectForKey("LastRefreshDate")
@@ -169,7 +169,7 @@ if let date = lastRefreshDate as? NSDate {
 
 当然，如果你能确定这个对象的类型（并且确定不是`nil`），你可以添加`as`操作符强制调用。
 
-```
+```swift
 //Swift
 let myDate = lastRefreshDate as NSDate
 let timeInterval = myDate.timeIntervalSinceReferenceDate
@@ -178,7 +178,7 @@ let timeInterval = myDate.timeIntervalSinceReferenceDate
 <a name="working_with_nil"></a>
 ##使用nil
 
-在Objective-C中，对象的引用可以是值为`NULL`的原始指针（同样也是Objective-C中的`nil`）。而在Swift中，所有的值–包括结构体与对象的引用–都被保证为非空。作为替代，你将这个可以为空的值包装为optional type。当你需要宣告值为空时，你需要使用`nil`。你可以在[Optionals](http://)中了解更多。
+在 Objective-C 中，对象的引用可以是值为`NULL`的原始指针（同样也是Objective-C中的`nil`）。而在Swift中，所有的值–包括结构体与对象的引用–都被保证为非空。作为替代，你将这个可以为空的值包装为optional type。当你需要宣告值为空时，你需要使用`nil`。你可以在[Optionals](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/01The%20Basics.md#optionals)中了解更多。
 
 因为Objective-C不会保证一个对象的值是否非空，Swift在引入Objective-C的API的时候，确保了所有函数的返回类型与参数类型都是optional，在你使用Objective-C的API之前，你应该检查并保证该值非空。
 在某些情况下，你可能绝对确认某些Objective-C方法或者属性永远不应该返回一个nil的对象引用。为了让对象在这种情况下更加易用，Swift使用 implicitly unwrapped optionals 方法引入对象， implicitly unwrapped optionals 包含optional 类型的所有安全特性。此外，你可以直接访问对象的值而无需检查nil。当你访问这种类型的变量时， implicitly unwrapped optional 首先检查这个对象的值是否不存在，如果不存在，将会抛出运行时错误。
@@ -190,7 +190,7 @@ Swift 的扩展和 Objective-C 的类别（Category）相似。扩展为原有�
 
 举个例子，你可以扩展`UIBezierPath`类来为它增加一个等边三角形，这个方法只需提供三角形的边长与起点。
 
-```
+```swift
 //Swift
 extension UIBezierPath {
     convenience init(triangleSideLength: Float, origin: CGPoint) {
@@ -207,7 +207,7 @@ extension UIBezierPath {
 
 你也可以使用扩展来增加属性（包括类的属性与静态属性）。然而，这些属性必须是通过计算才能获取的，扩展不会为类，结构体，枚举存储属性。下面这个例子为`CGRect`类增加了一个叫`area`的属性。
 
-```
+```swift
 //Swift
 extension CGRect {
     var area: CGFloat {
@@ -228,14 +228,14 @@ let area = rect.area
 
 Objective-C 中的`blocks`会被自动导入为 Swift 中的闭包。例如，下面是一个 Objective-C 中的 block 变量：
 
-```
+```objective-c
 //Objective-C
 void (^completionBlock)(NSData *, NSError *) = ^(NSData *data, NSError *error) {/* ... */}
 ```
 
 而它在 Swift 中的形式为
 
-```
+```swift
 //Swift
 let completionBlock: (NSData, NSError) -> Void = {data, error in /* ... */}
 ```
@@ -258,16 +258,16 @@ NSObject 类仅仅做了身份的比较，所以你需要在你自己的类中�
 <a name="swift_type_compatibility"></a>
 ##Swift 类型兼容性
 
-当你定义了一个继承自`NSObject`或者其他 Objective-C 类的 Swift 类，这些类都能与 Objective-C 无缝连接。所有的步骤都有 Swift 编译器自动完成，如果你从未在 Objective-C 代码中导入 Swift 类，你也不需要担心类型适配问题。另外一种情况，如果你的 Swift 类并不来源自 Objectve-C 类而且你希望能在 Objecive-C 的代码中使用它，你可以使用下面描述的 @objc 属性。
+当你定义了一个继承自`NSObject`或者其他 Objective-C 类的 Swift 类，这些类都能与 Objective-C 无缝连接。所有的步骤都由 Swift 编译器自动完成，如果你从未在 Objective-C 代码中导入 Swift 类，你也不需要担心类型适配问题。另外一种情况，如果你的 Swift 类并不继承于 Objectve-C 类而你希望能在 Objecive-C 的代码中使用它，你可以使用下面描述的`@objc`属性。
 
 `@objc`可以让你的 Swift API 在 Objective-C 中使用。换句话说，你可以通过在任何 Swift 方法、类、属性前添加`@objc`，来使得他们可以在 Objective-C 代码中使用。如果你的类继承自 Objective-C,编译器会自动帮助你完成这一步。编译器还会在所有的变量、方法、属性前加 @objc，如果这个类自己前面加上了`@objc`关键字。当你使用`@IBOutlet`，`@IBAction`，或者是`@NSManaged`属性时，`@objc`也会自动加在前面。这个关键字也可以用在 Objetive-C 中的 target-action 设计模式中，例如，`NSTimer`或者`UIButton`。
 
-当你在 Objective-C 中使用 Swift API，编译器基本对语句做直接的翻译。例如，`Swift API func playSong(name: String)`会被解释为`- (void)playSong:(NSString *)name`。然而，有一个例外：当在 Objective-C 中使用 Swift 的初始化函数，编译器会在方法前添加“initWith”并且将原初始化函数的第一个参数首字母大写。例如，这个 Swift 初始化函数`init (songName: String, artist: String`将被翻译为` - (instancetype)initWithSongName:(NSString *)songName artist:(NSString *)artist
+当你在 Objective-C 中使用 Swift API，编译器通常会对语句做直接的翻译。例如，Swift API `func playSong(name: String)`会被解释为`- (void)playSong:(NSString *)name`。然而，有一个例外：当在 Objective-C 中使用 Swift 的初始化函数，编译器会在方法前添加“initWith”并且将原初始化函数的第一个参数首字母大写。例如，这个 Swift 初始化函数`init (songName: String, artist: String`将被翻译为` - (instancetype)initWithSongName:(NSString *)songName artist:(NSString *)artist
 `。
 
-Swift 同时也提供了一个`@objc`关键字的变体，通过它你可以自定义在 Objectiv-C 中转换的函数名。例如，如果你的 Swift 类的名字包含 Objecytive-C 中不支持的字符，你就可以为 Objective-C 提供一个可供替代的名字。如果你给 Swift 函数提供一个 Objecytive-C 名字，要记得为带参数的函数添加（:）
+Swift 同时也提供了一个`@objc`关键字的变体，通过它你可以自定义在 Objectiv-C 中转换的函数名。例如，如果你的 Swift 类的名字包含 Objecytive-C 中不支持的字符，你就可以为 Objective-C 提供一个可供替代的名字。如果你要为 Swift 函数提供一个 Objective-C 名字，记得为带参数的函数添加（:）
 
-```
+```swift
 //Swift
 @objc(Squirrel)
 class Белка {
@@ -283,9 +283,9 @@ class Белка {
 <a name="objective_c_selectors"></a>
 ##Objective-C 选择器（Selectors）
 
-一个 Objective-C 选择器类型指向一个 Objective-C 的方法名。在 Swift 时代，Objective-C 的选择器被`Selector`结构体替代。你可以通过字符串创建一个选择器，比如`let mySelector: Selector = "tappedButton:"`。因为字符串能够自动转换为选择器，所以你可以把字符串直接传递给接受选择器的方法。
+一个 Objective-C 选择器类型指向一个 Objective-C 的方法名。在 Swift 里，Objective-C 的选择器被`Selector`结构体替代。你可以通过字符串创建一个选择器，比如`let mySelector: Selector = "tappedButton:"`。因为字符串能够自动转换为选择器，所以你可以把字符串直接传递给任何能够接受选择器的方法。
 
-```
+```swift
 //Swift
 import UIKit
 class MyViewController: UIViewController {
@@ -302,8 +302,9 @@ class MyViewController: UIViewController {
 }
 ```
 
->注意：
-`performSelector:`方法和相关的调用选择器的方法没有导入到 Swift 中因为它们是不安全的。
+>注意
+
+>`performSelector:`方法和相关的调用选择器的方法没有导入到 Swift 中因为它们是不安全的。
 
 如果你的 Swift 类继承自 Objective-C 的类，你的所有方法都可以用作 Objective-C 的选择器。另外，如果你的 Swift 类不是继承自 Objective-C，如果你想要当选择器来使用你就需要在前面添加`@objc`关键字，详情请看[Swift 类型兼容性](#swift_type_compatibility)。
 

@@ -45,7 +45,7 @@ Swift 提供了一些和 C 语言的基本类型如`char`，`int`，`float`，`d
 
 Swift 引进了用宏`NS_ENUM`来标记的任何 C 风格的枚举类型。这意味着无论枚举值是在系统框架还是在自定义的代码中定义的，当他们导入到 Swift 时，他们的前缀名称将被截断。例如，看这个 Objective-C 枚举：
 
-```
+```objective-c
 //Objective-C
 typedef NS_ENUM(NSInteger, UITableViewCellStyle) {
 	UITableViewCellStyleDefault,
@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, UITableViewCellStyle) {
 
 在 Swift 中这样来实现：
 
-```
+```swift
 //Swift
 enum UITableViewCellStyle: Int {
 	case Default
@@ -69,7 +69,7 @@ enum UITableViewCellStyle: Int {
 
 当您需要指向一个枚举值时，使用以点（.）开头的枚举名称：
 
-```
+```swift
 //Swift
 let cellStyle: UITableViewCellStyle = .Default
 
@@ -118,14 +118,14 @@ Swift 尽可能避免让您直接访问指针。然而，当您需要直接操�
 
 如果您像这样声明了一个函数：
 
-```
+```swift
 //Swift
 func takesAMutablePointer(x: CMutablePointer<Float>) { /*...*/ }
 ```
 
 那么您可以使用以下任何一种方式来调用这个函数：
 
-```
+```swift
 //Swift
 var x: Float = 0.0
 var p: CMutablePointer<Float> = nil
@@ -141,13 +141,13 @@ takesAMutablePointer(&a)
 
 如果您这样定义了一个函数：
 
-```
+```swift
 //Swift
 func takesAMutableVoidPointer(x: CMutableVoidPointer) { /* ... */ }
 ```
 那么您可以使用以下任何一种方式来调用这个函数：
 
-```
+```swift
 //Swift
 var x: Float = 0.0, y: Int = 0
 var p: CMutablePointer<Float> = nil, q: CMutablePointer<Int> = nil
@@ -174,14 +174,14 @@ takesAMutableVoidPointer(&b)
 
 如果您这样定义了一个函数：
 
-```
+```swift
 //Swift
 func takesAConstPointer(x: CConstPointer<Float>) { /*...*/ }
 ```
 
 那么您可以使用以下任何一种方式来调用这个函数：
 
-```
+```swift
 //Swift
 var x: Float = 0.0
 var p: CConstPointer<Float> = nil
@@ -196,14 +196,14 @@ takesAConstPointer([1.0, 2.0, 3.0])
 ￼
 如果您这样定义了一个函数：
 
-```
+```swift
 //Swift
 ￼￼￼￼func takesAConstVoidPointer(x: CConstVoidPointer) { /* ... */ }
 ```
 
 那么您可以使用以下任何一种方式来调用这个函数：
 
-```
+```swift
 //Swift
 var x: Float = 0.0, y: Int = 0
 var p: CConstPointer<Float> = nil, q: CConstPointer<Int> = nil 
@@ -230,14 +230,14 @@ takesAConstVoidPointer([1, 2, 3])
 
 如果您这样定义了一个函数：
 
-```
+```swift
 //Swift
 func takesAnAutoreleasingPointer(x: AutoreleasingUnsafePointer<NSDate?>) { /* ... */ }
 ```
 
 那么您可以使用以下任何一种方式来调用这个函数：
 
-```
+```swift
 //Swift
 var x: NSDate? = nil
 var p: AutoreleasingUnsafePointer<NSDate?> = nil
@@ -282,7 +282,7 @@ Swift 代码和 Objective-C 代码以不同的方式进行条件编译。Swift �
 
 一个简单的条件编译需要以下代码格式：
 
-```
+```swift
 #if build configuration
 	statements
 #else
@@ -292,7 +292,7 @@ Swift 代码和 Objective-C 代码以不同的方式进行条件编译。Swift �
 
 一个由零个或多个有效的 Swift 语句声明的`statements`，可以包括表达式，语句和控制流语句。您可以添加额外的构建配置要求，条件编译说明用 && 和 | | 操作符以及 ！ 操作符，添加条件控制块用 ＃elseif：
 
-```
+```swift
 #if build configuration && !build configuration
 	statements
 #elseif build configuration

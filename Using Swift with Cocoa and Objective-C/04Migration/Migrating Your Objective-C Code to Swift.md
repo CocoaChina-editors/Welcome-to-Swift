@@ -40,7 +40,7 @@
 * 对于打算将项目从 Objective-C 转换到 Swfit 的人，请看 [Propeties](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13)。
 * 在必要的时候，请为 Swift 的属性或方法，通过`@objc(<#name#>)`属性来提供 Objective-C 名称，就像这样：
 
-```
+```swift
 var enabled: Bool {
 	@objc(isEnabled) get {
 		/* ... */

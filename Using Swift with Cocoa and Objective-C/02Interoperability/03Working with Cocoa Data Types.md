@@ -14,7 +14,7 @@
 -  [Foundation函数（Foundation Functions）](#foundation_functions)
 -  [Core Foundation](#core_foundation)
 
-作为对 Objective-C 互用性（互操作性）的一部分，Swift提供快捷高效的方式来处理Cocoa数据类型。
+作为对 Objective-C 互用性（互操作性）的一部分，Swift提供快捷高效的方式来处理 Cocoa 数据类型。
 
 Swift 会自动将一些 Objective-C 类型转换为 Swift 类型，以及将 Swift 类型转换为 Objective-C 类型。在 Objective-C 和 Swift 中也有一些具有互用性的数据类型。那些可转换的数据类型或者具有互用性的数据类型被称为*bridged*数据类型。举个例子，在 Swift 中，您可以将一个`Array`值传递给一个要求为`NSArray`对象的方法。你也可以转换一个 bridged 类型和它的副本。当你使用`as`转换 bridged 类型或者那些由常量和变量所提供的类型时，Swift 会桥接它们的数据类型。
 
@@ -25,9 +25,9 @@ Swift 也提供一种简单便捷的覆盖方法来连接 Foundation 的数据�
 
 Swift会在`String`类型和`NSString`类型中自动转换。这意味着在可以使用`NSString`对象的地方，您可以使用一个属于 Swift 的`String`类型代替它，这样做会同时拥有它们数据类型的特点，`String`类型的插值，基于Swift设计的APIs以及`NSString`类更广的适用范围。因此，您几乎不必再在你的代码中使用`NSString`类。事实上，当 Swift 接入 Objective-C APIs 时，它将把所有`NSString`类型替换为`String`类型。当您在您的Objective-C代码中使用 Swift 类时，接入的API会将所有`String`类型替换成`NSString`类型。
 
-为了允许字符串转换，只需接入Foundation。举个例子，您在 Swift 的一个字符串中调用了`capitalizedString`--一个`NSString`类的方法，此后 Swift 会自动将`String`转换为一个`NSString`对象并调用方法。这个方法甚至会返回一个 Swift 的`String`类型，因为它在接入的时候被替换了。
+为了允许字符串转换，只需接入 Foundation。举个例子，您在 Swift 的一个字符串中调用了`capitalizedString`--一个`NSString`类的方法，此后 Swift 会自动将`String`转换为一个`NSString`对象并调用方法。这个方法甚至会返回一个 Swift 的`String`类型，因为它在接入的时候被替换了。
 
-```
+```swift
 import Foundation
 let greeting = "hello, world!"
 let capitalizedGreeting = greeting.capitalizedString
@@ -35,7 +35,7 @@ let capitalizedGreeting = greeting.capitalizedString
 ```
 如果您确实需要用到一个`NSString`对象，您可以用一个 Swift 的`String`值并转换它。`String`类型总是可以从一个`NSString`对象转换为一个Swift的`String`的值，因此，再没有必要去使用一个可选的类型转换器`()as?)`。您也可以再一个字符串中通过定义常量和变量来创建一个`NSString`对象。
 
-```
+```swift
 import Foundation
 let myString: NSString = "123"
 if let integerValue = (myString as String).toInt()){
@@ -77,9 +77,9 @@ Swift 会自动将`NSArray`和`NSDictionary`类转换为Swift里等价的类。�
 
 Swift 会在`Array`类型和`NSArray`类型中自动转换。当你从一个 Swift 数组转换到一个`NSArray`对象，转换后的数组是一个`AnyObject[]`类型的数组。如果某个对象是 Objective-C 或者 Swift 类的实例，或者这个对象可以转换成另一种类型，那么这个对象则属于`AnyObject`类型的对象。你可以将任一`NSArray`对象转换成一个 Swift 数组，因为所有 Objective-C 的对象都是`AnyObject`类型的。正因如此，Swift 的编译器会在接入 Objective-C APIs 的时候将`NSArray`类替换成`AnyObject[]`。
 
-当你将一个`NSArray`对象转换成一个 Swift 数组后，你也可以将数组强制类型转换成一个特定的类型。与从`NSArray`类转换到`AnyObject[]`不同的是，从`AnyObject`类型的对象转换成明确的类型并不会保证成功。由于直到运行时编译器才知道`AnyObject`的对象能否被强制转换为特定的类型，因此，从`AnyObject[]`转换为`SomeType[]`会返回一个optional的值。举个例子，如果你知道一个Swift数组只包含`UIView`类的实例(或者一个`UIView`类的子类)，你可以将`AnyObject`类型的数组元素强制转换为`UIView`对象。如果Swift数组中得元素在运行时不是`UIView`类型的对象，那么转换则会返回`nil`。
+当你将一个`NSArray`对象转换成一个 Swift 数组后，你也可以将数组强制类型转换成一个特定的类型。与从`NSArray`类转换到`AnyObject[]`不同的是，从`AnyObject`类型的对象转换成明确的类型并不会保证成功。由于直到运行时编译器才知道`AnyObject`的对象能否被强制转换为特定的类型，因此，从`AnyObject[]`转换为`SomeType[]`会返回一个 optional 的值。举个例子，如果你知道一个Swift数组只包含`UIView`类的实例(或者一个`UIView`类的子类)，你可以将`AnyObject`类型的数组元素强制转换为`UIView`对象。如果Swift数组中得元素在运行时不是`UIView`类型的对象，那么转换则会返回`nil`。
 
-```
+```swift
 let swiftyArray = foundationArray as AnyObject[]
 if let downcastedSwiftArray = swiftArray as? UIView[] {
     // downcastedSwiftArray contains only UIView objects
@@ -88,7 +88,7 @@ if let downcastedSwiftArray = swiftArray as? UIView[] {
 
 你也可以在for循环中将NSArray对象定向地强制转换为特定类型的Swift数组:
 
-```
+```swift
 for aView: UIView! in foundationArray {
      // aView is of type UIView
 }
@@ -100,7 +100,7 @@ for aView: UIView! in foundationArray {
 
 你也可以从 Swift 数组中创建一个`NSArray`对象。当你将一个常量或变量定义为一个`NSArray`对象并分配一个数组给它作为实例变量时，Swift 将会创建 `NSArray`对象，而不是 Swift 数组。
 
-```
+```swift
 let schoolSupplies: NSArray = ["Pencil", "Eraser", "Notebkko"]
 // schoolSupplies is an NSArray object containing NSString objects
 ```
@@ -116,13 +116,13 @@ let schoolSupplies: NSArray = ["Pencil", "Eraser", "Notebkko"]
 ##Foundation数据类型
 Swift 也提供一种简单便捷的覆盖方法来连接定义在 Foundation 框架中的数据类型。在`NSSize`和`NSPoint`中使用覆盖方法，在剩下的 Swift 语言中，你能在它的句法中感受到自然和统一。比如，你可以使用如下语法创建一个`NSSize`类型的结构:
 
-```
+```swift
 let size = NSSize(width: 20, height: 40)
 ```
 
 覆盖方法也允许你以一种自然的方式调用 Foundation 的结构函数。
 
-```
+```swift
 let rect = NSRect(x: 50, y: 50, width: 100, height: 100)
 let width = rect.width    // equivalent of NSWidth(rect)
 let maxX = rect.maxY      // equivalent of NSMaxY(rect)
@@ -135,7 +135,7 @@ Swift可以将`NSUInteger`和`NSInteger`转换为`Int`类型。这些类型都�
 
 在 Swift 中，`NSLog`可在系统控制台输出信息。您可以像在 Objective-C 中使用过的语法格式那样使用此函数。
 
-```
+```swift
 NSLog("%.7f", pi)         // Logs "3.1415927" to the console
 ```
 同时，Swift 也提供像`print`和`println`那样的输出函数。多归于 Swift 的字符插值机制才让这些函数简单，粗暴，多效。这些函数不会在系统控制台输出信息，但在需要调用的时候却是可用的。
@@ -150,7 +150,7 @@ Swift中的 Core Foundation 类型是一个成熟的类。当出现内存管理�
 
 ###重定义类型
 
-当 Swift 导入 Core Foundation 类型时，编译器会重映射导入的类型名字。编译器会从每个类型名字的末端移除*Ref*，这是因为所有的 Swift 类都属于引用类型，因此后缀是多余的。
+当 Swift 导入 Core Foundation 类型时，编译器会重映射导入的类型名字。编译器会从每个类型名字的末端移除 *Ref*，这是因为所有的 Swift 类都属于引用类型，因此后缀是多余的。
 
 Core Foundation 中的`CFTypeRef`类型会对`Anyobject`类型重映射。所以你以前使用的`CFTypeRef`，现在该换成`AnyObject`了。
 
@@ -162,20 +162,20 @@ Core Foundation 中的`CFTypeRef`类型会对`Anyobject`类型重映射。所以
 
 当 Swift 导入 unannotated 的APIs时，编译器将不会自动地对返回的 Core Foundation 对象进行内存管理托管。Swift 将这些返回的 Core Foundation 对象封闭在一个`Unmanaged<T>`结构中。那些间接返回 Core Foundation 的对象也是非托管的。举个例子，这里有一个 unannotated 的 C 函数:
 
-```
+```swift
 CFStringRef StringByAddingTwoStrings(CFStringRef string1, CFStringRef string2)
 ```
 
 这里说明了Swift是怎么导入的:
 
-```
+```swift
 func StringByAddingTwoStrings(CFString!, CFString!) -> Unmanaged<CFString>!
 ```
 假设您从 unannotated APIs 接收了非托管的对象，在使用它之前，你必须将它转换为能够内存管理的对象。在这方面，Swift 可以帮你进行内存管理而不用自己动手。同时，`Unmanaged<T>`结构也提供了两个方法来把一个非托管对象转换为一个可内存管理的对象--`takeUnretainedValue()`方法和`takeRetainedValue()`方法。这两个方法会返回原始的，非封闭的对象类型。您可以根据您实际调用的APIs返回的unretained或retained的对象，来选择哪一方法更合适。
 
 比如，假设这里有一个 C 函数，这个函数在返回值前不会释放`CFString`对象。在使用这个对象前，您使用`takeUnretainedValue()`函数，以将它转换为一个能够内存管理托管的对象。
 
-```
+```swift
 let memoryManagedResult = StringByAddingTwoStrings(str1, str2).takeUnretainedValue()
 // memoryManagedResult is a memory managed CFString
 ```

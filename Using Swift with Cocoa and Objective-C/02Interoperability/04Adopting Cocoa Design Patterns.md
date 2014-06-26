@@ -25,7 +25,7 @@
 3. 如果` myDelegate` 不为 `nil` 并且实现了 `window:willUseFullScreenContentSize:` 方法，那么调用该方法，将该方法的返回值分配给名为 `fullScreenSize` 的属性。<br />
 4. 将该方法的返回值输出在控制台。<br />
 
-```
+```swift
 // @inteface MyObject : NSObject
 // @property (nonatomic, weak) id<NSWindowDelegate> delegate;
 // @end
@@ -45,7 +45,7 @@ if let fullScreenSize = myDelegate?.window?(myWindow, willUseFullScreenContentSi
 ##错误报告（Error Reporting）##
 Swift 中的错误报告模式沿用了 Objective-C 的模式，但 Swift 中不定值返回值的新特性给我们带来了额外的好处。举个很简单的例子，你用 `Bool` 值作为一个函数的返回值，用于标识该函数是否执行成功，当你需要输出错误信息时，你可以在函数中添加一个 `NSErrorPointer` 类型的输出参数 `NSError`。这个类型类似 Objective-C 中的 `NSError **`，并增加了内存安全性和非强制性的传参。你可以使用 `&` 运算符作为前缀引用一个不定值 `NSError` 类型作为 `NSErrorPointer` 对象传递错误信息。如下面的代码所示：<br />
 
-```
+```swift
 var writeError : NSError?
 let written = myString.writeToFile(path, atomically: false,
     encoding: NSUTF8StringEncoding,
@@ -59,7 +59,7 @@ if !written {
 
 当你实现自己的方法时，你需要配置一个 `NSErrorPointer` 对象，并将 `NSErrorPointer` 对象的 `memory` 属性设为你创建的 `NSError` 对象。首先检查调用者传递的参数，确保它是一个非 `nil` 的 `NSError` 对象。
 
-```
+```swift
 func contentsForType(typeName: String! error: NSErrorPointer) -> AnyObject! {
     if cannotProduceContentsForType(typeName) {
         if error {
@@ -83,7 +83,7 @@ func contentsForType(typeName: String! error: NSErrorPointer) -> AnyObject! {
 在 Objective-C 中，你可以使用 `isKindOfClass:` 方法检查某个对象是否是指定类型，可以使用 `conformsToProtocol:` 方法检查某个对象是否遵循特定协议的规范。在 Swift 中，你可以使用 `is` 运算符完成上述的功能，或者也可以使用 `as?` 向下匹配指定类型。<br />
 你可以使用 `is` 运算符检查一个实例是否是指定的子类。如果该实例是指定的子类，那么 `is` 运算结果为 `true`，反之为 `false`。
 
-```
+```swift
 if object is UIButton {
     // object is of type UIButton
 } else {
@@ -92,7 +92,7 @@ if object is UIButton {
 ```
 你也可以使用 `as?` 运算符尝试向下匹配子类型，`as?` 运算符返回不定值，结合 `if-let` 语句使用。
 
-```
+```swift
 if let button = object as? UIButton {
     // object is successfully cast to type UIButton and bound to button
 } else {
@@ -102,7 +102,7 @@ if let button = object as? UIButton {
 请在 [Type Casting](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html#//apple_ref/doc/uid/TP40014097-CH22) 中查看更多信息。<br />
 检查匹配协议的语法与检查匹配类的语法是一样的，下面是使用 `as?` 检查匹配协议的示例：
 
-```
+```swift
 if let dataSource = object as? UITableViewDataSource {
     // object conforms to UITableViewDataSource and is bound to dataSource
 } else {

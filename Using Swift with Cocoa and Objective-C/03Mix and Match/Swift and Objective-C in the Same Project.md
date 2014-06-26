@@ -50,9 +50,9 @@ Objective-C 和 Swift 文件可以在一个工程中并存，不管这个工程�
 
 1. 在 Objective-C 桥接头文件中，import 任何你想暴露给 Swift 的头文件，例如：
 
-```
+```objective-c
 // OBJECTIVE-C
-    
+
 #import "XYZCustomCell.h"
 #import "XYZCustomView.h"
 #import "XYZCustomViewController.h"
@@ -64,9 +64,9 @@ Objective-C 和 Swift 文件可以在一个工程中并存，不管这个工程�
 
 在这个桥接头文件中列出的所有 public 的 Objective-C 头文件都会对 Swift 可见。之后当前 target 的所有 Swift 文件都可以使用这些头文件中的方法，不需要任何 import 语句。用 Swift 语法使用这些 Objective-C 代码，就像使用系统自带的 Swift 类一样。
 
-```
+```swift
 // SWIFT
-    
+
 let myCell = XYZCustomCell()
 myCell.subtitle = "A custom cell"
 ```
@@ -81,7 +81,7 @@ myCell.subtitle = "A custom cell"
 
 - 在相同 target 的 Objective-C .m 源文件中，用下面的语法来导入Swift 代码：
 
-```
+```objective-c
 // OBJECTIVE-C
 
 #import "ProductModuleName-Swift.h"
@@ -90,9 +90,9 @@ myCell.subtitle = "A custom cell"
 target 中任何 Swift 文件将会对 Objective-C .m 源文件可见，包括这个 import 语句。关于在 Objective-C 代码中使用 Swift 代码，详见 [Using Swift from Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_84)。
 
 |              | 导入到 Swift | 导入到 Swift  |
-| -------------|:-----------:|:------------:| 
-| Swift 代码    | 不需要import语句  | #import <ProductName/ProductModuleName-Swift.h>  |
-| Objective-C 代码     | 不需要import语句；需要 Objective-C `umbrella头文件| #import "Header.h"     |
+| -------------|:-----------:|:------------:|
+| Swift 代码    | 不需要import语句  | #import "ProductModuleName-Swift.h”  |
+| Objective-C 代码     | 不需要import语句；需要 Objective-C bridging头文件| #import "Header.h"     |
 
 
 <a name="importing_code_from_within_the_same_framework_target"></a>
@@ -108,7 +108,7 @@ target 中任何 Swift 文件将会对 Objective-C .m 源文件可见，包括�
 
 确保将框架 target 的 `Build Settings > Packaging > Defines Module` 设置为 `Yes`。然后在你的 `umbrella header` 头文件中导入你想暴露给 Swift 访问的 Objective-C 头文件，例如：
 
-```
+```objective-c
 // OBJECTIVE-C
 #import <XYZ/XYZCustomCell.h>
 #import <XYZ/XYZCustomView.h>
@@ -117,9 +117,9 @@ target 中任何 Swift 文件将会对 Objective-C .m 源文件可见，包括�
 
 Swift 将会看到所有你在 `umbrella header` 中公开暴露出来的头文件，框架 target 中的所有 Swift 文件都可以访问你 Objective-C 文件的内容，不需要任何 import 语句。
 
-```
+```swift
 // SWIFT
-    
+
 let myCell = XYZCustomCell()
 myCell.subtitle = "A custom cell"
 ```
@@ -132,7 +132,7 @@ myCell.subtitle = "A custom cell"
 
 确保将框架 target 的 `Build Settings > Packaging` 中的 `Defines Module` 设置为 `Yes`。用下面的语法将 Swift 代码导入到同个框架 target 下的 Objective-C .m 源文件去。
 
-```
+```objective-c
 // OBJECTIVE-C
 #import <ProductName/ProductModuleName-Swift.h>
 ```
@@ -141,8 +141,8 @@ myCell.subtitle = "A custom cell"
 
 |              | 导入到 Swift | 导入到 Swift  |
 | -------------|:-----------:|:------------:| 
-| Swift 代码    | 不需要import语句  | #import <ProductName/ProductModuleName-Swift.h>  |
-| Objective-C 代码     | 不需要import语句；需要 Objective-C `umbrella头文件| #import "Header.h"     |
+| Swift 代码    | 不需要import语句  | #import "ProductName/ProductModuleName-Swift.h"  |
+| Objective-C 代码     | 不需要import语句；需要 Objective-C umbrella头文件| #import "Header.h"     |
 
 
 <a name="importing_external_frameworks"></a>
@@ -152,17 +152,17 @@ myCell.subtitle = "A custom cell"
 
 用下面的语法将框架导入到不同 target 的 Swift 文件中：
 
-```
+```swift
 // SWIFT
-    
+
 import FrameworkName
 ```
 
 用下面的语法将框架导入到不同 target 的 Objective-C .m 文件中：
 
-```
+```objective-c
 // OBJECTIVE-C
-    
+
 @import FrameworkName;
 ```
 
@@ -176,7 +176,7 @@ import FrameworkName
 
 当你将 Swift 代码导入 Objective-C 文件之后，用普通的 Objective-C 语法使用 Swift 类。
 
-```
+```objective-c
 // OBJECTIVE-C
 
 MySwiftClass *swiftObject = [[MySwiftClass alloc] init];
@@ -215,12 +215,12 @@ Swift 的类或协议必须用 `@Objective-C attribute` 来标记，以便在 Ob
 
 这样前向声明 Swift 类：
 
-```
+```objective-c
 // OBJECTIVE-C
 // MyObjective-CClass.h
- 
+
 @class MySwiftClass;
- 
+
 @interface MyObjective-CClass : NSObject
 - (MySwiftClass *)returnSwiftObject;
 /* ... */

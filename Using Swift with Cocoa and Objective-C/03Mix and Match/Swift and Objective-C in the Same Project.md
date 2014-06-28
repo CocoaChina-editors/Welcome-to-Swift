@@ -38,7 +38,7 @@ Objective-C 和 Swift 文件可以在一个工程中并存，不管这个工程�
 
 ### 将 Objective-C 导入 Swift
 
-在一个应用的 target 中导入一些 Objective-C 文件供 Swift 代码使用时，你需要依赖与 Objective-C 的桥接头文件（`bridging header`）来暴露给 Swift。当你添加 Swift 文件到现有的 Objective-C 应用（或反之）时，Xcode 会自动创建这些头文件。
+在一个应用的 target 中导入一些 Objective-C 文件供 Swift 代码使用时，你需要依赖于 Objective-C 的桥接头文件（`bridging header`）来暴露给 Swift。当你添加 Swift 文件到现有的 Objective-C 应用（或反之）时，Xcode 会自动创建这些头文件。
 
 ![bridgingheader_2x.png](https://raw.githubusercontent.com/haolloyin/Welcome-to-Swift/translate/Using%20Swift%20with%20Cocoa%20and%20Objective-C/03Mix%20and%20Match/bridgingheader_2x.png?raw=true)
 

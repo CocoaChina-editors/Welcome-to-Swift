@@ -278,7 +278,7 @@ Swift 代码和 Objective-C 代码以不同的方式进行条件编译。Swift �
 
 >注意
 
->arch(arm) 的生成配置不会为64位 arm 设备返回`true`，当代码运行在为32位的 ios 模拟器器时，arch(i386) 的生成配置返回`true`。
+>arch(arm) 的生成配置不会为64位 ARM 设备返回`true`，当代码运行在为32位的 iOS 模拟器器时，arch(i386) 的生成配置返回`true`。
 
 一个简单的条件编译需要以下代码格式：
 

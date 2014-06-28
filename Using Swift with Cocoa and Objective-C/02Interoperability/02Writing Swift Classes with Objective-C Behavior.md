@@ -43,7 +43,7 @@ class MySwiftViewController: UIViewController, UITableViewDelegate, UITableViewD
 }
 ```
 
-Objective-C 协议与 Swift 协议使用上是一致的。如果开发者想在 Swift 代码中引用 `UITableViewDelegate`协议，可以直接使用`UITableViewDelegate`（跟在 Objective-C 中引用`id<UITableViewDelegate\>`是等价的）。
+Objective-C 协议与 Swift 协议使用上是一致的。如果开发者想在 Swift 代码中引用 `UITableViewDelegate`协议，可以直接使用`UITableViewDelegate`（跟在 Objective-C 中引用`id<UITableViewDelegate>`是等价的）。
 
 <a name="writing_initializers_and_deinitializers"></a>
 ## 编写构造器和析构器

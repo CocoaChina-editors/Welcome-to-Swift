@@ -12,7 +12,7 @@
 -  [迁移过程（The Migration Process）](#the_migration_process)
 -  [问题解决提示（Troubleshooting Tips and Reminders）](#troubleshooting_tips_and_reminders	)
 
-迁移工作正好提供了一个重新审视现有 Objective-C 应用程序的机会，也可以通过 Swift 代码来更好的优化应用程序的体系架构，逻辑以及性能。直接的说，你将用先前学到的 mix and match 以及这两个语言间的互操作性来进行增量迁移工作。Mix-and-match 功能使得选择哪些特性和功能来用 Swift 来实现，哪些依然用 Objective-C 来实现变得简单。Swift 和 Objective-C 的互用性又使得将这些功能集成到 Objective-C 变得并不困难。通过这些工具可以开放 Swift 的扩展功能并集成到现有的 Objective-C 项目中而完全不必立刻使用 Swift 重写整个项目。
+迁移工作正好提供了一个重新审视现有 Objective-C 应用程序的机会，也可以通过 Swift 代码来更好的优化应用程序的体系架构，逻辑以及性能。直接地说，你将用先前学到的 mix and match 以及这两个语言间的互操作性来进行增量迁移工作。Mix-and-match 功能使得选择哪些特性和功能来用 Swift 来实现，哪些依然用 Objective-C 来实现变得简单。Swift 和 Objective-C 的互用性又使得将这些功能集成到 Objective-C 变得并不困难。通过这些工具可以开放 Swift 的扩展功能并集成到现有的 Objective-C 项目中而完全不必立刻使用 Swift 重写整个项目。
 
 <a name="preparing_your_objective-c_code_for_migration"></a>
 ## 为你的Objective-C代码做好迁移准备
@@ -22,7 +22,7 @@
 <a name="the_migration_process"></a>
 ## 迁移过程
 
-最有效迁移代码的方式是基于逐个文件的方式，即一次完成一个类。由于你不能在 Objective-C 中继承 Swift 类， 最好选择一个没有子类的（译者：从类的继承角度来看，应该先从类族树的叶子节点开始，自底向上的进行迁移操作）。你就可以用单个`.swift`文件来代替对应的`.m`和`.h`文件了。你所有的实现代码和接口将直接放进单个 Swift 文件。你不用再创建头文件了；Xcode 会在你需要引用的时候自动生成头文件。(译者：当然这实在xcode内部机制完成的了，对开发者是透明的)
+最有效迁移代码的方式是基于逐个文件的方式，即一次完成一个类。由于你不能在 Objective-C 中继承 Swift 类， 最好选择一个没有子类的（译者：从类的继承角度来看，应该先从类族树的叶子节点开始，自底向上的进行迁移操作）。你就可以用单个`.swift`文件来代替对应的`.m`和`.h`文件了。你所有的实现代码和接口将直接放进单个 Swift 文件。你不用再创建头文件了；Xcode 会在你需要引用的时候自动生成头文件。(译者：当然这是在xcode内部机制完成的了，对开发者是透明的)
 
 
 ### 准备工作
@@ -37,7 +37,7 @@
 * 当你使用 Objective-C APIs 的时候，你需要知道 Swift 是怎样来翻译某些 Objective-C 特性的。更多信息，请看[Interacting with Objective-C APIs](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-XID_26)
 * 当用 Swift 编写用到 Cocoa 框架的代码时，记住某些类型是被桥接的，意味着你可以使用某些 Swift 类型来替代 Objective-C 类型。更多信息，请看[Working with Cocoa Data Types](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/WorkingWithCocoaDataTypes.html#//apple_ref/doc/uid/TP40014216-CH6-XID_40)
 * 当你在 Swift 中运用 Cocoa设计模式得时候，请看 [Adopting Cocoa Design Patterns](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html#//apple_ref/doc/uid/TP40014216-CH7-XID_5)获取更多的通用设计模式的转换信息。
-* 对于打算将项目从 Objective-C 转换到 Swfit 的人，请看 [Propeties](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13)。
+* 对于打算将项目从 Objective-C 转换到 Swfit 的人，请看 [Properties](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13)。
 * 在必要的时候，请为 Swift 的属性或方法，通过`@objc(<#name#>)`属性来提供 Objective-C 名称，就像这样：
 
 ```swift
@@ -67,5 +67,5 @@ var enabled: Bool {
 * 当你迁移一个类到 Swift 的时候，你必须从 target 中移除相关的`.m`文件，以避免编译时提示出现重复的符号等编译错误。
 * 为了在 Objective-C 中可以访问并使用，Swift 类必须是一个 Objective-C 类的子类，或者被标记为`@objc`。
 * 当你在 Objective-C 中使用 Swift 代码的时候，记住 Objective-C 不能理解那些 Swift 的某些特性，请看[Using Swift from Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_84)。
-* 可以通过`Commond + 点击`一个 Swift 类名来查看他生成的头文件。
+* 可以通过`Commond + 点击`一个 Swift 类名来查看它生成的头文件。
 * 可以通过`Option + 点击`一个符号来查看更详细的信息，比如它的类型，属性以及文档注释等。

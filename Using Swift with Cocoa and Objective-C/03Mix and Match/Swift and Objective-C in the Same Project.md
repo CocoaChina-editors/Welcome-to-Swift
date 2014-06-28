@@ -185,7 +185,7 @@ MySwiftClass *swiftObject = [[MySwiftClass alloc] init];
 
 Swift 的类或协议必须用 `@Objective-C attribute` 来标记，以便在 Objective-C 中可访问。这个 attribute 告诉编译器这个 Swift 代码可以从 Objective-C 代码中访问。如果你的 Swift 类是 Objective-C 类的子类，编译器会自动为你添加 `@Objective-C attribute`。详见 [Swift Type Compatibility](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-XID_36)。
 
-你可以访问 Swift 类或协议中用 `@Objective-C attribute` 标记过东西，只要它和 Objective-C 兼容。不包括一下这些 Swift 独有的特性：
+你可以访问 Swift 类或协议中用 `@Objective-C attribute` 标记过东西，只要它和 Objective-C 兼容。不包括以下这些 Swift 独有的特性：
 
 -  Generics - 范型  
 
@@ -195,7 +195,7 @@ Swift 的类或协议必须用 `@Objective-C attribute` 来标记，以便在 Ob
 
 -  Structures defined in Swift - Swift 中定义的结构体  
 
--  Top-level functions defined in Swift - Swift Swift 中定义的顶层函数  
+-  Top-level functions defined in Swift - Swift 中定义的顶层函数  
 
 -  Global variables defined in Swift - Swift 中定义的全局变量  
 

@@ -33,7 +33,7 @@ let greeting = "hello, world!"
 let capitalizedGreeting = greeting.capitalizedString
 // capitalizedGreeting: String = Hello, World!
 ```
-如果您确实需要用到一个`NSString`对象，您可以用一个 Swift 的`String`值并转换它。`String`类型总是可以从一个`NSString`对象转换为一个Swift的`String`的值，因此，再没有必要去使用一个可选的类型转换器`()as?)`。您也可以再一个字符串中通过定义常量和变量来创建一个`NSString`对象。
+如果您确实需要用到一个`NSString`对象，您可以用一个 Swift 的`String`值并转换它。`String`类型总是可以从一个`NSString`对象转换为一个Swift的`String`的值，因此，再没有必要去使用一个可选的类型转换器`()as?)`。您也可以在一个字符串中通过定义常量和变量来创建一个`NSString`对象。
 
 ```swift
 import Foundation
@@ -77,7 +77,7 @@ Swift 会自动将`NSArray`和`NSDictionary`类转换为Swift里等价的类。�
 
 Swift 会在`Array`类型和`NSArray`类型中自动转换。当你从一个 Swift 数组转换到一个`NSArray`对象，转换后的数组是一个`AnyObject[]`类型的数组。如果某个对象是 Objective-C 或者 Swift 类的实例，或者这个对象可以转换成另一种类型，那么这个对象则属于`AnyObject`类型的对象。你可以将任一`NSArray`对象转换成一个 Swift 数组，因为所有 Objective-C 的对象都是`AnyObject`类型的。正因如此，Swift 的编译器会在接入 Objective-C APIs 的时候将`NSArray`类替换成`AnyObject[]`。
 
-当你将一个`NSArray`对象转换成一个 Swift 数组后，你也可以将数组强制类型转换成一个特定的类型。与从`NSArray`类转换到`AnyObject[]`不同的是，从`AnyObject`类型的对象转换成明确的类型并不会保证成功。由于直到运行时编译器才知道`AnyObject`的对象能否被强制转换为特定的类型，因此，从`AnyObject[]`转换为`SomeType[]`会返回一个 optional 的值。举个例子，如果你知道一个Swift数组只包含`UIView`类的实例(或者一个`UIView`类的子类)，你可以将`AnyObject`类型的数组元素强制转换为`UIView`对象。如果Swift数组中得元素在运行时不是`UIView`类型的对象，那么转换则会返回`nil`。
+当你将一个`NSArray`对象转换成一个 Swift 数组后，你也可以将数组强制类型转换成一个特定的类型。与从`NSArray`类转换到`AnyObject[]`不同的是，从`AnyObject`类型的对象转换成明确的类型并不会保证成功。由于直到运行时编译器才知道`AnyObject`的对象能否被强制转换为特定的类型，因此，从`AnyObject[]`转换为`SomeType[]`会返回一个 optional 的值。举个例子，如果你知道一个Swift数组只包含`UIView`类的实例(或者一个`UIView`类的子类)，你可以将`AnyObject`类型的数组元素强制转换为`UIView`对象。如果Swift数组中的元素在运行时不是`UIView`类型的对象，那么转换则会返回`nil`。
 
 ```swift
 let swiftyArray = foundationArray as AnyObject[]

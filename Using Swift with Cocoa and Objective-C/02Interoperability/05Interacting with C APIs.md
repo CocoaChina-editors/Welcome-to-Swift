@@ -151,7 +151,7 @@ func takesAMutableVoidPointer(x: CMutableVoidPointer) { /* ... */ }
 //Swift
 var x: Float = 0.0, y: Int = 0
 var p: CMutablePointer<Float> = nil, q: CMutablePointer<Int> = nil
-var a: Float[] = [1.0, 2.0, 3.0], b: Int = [1, 2, 3]
+var a: Float[] = [1.0, 2.0, 3.0], b: Int[] = [1, 2, 3]
 
 takesAMutableVoidPointer(nil)
 takesAMutableVoidPointer(p)

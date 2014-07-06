@@ -27,7 +27,7 @@
 <a name="initialization"></a>
 ##初始化
 
-为了使用 Swift 实例化 Objective-C 的 Class，你应该使用 Swift 语法调用它的一个初始化器。当 Objective-C 的`init`方法变化到 Swift，他们用 Swift 初始化语法呈现。“init”前缀被截断当作一个关键字，用来表明该方法是初始化方法。那些以“initWith”开头的`init`方法，“With”也会被去除。从“init”或者“initWith”中分离出来的这部分方法名首字母变成小写，并且被当做是第一个参数的参数名。其余的每一部分方法名依次变为参数名。这些方法名都在圆括号中被调用。
+为了使用 Swift 实例化 Objective-C 的 Class，你应该使用 Swift 语法调用它的一个初始化器。当 Objective-C 的`init`方法变化到 Swift，他们用 Swift 初始化语法呈现。“init”前缀被截断当作一个关键字，用来表明该方法是初始化方法。那些以“initWith”开头的`init`方法，“With”也会被去除。从“init”或者“initWith”中分离出来的这部分方法名首字母变成小写，并且被当做是第一个参数的参数名。其余的每一部分方法名依次变味参数名。这些方法名都在圆括号中被调用。
 
 举个例子，你在使用 Objective-C 时会这样做：
 
@@ -119,7 +119,7 @@ myTableView.layoutIfNeeded()
 
 Swift 包含一个叫做`AnyObject`的协议类型，表示任意类型的对象，就像 Objective-C 中的`id`一样。`AnyObject`协议允许你编写类型安全的 Swift 代码同时维持无类型对象的灵活性。因为`AnyObject`协议保证了这种安全，Swift 将 id 对象导入为 AnyObject。
 
-举个例子，跟 id 一样，你可以为`AnyObject`类型的对象分配任何其它类型的对象，你也同样可以为它重新分配其它类型的对象。
+举个例子，跟 id 一样，你可以为`AnyObject`类型的对象分配任何其他类型的对象，你也同样可以为它重新分配其他类型的对象。
 
 ```swift
 //Swift
@@ -205,7 +205,7 @@ extension UIBezierPath {
 }
 ```
 
-你也可以使用扩展来增加属性（包括类的属性与静态属性）。然而，这些属性必须是通过计算才能获取的，扩展不会为类，结构体，枚举添加存储属性。下面这个例子为`CGRect`类增加了一个叫`area`的属性。
+你也可以使用扩展来增加属性（包括类的属性与静态属性）。然而，这些属性必须是通过计算才能获取的，扩展不会为类，结构体，枚举存储属性。下面这个例子为`CGRect`类增加了一个叫`area`的属性。
 
 ```swift
 //Swift
@@ -242,7 +242,7 @@ let completionBlock: (NSData, NSError) -> Void = {data, error in /* ... */}
 
 Swift 的闭包与 Objective-C 中的 blocks 能够和睦相处，所以你可以把一个 Swift 闭包传递给一个把 block 作为参数的 Objective-C 函数。Swift 闭包与函数具有互通的类型，所以你甚至可以传递 Swift 函数的名字。
 
-闭包与 blocks 语义上相通但是在一个地方不同：变量是可以直接改变的，而不是像 block 那样会拷贝变量。换句话说，Swift 中变量的默认行为与 Objective-C 中 __block 变量一致。
+闭包与 blocks 语义上想通但是在一个地方不同：变量是可以直接改变的，而不是像 block 那样会拷贝变量。换句话说，Swift 中变量的默认行为与 Objective-C 中 __block 变量一致。
 
 <a name="object_comparison"></a>
 ##比较对象
@@ -260,12 +260,12 @@ NSObject 类仅仅做了身份的比较，所以你需要在你自己的类中�
 
 当你定义了一个继承自`NSObject`或者其他 Objective-C 类的 Swift 类，这些类都能与 Objective-C 无缝连接。所有的步骤都由 Swift 编译器自动完成，如果你从未在 Objective-C 代码中导入 Swift 类，你也不需要担心类型适配问题。另外一种情况，如果你的 Swift 类并不继承于 Objectve-C 类而你希望能在 Objecive-C 的代码中使用它，你可以使用下面描述的`@objc`属性。
 
-`@objc`可以让你的 Swift API 在 Objective-C 中使用。换句话说，你可以通过在任何 Swift 方法、类、属性前添加`@objc`，来使得他们可以在 Objective-C 代码中使用。如果你的类继承自 Objective-C，编译器会自动帮助你完成这一步。编译器还会在所有的变量、方法、属性前加 @objc，如果这个类自己前面加上了`@objc`关键字。当你使用`@IBOutlet`，`@IBAction`，或者是`@NSManaged`属性时，`@objc`也会自动加在前面。这个关键字也可以用在 Objetive-C 中的 target-action 设计模式中，例如，`NSTimer`或者`UIButton`。
+`@objc`可以让你的 Swift API 在 Objective-C 中使用。换句话说，你可以通过在任何 Swift 方法、类、属性前添加`@objc`，来使得他们可以在 Objective-C 代码中使用。如果你的类继承自 Objective-C,编译器会自动帮助你完成这一步。编译器还会在所有的变量、方法、属性前加 @objc，如果这个类自己前面加上了`@objc`关键字。当你使用`@IBOutlet`，`@IBAction`，或者是`@NSManaged`属性时，`@objc`也会自动加在前面。这个关键字也可以用在 Objetive-C 中的 target-action 设计模式中，例如，`NSTimer`或者`UIButton`。
 
 当你在 Objective-C 中使用 Swift API，编译器通常会对语句做直接的翻译。例如，Swift API `func playSong(name: String)`会被解释为`- (void)playSong:(NSString *)name`。然而，有一个例外：当在 Objective-C 中使用 Swift 的初始化函数，编译器会在方法前添加“initWith”并且将原初始化函数的第一个参数首字母大写。例如，这个 Swift 初始化函数`init (songName: String, artist: String`将被翻译为` - (instancetype)initWithSongName:(NSString *)songName artist:(NSString *)artist
 `。
 
-Swift 同时也提供了一个`@objc`关键字的变体，通过它你可以自定义在 Objective-C 中转换的函数名。例如，如果你的 Swift 类的名字包含 Objecytive-C 中不支持的字符，你就可以为 Objective-C 提供一个可供替代的名字。如果你要为 Swift 函数提供一个 Objective-C 名字，记得为带参数的函数添加（:）
+Swift 同时也提供了一个`@objc`关键字的变体，通过它你可以自定义在 Objectiv-C 中转换的函数名。例如，如果你的 Swift 类的名字包含 Objecytive-C 中不支持的字符，你就可以为 Objective-C 提供一个可供替代的名字。如果你要为 Swift 函数提供一个 Objective-C 名字，记得为带参数的函数添加（:）
 
 ```swift
 //Swift

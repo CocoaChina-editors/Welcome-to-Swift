@@ -113,8 +113,8 @@ Swift 尽可能避免让您直接访问指针。然而，当您需要直接操�
 
 * `nil`，作为空指针传入
 * 一个`CMutablePointer<Type>`类型的值
-* 一个操作数是 Type 类型的左值的输入输出表达式，作为这个左值的内存地址传入
-* 一个输入输出 Type[] 值，作为一个数组的起始指针传入，并且它的生命周期将在这个调用期间被延长
+* 一个操作数是 `Type` 类型的左值的输入输出表达式，作为这个左值的内存地址传入
+* 一个输入输出 `Type[]` 值，作为一个数组的起始指针传入，并且它的生命周期将在这个调用期间被延长
 
 如果您像这样声明了一个函数：
 
@@ -137,7 +137,7 @@ takesAMutablePointer(&x)
 takesAMutablePointer(&a)
 ```
 
-当函数被声明使用一个`CMutableVoidPointer`参数，那么这个函数接受任何和`CMutablePointer<Type>`相似类型的Type操作数。
+当函数被声明使用一个`CMutableVoidPointer`参数，那么这个函数接受任何和`CMutablePointer<Type>`相似类型的`Type`操作数。
 
 如果您这样定义了一个函数：
 
@@ -151,7 +151,7 @@ func takesAMutableVoidPointer(x: CMutableVoidPointer) { /* ... */ }
 //Swift
 var x: Float = 0.0, y: Int = 0
 var p: CMutablePointer<Float> = nil, q: CMutablePointer<Int> = nil
-var a: Float[] = [1.0, 2.0, 3.0], b: Int = [1, 2, 3]
+var a: Float[] = [1.0, 2.0, 3.0], b: Int[] = [1, 2, 3]
 
 takesAMutableVoidPointer(nil)
 takesAMutableVoidPointer(p)
@@ -168,7 +168,7 @@ takesAMutableVoidPointer(&b)
 
 -  `nil`，作为空指针传入
 -  一个`CMutablePointer<Type>`, `CMutableVoidPointer`, `CConstPointer<Type>`, `CConstVoidPointer`,  或者在必要情况下转换成`CConstPointer<Type>`的`AutoreleasingUnsafePointer<Type>`值
--  一个操作数是 Type 类型的左值的输入输出表达式，作为这个左值的内存地址传入
+-  一个操作数是 `Type` 类型的左值的输入输出表达式，作为这个左值的内存地址传入
 -  一个`Type[]`数组值，作为一个数组的起始指针传入，并且它的生命周期将在这个调用期间被延长
 
 
@@ -269,7 +269,7 @@ Swift 编译器不包含预处理器。取而代之的是，它充分利用了�
 
 ### 编译配置
 
-Swift 代码和 Objective-C 代码以不同的方式进行条件编译。Swift 代码可以根据生成配置的评价配进行有条件的编译。生成配置包括 true 和 false 字面值，命令行标志，和下表中的平台测试函数。您可以使用-D \<＃Flag＃\>指定命令行标志。
+Swift 代码和 Objective-C 代码以不同的方式进行条件编译。Swift 代码可以根据生成配置的评价配进行有条件的编译。生成配置包括 `true` 和 `false` 字面值，命令行标志，和下表中的平台测试函数。您可以使用-D \<＃Flag＃\>指定命令行标志。
 
 | 函数 | 有效参数 |
 | --- | --- |
@@ -278,7 +278,7 @@ Swift 代码和 Objective-C 代码以不同的方式进行条件编译。Swift �
 
 >注意
 
->arch(arm) 的生成配置不会为64位 arm 设备返回`true`，当代码运行在为32位的 ios 模拟器器时，arch(i386) 的生成配置返回`true`。
+>arch(arm) 的生成配置不会为64位 ARM 设备返回`true`，当代码运行在为32位的 iOS 模拟器器时，arch(i386) 的生成配置返回`true`。
 
 一个简单的条件编译需要以下代码格式：
 

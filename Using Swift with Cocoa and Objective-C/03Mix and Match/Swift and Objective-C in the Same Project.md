@@ -20,7 +20,7 @@
 
 
 
-Swift 与 Objective-C 的兼容能力使你可以在同一个工程中同时使用两种语言。你可以用这种叫做 `mix and match` 的特性来开发基于混合语言的应用，可以用 Swfit 的最新特性实现应用的一部分功能，并无缝地并入已有的 Objective-C 的代码中。
+Swift 与 Objective-C 的兼容能力使你可以在同一个工程中同时使用两种语言。你可以用这种叫做 `mix and match` 的特性来开发基于混合语言的应用，可以用 Swift 的最新特性实现应用的一部分功能，并无缝地并入已有的 Objective-C 的代码中。
 
 <a name="mix_and_match_overview"></a>
 ## Mix and Match 概述
@@ -38,7 +38,7 @@ Objective-C 和 Swift 文件可以在一个工程中并存，不管这个工程�
 
 ### 将 Objective-C 导入 Swift
 
-在一个应用的 target 中导入一些 Objective-C 文件供 Swift 代码使用时，你需要依赖与 Objective-C 的桥接头文件（`bridging header`）来暴露给 Swift。当你添加 Swift 文件到现有的 Objective-C 应用（或反之）时，Xcode 会自动创建这些头文件。
+在一个应用的 target 中导入一些 Objective-C 文件供 Swift 代码使用时，你需要依赖于 Objective-C 的桥接头文件（`bridging header`）来暴露给 Swift。当你添加 Swift 文件到现有的 Objective-C 应用（或反之）时，Xcode 会自动创建这些头文件。
 
 ![bridgingheader_2x.png](https://raw.githubusercontent.com/haolloyin/Welcome-to-Swift/translate/Using%20Swift%20with%20Cocoa%20and%20Objective-C/03Mix%20and%20Match/bridgingheader_2x.png?raw=true)
 
@@ -185,7 +185,7 @@ MySwiftClass *swiftObject = [[MySwiftClass alloc] init];
 
 Swift 的类或协议必须用 `@Objective-C attribute` 来标记，以便在 Objective-C 中可访问。这个 attribute 告诉编译器这个 Swift 代码可以从 Objective-C 代码中访问。如果你的 Swift 类是 Objective-C 类的子类，编译器会自动为你添加 `@Objective-C attribute`。详见 [Swift Type Compatibility](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-XID_36)。
 
-你可以访问 Swift 类或协议中用 `@Objective-C attribute` 标记过东西，只要它和 Objective-C 兼容。不包括一下这些 Swift 独有的特性：
+你可以访问 Swift 类或协议中用 `@Objective-C attribute` 标记过东西，只要它和 Objective-C 兼容。不包括以下这些 Swift 独有的特性：
 
 -  Generics - 范型  
 
@@ -195,7 +195,7 @@ Swift 的类或协议必须用 `@Objective-C attribute` 来标记，以便在 Ob
 
 -  Structures defined in Swift - Swift 中定义的结构体  
 
--  Top-level functions defined in Swift - Swift Swift 中定义的顶层函数  
+-  Top-level functions defined in Swift - Swift 中定义的顶层函数  
 
 -  Global variables defined in Swift - Swift 中定义的全局变量  
 

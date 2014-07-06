@@ -43,7 +43,7 @@ class MySwiftViewController: UIViewController, UITableViewDelegate, UITableViewD
 }
 ```
 
-Objective-C 协议与 Swift 协议使用上是一致的。如果开发者想在 Swift 代码中引用 `UITableViewDelegate`协议，可以直接使用`UITableViewDelegate`（跟在 Objective-C 中引用`id<UITableViewDelegate>`是等价的）。
+Objective-C 协议与 Swift 协议使用上是一致的。如果开发者想在 Swift 代码中引用 `UITableViewDelegate`协议，可以直接使用`UITableViewDelegate`（跟在 Objective-C 中引用`id<UITableViewDelegate\>`是等价的）。
 
 <a name="writing_initializers_and_deinitializers"></a>
 ## 编写构造器和析构器
@@ -55,7 +55,7 @@ Swift 的编译器确保在初始化时，构造器不允许类里有任何未�
 <a name="integrating_with_interface_builder"></a>
 ## 集成Interface Builder
 
-Swift 编译器包含一些属性，使得开发者的 Swift 类集成了 Interface Builder 里的一些特色功能。和 Objective-C 里一样，你能在 Swift 里面使用 outlets，actions 和实时渲染（live rendering）。
+Swift 编译器包含一些属性，使得开发者的 Swift 类集成了 Interface Builder 里的一些特色功能。和 Objective-C 里一样，你能在 Swift 里面使用 OutLets，actions 和实时渲染（live rendering）。
 
 ### 使用Outlets和Action
 
@@ -63,7 +63,7 @@ Swift 编译器包含一些属性，使得开发者的 Swift 类集成了 Interf
 
 当开发者在 Swift 里面声明了一个 Outlet 时，Swift 编译器会自动将该类型转换为弱（weak）、隐式（implicitly）、未包装（unwrapped）的 optional（Objective-C 里面对应指针类型）数据类型，并为它分配一个初始化的空值`nil`。实际上，编译器使用`@IBOutlet weak var name: Type! = nil`来代替 `@IBOutlet var name: Type`。编译器将该类型转换成了弱（weak）、隐式（implicitly）、未包装（unwrapped）的 optional 类型，因此开发者就不需要在构造器中为该类型分配一个初始值了。当开发者从故事板（storyboard）或者`xib`文件里面初始化对象 class 后，定义好的 Outlet 和这些对象连接在一起了，所以，这些 Outlet 是隐式的，未包装的。由于创建的 outlets 一般都是弱关系，因此默认 outlets 是弱类型。
 
-例如，下面的 Swift 代码声明了一个拥有 Outlet、Outlet 集合和 Action 的类：
+例如，下面的 Swift 代码声明了一个拥有 Outlet、Outlets 集合和 Action 的类：
 
 ```swift
 

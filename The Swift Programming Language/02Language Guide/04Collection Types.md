@@ -26,7 +26,9 @@ Swift数组的类型是`Array<SomeType>`，这里的`SomeType`是某种数组能
 下面的例子创建了一个存放`String`类型值，名为`shoppingList`的数组：
 
 ```
+
 var shoppingList: String[] = ["Eggs", "Milk"]
+// 在xcode beat 3 中 方法已经改成 var shoppingList: [String] = ["Eggs", "Milk"]
 // shoppingList 用两个元素完成初始化
 ```
 

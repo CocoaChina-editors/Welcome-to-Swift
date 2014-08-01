@@ -32,7 +32,8 @@ The Swift Programming Language 中文手册
 -  [扩展](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/20Extensions.md)
 -  [协议](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/21Protocols.md)
 -  [泛型](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/22Generics.md)
--  [高级操作符](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/23Advanced%20Operators.md)
+-  [访问控制](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The Swift Programming Language/02Language Guide/23Access Control.md)
+-  [高级操作符](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/24Advanced%20Operators.md)
 
 ## 语言参考
 

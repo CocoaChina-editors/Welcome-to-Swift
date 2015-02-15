@@ -127,7 +127,7 @@ var myObject: AnyObject = UITableViewCell()
 myObject = NSDate()
 ```
 
-你也可以在调用 Objective-C 方法或者访问属性时不将它转换为具体类的类型。这包括了 Objcive-C 中标记为 @objc 的方法。
+你也可以在调用 Objective-C 方法或者访问属性时不将它转换为具体类的类型。这包括了 Objective-C 中标记为 @objc 的方法。
 
 ```swift
 //Swift

@@ -345,7 +345,7 @@ for index in 1...5 {
 
 ### 半闭区间
 
-半闭区间（`a..b`）定义一个从`a`到`b`但不包括`b`的区间。
+半闭区间（`a..<b`）定义一个从`a`到`b`但不包括`b`的区间。
 之所以称为半闭区间，是因为该区间包含第一个值而不包括最后的值。
 
 半闭区间的实用性在于当你使用一个0始的列表(如数组)时，非常方便地从0数到列表的长度。
@@ -353,7 +353,7 @@ for index in 1...5 {
 ```swift
 let names = ["Anna", "Alex", "Brian", "Jack"]
 let count = names.count
-for i in 0..count {
+for i in 0..<count {
     println("第 \(i + 1) 个人叫 \(names[i])")
 }
 // 第 1 个人叫 Anna
@@ -362,7 +362,7 @@ for i in 0..count {
 // 第 4 个人叫 Jack
 ```
 
-数组有4个元素，但`0..count`只数到3(最后一个元素的下标)，因为它是半闭区间。关于数组，请查阅[数组](04_Collection_Types.html#arrays)。
+数组有4个元素，但`0..<count`只数到3(最后一个元素的下标)，因为它是半闭区间。关于数组，请查阅[数组](04_Collection_Types.html#arrays)。
 
 <a name="logical_operators"></a>
 ## 逻辑运算

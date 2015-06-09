@@ -89,7 +89,7 @@ myCell.subtitle = "A custom cell"
 
 target 中任何 Swift 文件将会对 Objective-C .m 源文件可见，包括这个 import 语句。关于在 Objective-C 代码中使用 Swift 代码，详见 [Using Swift from Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_84)。
 
-|              | 导入到 Swift | 导入到 Swift  |
+|              | 导入到 Swift | 导入到 Objective-C  |
 | -------------|:-----------:|:------------:|
 | Swift 代码    | 不需要import语句  | #import "ProductModuleName-Swift.h”  |
 | Objective-C 代码     | 不需要import语句；需要 Objective-C bridging头文件| #import "Header.h"     |
@@ -139,7 +139,7 @@ myCell.subtitle = "A custom cell"
 
 这个 import 语句所包含的 Swift 文件都可以被同个框架 target 下的 Objective-C .m 源文件访问。关于在 Objective-C 代码中使用 Swift 代码，详见 [Using Swift from Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_84)。
 
-|              | 导入到 Swift | 导入到 Swift  |
+|              | 导入到 Swift | 导入到 Objective-C  |
 | -------------|:-----------:|:------------:| 
 | Swift 代码    | 不需要import语句  | #import "ProductName/ProductModuleName-Swift.h"  |
 | Objective-C 代码     | 不需要import语句；需要 Objective-C umbrella头文件| #import "Header.h"     |

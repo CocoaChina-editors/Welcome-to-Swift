@@ -63,12 +63,13 @@ let explicitDouble: Double = 70
 
 要创建一个空数组或者字典，使用初始化语法。
 
-    let emptyArray = String[]()
-    let emptyDictionary = Dictionary<String, Float>()
+    let emptyArray = [String]()
+    let emptyDictionary = [String: Float]()
 
 如果类型信息可以被推断出来，你可以用`[]`和`[:]`来创建空数组和空字典——就像你声明变量或者给函数传参数的时候一样。
 
-    shoppingList = []   // 去逛街并买点东西
+    shoppingList = []
+    occupations = [:]
 
 ## 控制流
 
@@ -87,7 +88,7 @@ let explicitDouble: Double = 70
 
 在`if`语句中，条件必须是一个布尔表达式——像`if score { ... }`这样的代码是错误的。
 
-你可以一起使用`if`和`let`来处理值缺失的情况。有些变量的值是可选的。一个可选的值可能是一个具体的值或者是`nil`，表示值缺失。在类型后面加一个问号来标记这个变量的值是可选的。
+你可以同时使用`if`和`let`来处理值缺失的情况。有些变量的值是可选的。一个可选的值可能是一个具体的值或者是`nil`，表示值缺失。在类型后面加一个问号来标记这个变量的值是可选的。
 
     var optionalString: String? = "Hello"
     optionalString == nil
@@ -102,7 +103,7 @@ let explicitDouble: Double = 70
 
 如果变量的可选值是`nil`，条件会判断为`false`，大括号中的代码会被跳过。如果不是`nil`，会将值赋给`let`后面的常量，这样代码块中就可以使用这个值了。
 
-`switch`支持任意类型的数据以及各种比较操作——不仅仅是整数以及测试相等。
+`switch`支持任意类型的数据以及各种比较操作——不限于整数或等值测试。
 
     let vegetable = "red pepper"
     switch vegetable {
@@ -205,7 +206,7 @@ let explicitDouble: Double = 70
 
     func returnFifteen() -> Int {
         var y = 10
-            func add() {
+        func add() {
             y += 5
         }
         add()
@@ -246,13 +247,13 @@ let explicitDouble: Double = 70
         (number: Int) -> Int in
         let result = 3 * number
         return result
-        })
+    })
 
 > 练习：重写闭包，对所有奇数返回0.
 
 有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
 
-你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。
+你可以通过参数位置而不是参数名字来引用参数——这个方法在很短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。
 
     sort([1, 5, 3, 12, 2]) { $0 > $1 }
 
@@ -333,12 +334,12 @@ let explicitDouble: Double = 70
         }
 
         var perimeter: Double {
-        get {
-            return 3.0 * sideLength
-        }
-        set {
-                    sideLength = newValue / 3.0
-        }
+            get {
+                return 3.0 * sideLength
+            }
+            set {
+                sideLength = newValue / 3.0
+            }
         }
 
         override func simpleDescription() -> String {
@@ -364,14 +365,14 @@ let explicitDouble: Double = 70
 
     class TriangleAndSquare {
         var triangle: EquilateralTriangle {
-        willSet {
-            square.sideLength = newValue.sideLength
-        }
+            willSet {
+                square.sideLength = newValue.sideLength
+            }
         }
         var square: Square {
-        willSet {
-            triangle.sideLength = newValue.sideLength
-        }
+            willSet {
+                triangle.sideLength = newValue.sideLength
+            }
         }
         init(size: Double, name: String) {
             square = Square(sideLength: size, name: name)
@@ -563,10 +564,10 @@ let explicitDouble: Double = 70
 
 在尖括号里写一个名字来创建一个泛型函数或者类型。
 
-    func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
-        var result = ItemType[]()
-        for i in 0..times {
-            result += item
+    func repeat<Item>(item: Item, times: Int) -> [Item] {
+        var result = [Item]()
+        for i in 0..<times {
+            result.append(item)
         }
         return result
     }

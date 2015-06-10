@@ -2,9 +2,9 @@
 
 ------
 
-*泛型代码*可以确保你写出灵活的，可重用的函数和定义出任何你所确定好的需求的类型。你的可以写出避免重复的代码，并且用一种清晰的，抽象的方式表达出来。
+*泛型代码*可以确保你写出灵活的，可重用的函数和定义出任何你所确定好的需求的类型。你可以写出避免重复的代码，并且用一种清晰的，抽象的方式表达出来。
 
-泛型是Swift需要强大特征中的其中一个，许多Swift标准库是通过泛型代码构建出来的。事实上，你已经使用泛型贯穿着整个Language Guide，即便你没有实现它。例如：Swift的Array和Dictionary类型都是泛型集。你可以创建一个Int数组，也可创建一个String数组，或者甚至于可以是任何其他Swift的类型数据数组。同样的，你也可以创建存储任何指定类型的字典(dictionary)，而且这些类型可以是没有限制的。
+泛型是Swift许多强大特征中的其中一个，许多Swift标准库是通过泛型代码构建出来的。事实上，你已经使用泛型贯穿着整个Language Guide，即便你没有实现它。例如：Swift的Array和Dictionary类型都是泛型集。你可以创建一个Int数组，也可创建一个String数组，或者甚至于可以是任何其他Swift的类型数据数组。同样的，你也可以创建存储任何指定类型的字典(dictionary)，而且这些类型可以是没有限制的。
 
 ------
 
@@ -459,7 +459,7 @@ if allItemsMatch(stackOfStrings, arrayOfStrings) {
 }
 // prints "All items match."
 ```
- 上面的例子创建一个`Stack`单例来存储`String`，然后压了三个字符串进栈。这个例子也创建了一个`Array`单例，并初始化包含三个同栈里一样的原始字符串。即便栈和数组否是不同的类型，但他们都遵循`Container`协议，而且他们都包含同样的类型值。你因此可以调用`allItemsMatch`函数，用这两个容器作为它的参数。在上面的例子中，`allItemsMatch`函数正确的显示了所有的这两个容器的items匹配。
+ 上面的例子创建一个`Stack`单例来存储`String`，然后压了三个字符串进栈。这个例子也创建了一个`Array`单例，并初始化包含三个同栈里一样的原始字符串。即便栈和数组是不同的类型，但他们都遵循`Container`协议，而且他们都包含同样的类型值。你因此可以调用`allItemsMatch`函数，用这两个容器作为它的参数。在上面的例子中，`allItemsMatch`函数正确的显示了所有的这两个容器的items匹配。
 
   [1]: https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown
   [2]: https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/stackPushPop_2x.png

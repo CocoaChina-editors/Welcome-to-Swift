@@ -165,9 +165,10 @@ Swift尽可能避免让您直接访问指针。然而，当您需要直接操作
     //Swift
     func takesAVoidPointer(x: UnsafePointer<Void>)  { /* ... */ }
 ````
+
 那么您可以使用以下任何一种方式来调用这个函数：
-￼
-````
+
+```
     //Swift
     var x: Float = 0.0, y: Int = 0
 	var p: UnsafePointer<Float> = nil, q: UnsafePointer<Int> = nil
@@ -179,7 +180,8 @@ Swift尽可能避免让您直接访问指针。然而，当您需要直接操作
 	takesAVoidPointer([1.0, 2.0, 3.0] as [Float])
 	let intArray = [1, 2, 3]
 	takesAVoidPointer(intArray)
-````
+
+```
 
 ### 可变指针
 

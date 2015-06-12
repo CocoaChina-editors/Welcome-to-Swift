@@ -31,7 +31,7 @@ Swift提供了一些与C语言基本类型如`char`,`int`,`float`和`double`等�
 
 例如，看这个Objective-C枚举的声明：
 
-````
+```
     //Objective-C
     typedef NS_ENUM(NSInteger, UITableViewCellStyle) {
         UITableViewCellStyleDefault,
@@ -40,11 +40,11 @@ Swift提供了一些与C语言基本类型如`char`,`int`,`float`和`double`等�
         UITableViewCellStyleSubtitle
     };
 
-````
+```
 
 在Swift中，会被导入为这样：
 
-````
+```
     //Swift
     enum UITableViewCellStyle: Int {
         case Default
@@ -53,15 +53,15 @@ Swift提供了一些与C语言基本类型如`char`,`int`,`float`和`double`等�
         case Subtitle
     }
 
-````
+```
 
 当你需要使用一个枚举值时，使用以点（.）开头的枚举名称：
 
-````
+```
     //Swift
     let cellStyle: UITableViewCellStyle = .Default
 
-````
+```
 
 ## 选项集
 
@@ -130,24 +130,24 @@ Swift尽可能避免让您直接访问指针。然而，当您需要直接操作
 
 ### 常量指针
 
-当一个方法被声明为接受`UnsafePointer<Type>`参数时，这个函数可以接受下列任何一个类型作为参数：
+当一个函数被声明为接受`UnsafePointer<Type>`参数时，这个函数可以接受下列任何一个类型作为参数：
 
 * `nil`，作为空指针传入；
 * 一个`UnsafePointer<Type>`，`UnsafeMutablePointer<Type>`， 或者`AutoreleasingUnsafeMutablePointer<Type>`的值，在必要情况下会转换成`UnsafePointer<Type>`的值；
 * 一个`String`类型的值，如果`Type`是`Int8`或者`UInt8`的话。该字符串会自动在一个缓冲区内被转换为UTF8，该缓冲区在本次调用期间有效；
-* 一个左值操作数为`Type`类型的输入输出表达式，传入的是这个左值的内存地址；
+* 一个左值操作数为`Type`类型的输入输出（inout）表达式，传入的是这个左值的内存地址；
 * 一个`[Type]`值，传入该数组的起始指针，并且它的生命周期将在本次调用期间被延长。
 
 如果您这样定义了一个函数：
 
-````
+```
     //Swift
     func takesAPointer(x: UnsafePointer<Float>) { /*...*/ }
-````
+```
 
 那么您可以使用以下任何一种方式来调用这个函数：
 
-````
+```
     //Swift
     var x: Float = 0.0
 	var p: UnsafePointer<Float> = nil
@@ -155,16 +155,16 @@ Swift尽可能避免让您直接访问指针。然而，当您需要直接操作
 	takesAPointer(p)
 	takesAPointer(&x)
 	takesAPointer([1.0, 2.0, 3.0])
-````
+```
 
 如果函数被声明为使用一个`UnsafePointer<Void>`参数，那么这个函数接受任何`Type`的`UnsafePointer<Type>`类型的操作数。
 ￼
 如果您这样定义了一个函数：
 
-````
+```
     //Swift
     func takesAVoidPointer(x: UnsafePointer<Void>)  { /* ... */ }
-````
+```
 
 那么您可以使用以下任何一种方式来调用这个函数：
 
@@ -185,86 +185,116 @@ Swift尽可能避免让您直接访问指针。然而，当您需要直接操作
 
 ### 可变指针
 
-当一个函数被声明为接受*CMutablePointer\<Type\>*参数时，这个函数可以接受下列任何一个类型作为参数：
+当一个方法被声明为接受`UnsafeMutablePointer<Type>`参数时，这个函数可以接受下列任何一个类型作为参数：
 
-* *nil*,作为空指针传入
-* 一个*CMutablePointer\<Type\>*类型的值
-* 一个操作数是Type类型的左值的输入输出表达式，作为这个左值的内存地址传入
-* 一个输入输出Type[]值，作为一个数组的起始指针传入，并且它的生命周期将在这个调用期间被延长
+* `nil`，作为空指针传入；
+* 一个`UnsafeMutablePointer<Type>`类型的值；
+* 一个输入输出（inout）表达式，其左值操作数是`Type`类型的，且被存储起来了。传入的是这个左值的内存地址；
+* 一个输入输出的`[Type]`类型的值，传入的是该数组的起始指针，并且它的生命周期将在本次调用期间被延长。
 
-如果您像这样声明了一个函数：
+如果您这样定义了一个函数：
 
-````
+```
     //Swift
-    func takesAMutablePointer(x: CMutablePointer<Float>) { /*...*/ }
+    func takesAMutablePointer(x: UnsafeMutablePointer<Float>) { /*...*/ }
 
-````
+```
 
 那么您可以使用以下任何一种方式来调用这个函数：
 
-````
+```
     //Swift
     var x: Float = 0.0
-    var p: CMutablePointer<Float> = nil
-    var a: Float[] = [1.0, 2.0, 3.0]
+	var p: UnsafeMutablePointer<Float> = nil
+	var a: [Float] = [1.0, 2.0, 3.0]
+	takesAMutablePointer(nil)
+	takesAMutablePointer(p)
+	takesAMutablePointer(&x)
+	takesAMutablePointer(&a)
+```
 
-    takesAMutablePointer(nil)
-    takesAMutablePointer(p)
-    takesAMutablePointer(&x)
-    takesAMutablePointer(&a)
-````
-
-当函数被声明使用一个*CMutableVoidPointer*参数，那么这个函数接受任何和*CMutablePointer\<Type\>*相似类型的Type操作数。
+如果函数被声明使用一个`UnsafeMutablePointer<Void> `参数，那么这个函数接受任何`Type`的`UnsafeMutablePointer<Type>`类型的操作数。
 
 如果您这样定义了一个函数：
 
-````
+```
     //Swift
-    func takesAMutableVoidPointer(x: CMutableVoidPointer) { /* ... */ }
-````
+    func takesAMutableVoidPointer(x: UnsafeMutablePointer<Void>)  { /* ... */ }
+```
+
 那么您可以使用以下任何一种方式来调用这个函数：
 
-````
+```
     //Swift
     var x: Float = 0.0, y: Int = 0
-    var p: CMutablePointer<Float> = nil, q: CMutablePointer<Int> = nil
-    var a: Float[] = [1.0, 2.0, 3.0], b: Int = [1, 2, 3]
+	var p: UnsafeMutablePointer<Float> = nil, q: UnsafeMutablePointer<Int> = nil
+	var a: [Float] = [1.0, 2.0, 3.0], b: [Int] = [1, 2, 3]
+	takesAMutableVoidPointer(nil)
+	takesAMutableVoidPointer(p)
+	takesAMutableVoidPointer(q)
+	takesAMutableVoidPointer(&x)
+	takesAMutableVoidPointer(&y)
+	takesAMutableVoidPointer(&a)
+	takesAMutableVoidPointer(&b)
 
-    takesAMutableVoidPointer(nil)
-    takesAMutableVoidPointer(p)
-    takesAMutableVoidPointer(q)
-    takesAMutableVoidPointer(&x)
-    takesAMutableVoidPointer(&y)
-    takesAMutableVoidPointer(&a)
-    takesAMutableVoidPointer(&b)
-````
-### 自动释放不安全指针
+```
 
-当一个函数被声明为接受*AutoreleasingUnsafePointer\<Type\>*参数时，这个函数可以接受下列任何一个类型作为参数：
+### 自动释放指针
 
-* *nil*,作为空指针传入
-* 一个*AutoreleasingUnsafePointer\<Type\>*值
-* 其操作数是原始的，复制到一个临时的没有所有者的缓冲区的一个输入输出表达式，该缓冲区的地址传递给调用，并返回时，缓冲区中的值加载，保存，并重新分配到操作数。
+当一个函数被声明为接受`AutoreleasingUnsafeMutablePointer<Type>`参数时，这个函数可以接受下列任何一个类型作为参数：
 
-**注：这个列表没有包含数组。**
+* `nil`，作为空指针传入；
+* 一个`AutoreleasingUnsafeMutablePointer<Type>`类型的值；
+* 一个输入输出（inout）表达式，其操作数首先被拷贝到一个无拥有者的缓冲区，传递给被调用函数的就是这个缓冲区的地址。在调用返回时，缓冲区中的值被加载、保存、并重新复制给操作数。
+
+注意，这个列表中没有包含数组。
 
 如果您这样定义了一个函数：
-````
+
+```
     //Swift
-    func takesAnAutoreleasingPointer(x: AutoreleasingUnsafePointer<NSDate?>) { /* ... */ }
-````
+    func takesAnAutoreleasingPointer(x: AutoreleasingUnsafeMutablePointer<NSDate?>) { /* ... */ }
+```
+
 那么您可以使用以下任何一种方式来调用这个函数：
-````
+
+```
     //Swift
     var x: NSDate? = nil
-    var p: AutoreleasingUnsafePointer<NSDate?> = nil
-￼￼￼￼￼
-    takesAnAutoreleasingPointer(nil)
-    takesAnAutoreleasingPointer(p)
-    takesAnAutoreleasingPointer(&x)
-````
+	var p: AutoreleasingUnsafeMutablePointer<NSDate?> = nil
+	takesAnAutoreleasingPointer(nil)
+	takesAnAutoreleasingPointer(p)
+	takesAnAutoreleasingPointer(&x)
+```
 
-**注：C语言函数指针没有被Swift引进。**
+被指针指向的类型并不会被桥接。例如，`NSString **`转换到Swift后，是`AutoreleasingUnsafeMutablePointer<NSString?>`，而不是`AutoreleasingUnsafeMutablePointer<String?>`。
+
+### 函数指针
+
+C语言的函数指针通过调用约定，以闭包的形式被引入Swift中，表示形式为` @convention(c)`。例如，一个类型为`int (*)(void)`的C语言函数指针，会转换为Swift的`@convention(c) () -> Int32`。
+
+在调用一个以函数指针为参数的函数时，给它传的值可以是一个顶层的Swift函数，也可以是个闭包字面量，或者`nil`。只有符合C语言函数指针调用约定的Swift函数，才能用来给函数指针类型的形参传值。例如，Core Foundation的`CFArrayCreateMutable(_:_:_:)`函数，它有个参数的类型为`CFArrayCallBacks`结构体。这个`CFArrayCallBacks`结构体就是用一些函数指针进行初始化的：
+
+```
+	func customCopyDescription(p: UnsafePointer<Void>) -> Unmanaged<CFString>! {
+    	// return an Unmanaged<CFString>! value
+	}
+ 
+	let callbacks = CFArrayCallBacks(
+    	version: 0 as CFIndex,
+    	retain: nil,
+    	release: nil,
+    	copyDescription: customCopyDescription,
+    	equal: { (p1, p2) -> Boolean in
+        	// return Boolean value
+    	}
+	)
+ 
+	var mutableArray = CFArrayCreateMutable(nil, 0, callbacks)
+```
+
+在上面的例子中，在`CFArrayCallBacks`初始化时，传给`retain`和`release`作参数的是`nil`，传给`copyDescription`作参数的是函数`customCopyDescription`，传给`equal`作参数的是一个闭包字面量。
+
 
 ## 全局常量
 
@@ -276,37 +306,37 @@ Swift编译器不包含预处理器。取而代之的是，它充分利用了编
 
 ### 简单宏
 
-在C和Objective-C，您通常使用的#define指令定义的一个基本常数，在Swift，您可以使用全局常量来代替。例如：一个全局定义*#define FADE_ANIMATION_DURATION 0.35*，在Swift可以使用*let FADE_ANIMATION_DURATION = 0.35*来更好的表述。由于简单的用于定义常量的宏会被直接被映射成Swift全局量，Swift编译器会自动引进在C或Objective-C源文件中定义的简单宏。
+在C和Objective-C中，通常使用`#define`指令来定义一个简单的常数，在Swift，您可以使用全局常量来代替。例如：定义一个常数的`#define FADE_ANIMATION_DURATION 0.35`，在Swift使用`let FADE_ANIMATION_DURATION = 0.35`来表述会更好一些。由于简单的用于定义常量的宏会被直接被映射成Swift全局量，Swift编译器会自动引进在C或Objective-C源文件中定义的简单宏。
 
 ### 复杂宏
 
-在C和Objective-C中使用的复杂宏在Swift中并没有副本。复杂宏是那些不用来定义常量的宏，包含，函数式宏。您在C和Objective-C使用复杂的宏以避免类型检查的限制或避免重新键入大量的样板代码。然而，宏也会产生Bug和重构的困难。在Swift中你可以使用函数和泛型来达到同样的效果，没有任何的妥协。因此，在C和Objective-C源文件中定义的复杂宏在Swift是不能使用的。
+在C和Objective-C中使用的复杂宏在Swift中没有相对应的东西。复杂宏是那些不用来定义常量的宏，包含了括号的函数式宏。您在C和Objective-C使用复杂的宏以避免类型检查的限制或避免重新键入大量的样板代码。然而，宏也会造成debug和重构起来更困难。在Swift中你可以使用函数和泛型来达到同样的效果，而没有任何的委屈折中。因此，在C和Objective-C源文件中定义的复杂宏在Swift是不能使用的。
 
-### 编译配置
+### 生成配置
 
-Swift代码和C、Objective-C代码被有条件的编译也是用不同的方式的。SWIFT代码可以根据生成配置的评价可以有条件地编译。生成配置包括true和false字面值，命令行标志，和下表中的平台测试函数。您可以使用-D \<＃Flag＃\>指定命令行标志。
+Swift代码使用和C、Objective-C代码不同的方式进行条件编译。Swift代码可以根据生成配置的组合进行条件编译。生成配置包括`true`和`false`字面值，命令行标志，和下表中的平台测试函数。您可以使用`-D <＃Flag＃>`指定命令行标志。
 
 | 函数 | 有效参数 |
 | --- | --- |
-| os() | OSX, iOS |
-| arch() | x86_64, arm, arm64, i386 |
+| os() | OSX，iOS，watchOS |
+| arch() | x86_64，arm，arm64，i386 |
 
->注意：arm 的生成配置不会为64位arm设备返回*true*，i386 的生成配置当为32位iOS 模拟器编译代码时返回*true*。
+>注意：生成配置`arch(arm)`不会为64位ARM设备返回`true`，生成配置`arch(i386)`在为32位iOS模拟器编译代码时会返回`true`。
 
-一个简单的有条件编译可以像下面这段代码：
+一个简单的条件编译可以像下面这段代码：
 
-````
+```
     #if build configuration
       statements
     #else
       statements
     #endif
 
-````
+```
 
-一个由零个或多个有效的Swift语句声明的*statements*，可以包括表达式，语句和控制流语句。您可以添加额外的构建配置要求，条件编译说明用&&和| |操作符，否定生成配置！操作符，添加条件控制块用＃elseif：
+由零个或多个有效的Swift语句组成的*statements*，可以包括表达式，普通语句和控制流语句。可以使用`&&`和`||`操作符往一个条件编译语句上添加新的编译条件，使用`!`操作符来否定某条件，使用`#elseif`来添加编译块：
 
-````
+```
     #if build configuration && !build configuration
       statements
     #elseif build configuration
@@ -314,6 +344,6 @@ Swift代码和C、Objective-C代码被有条件的编译也是用不同的方式
     #else
       statements
     #endif
-````
+```
 
-与C语言编译器的条件编译相反，Swift条件编译语句必须完全是自包含和语法有效的代码块。这是因为即使它没有被编译的Swift代码也是被进行语法检查。
+与C语言编译器的条件编译不同的是，Swift条件编译的语句必须是独立完整、语法有效的代码块。这是因为所有的Swift代码都会做语法检查，而不管会不会被编译。

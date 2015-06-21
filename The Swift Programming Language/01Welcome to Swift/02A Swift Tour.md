@@ -149,7 +149,7 @@ let explicitDouble: Double = 70
     n
 
     var m = 2
-    do {
+    repeat {
         m = m * 2
     } while m < 100
     m

@@ -154,10 +154,10 @@ let explicitDouble: Double = 70
     } while m < 100
     m
 
-你可以在循环中使用`..`来表示范围，也可以使用传统的写法，两者是等价的：
+你可以在循环中使用`..<`和`...`来表示范围，也可以使用传统的写法，两者是等价的：
 
     var firstForLoop = 0
-    for i in 0..3 {
+    for i in 0..<3 {
         firstForLoop += i
     }
     firstForLoop
@@ -168,7 +168,7 @@ let explicitDouble: Double = 70
     }
     secondForLoop
 
-使用`..`创建的范围不包含上界，如果想包含的话需要使用`...`。
+使用`..<`创建的范围不包含上界，如果想包含的话需要使用`...`。
 
 ## 函数和闭包
 

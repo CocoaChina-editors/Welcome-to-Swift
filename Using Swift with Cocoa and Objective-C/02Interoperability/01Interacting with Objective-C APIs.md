@@ -10,7 +10,7 @@
 本页包含内容：
 
 -   [初始化](#initialization)
--   [可失败初始化](#Failable Initialization)
+-   [可失败初始化](#failable_initialization)
 -   [访问属性](#accessing_properties)
 -   [方法](#working_with_methods)
 -   [id 兼容性（id Compatibility）](#id_compatibility)
@@ -19,7 +19,6 @@
 -   [闭包（Closures）](#closures)
 -   [比较对象](#object_comparison)
 -   [Swift 类型兼容性](#swift_type_compatibility)
--   [为Objective-C暴露Swift接口](#Exposing_Swift_Interfaces_in_Objective-C)
 -   [动态分发](#Requiring_Dynamic_Dispatch)
 -   [轻量级泛型](#Lightweight_Generics)
 -   [Objective-C 选择器（Selectors）](#objective_c_selectors)
@@ -67,7 +66,7 @@ UIColor *color = [UIColor colorWithRed:0.5 green:0.0 blue:0.5 alpha:1.0];
 let color = UIColor(red: 0.5, green: 0.0, blue: 0.5, alpha: 1.0)
 ```
 
-<a name="Failable Initialization"></a>
+<a name="failable_initialization"></a>
 ##可失败初始化
 
 在 Objective-C 中，构造器会直接返回他们初始化的对象。为了通知调用者初始化失败，Objective-C 构造器会返回`nil`。在 Swift 中，这种模式被内置到语言特性中，被称为_可失败初始化_。在 iOS 和 OSX 系统框架中许多 Objective-C 构造器会被检查是否会初始化失败。如果初始化不会失败，这些 Objective-C 构造器便会以`init(...)`被导入，如果初始化可能会失败，则会以`init?(...)`被导入。在我们自己的 Objective-C 类以及未被检查的框架类中，构造器会以`init!(...)`被导入。例如，当图片文件在指定路径中不存在时，`UIImage(contentsOfFile:)`构造器初始化`UIImage`对象便会失败。如果初始化成功，我们可以用可选值绑定来对可失败初始化的结果进行解包。
@@ -184,18 +183,13 @@ let timeInterval = myDate.timeIntervalSinceReferenceDate
 
 在 Objective-C 中，对象的引用可以是值为`NULL`的原始指针（在 Objective-C 中的简称为`nil`）。而在Swift中，所有的值–包括结构体与对象的引用–都被保证为非空。作为替代，你将这个可以为空的值包装为optional type。当你需要宣告值为空时，你需要使用`nil`。你可以在[Optionals](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/01The%20Basics.md#optionals)中了解更多。
 
-因为Objective-C不会保证一个对象的值是否非空，Swift 在引入 Objective-C 的 API 的时候，确保了所有函数的返回类型与参数类型都是可选的，在你使用 Objective-C 的 API 之前，你应该检查并保证该值非空。
-在某些情况下，你可能绝对确认某些Objective-C方法或者属性永远不应该返回一个nil的对象引用。为了让对象在这种情况下更加易用，Swift使用 implicitly unwrapped optionals 方法引入对象， implicitly unwrapped optionals 包含optional 类型的所有安全特性。此外，你可以直接访问对象的值而无需检查nil。当你访问这种类型的变量时， implicitly unwrapped optional 首先检查这个对象的值是否不存在，如果不存在，将会抛出运行时错误。
+Objective-C 能够使用空值标记来设定一个参数类型，属性类型或者返回值类型是否可以为 NULL 或者 为 nil 值。单独的类型声明可以使用`__nullable`和`__nonnull`标注，空值的范围性的声明可以使用`NS_ASSUME_NONNULL_BEGIN`和`NS_ASSUME_NONNULL_END`宏。如果一个类型没有任何的空值标注信息，Swift 就不能分辨出可选值和非可选值类型，并且将作为隐式的解包可选值导入。
 
+-  以`__nonnull`或者范围宏标注声明的空值类型，被作为非空可选值`non-optional`导入到 Swift。
+-  以`__nullable`标注声明的空值类型，被作为可选值导入到 Swift。
+-  没有以空值标注声明的类型被作为隐式的解包可选值导入到 Swift。
 
-In Objective-C, you work with references to objects using raw pointers that could be NULL (referred to as nil in Objective-C). In Swift, all values—including structures and object references—are guaranteed to be non–null. Instead, you represent a value that could be missing by wrapping the type of the value in an optional type. When you need to indicate that a value is missing, you use the value nil. For more information about optionals, see Optionals in The Swift Programming Language.
-
-Objective-C can use nullability annotations to designate whether a parameter type, property type, or return type, can have a NULL or nil value. Individual type declarations can be audited using the __nullable and __nonnull annotations, or entire regions can be audited for nullability using the NS_ASSUME_NONNULL_BEGIN and NS_ASSUME_NONNULL_END macros. If no nullability information is provided for a type, Swift cannot distinguish between optional and non-optional references, and imports it as an implicitly unwrapped optional.
-
-Types declared to be nullable, either with a __nonnull annotation or in an audited region, are imported by Swift as a non-optional.
-Types declared to be nullable with a __nullable annotation, are imported by Swift as a optional.
-Types declared without a nullability annotation are imported by Swift as an implicitly unwrapped optional.
-For example, consider the following Objective-C declarations:
+例如，考虑如下的 Objective-C 声明：
 
 ```Objective-C
 @property (nullable) id  nullableProperty;
@@ -277,14 +271,12 @@ let area = rect.area
 Objective-C 中的`blocks`会被自动导入为 Swift 中的闭包。例如，下面是一个 Objective-C 中的 block 变量：
 
 ```objective-c
-//Objective-C
 void (^completionBlock)(NSData *, NSError *) = ^(NSData *data, NSError *error) {/* ... */}
 ```
 
 而它在 Swift 中的形式为
 
 ```swift
-//Swift
 let completionBlock: (NSData, NSError) -> Void = {data, error in /* ... */}
 ```
 
@@ -334,12 +326,12 @@ class Белка {
 
 当你在 Swift 类中使用`@objc(<#name#>)`关键字，这个类可以不需要命名空间即可在 Objective-C 中使用。这个关键字在你迁徙 Objecive-C 代码到 Swift 时同样也非常有用。由于归档过的对象存贮了类的名字，你应该使用`@objc(<#name#>)`来声明与旧的归档过的类相同的名字，这样旧的类才能被新的 Swift 类解档。
 
-<a name="Exposing_Swift_Interfaces_in_Objective-C"></a>
-## 为Objective-C暴露Swift接口
-
 <a name="Requiring_Dynamic_Dispatch"></a>
 ## 请求动态分配
 
+@objc 属性将你的 Swift API 暴露给了 Objective-C 运行时，但是它并不能保证一个属性，方法，下标，或构造器的动态调度。通过绕过 Objective-C 运行时，Swift 编译器可能仍然 devirtualize 或内联成员访问来优化代码的性能。当你用动态修改符标记一个成员声明时，对该成员的访问始终是动态调度。由于标有动态修改声明使用 Objective-C 运行时来调度，它们被隐式的用 @objc 属性标记。
+
+动态分配的需求很少是必要的。但是，当你要在运行时替换一个 API 的实现时你必须使用动态修改。例如，你可以使用 Objective-C 运行时方法`method_exchangeImplementations`函数来替换 app 正在运行时某个方法的实现。如果 Swift 编译器内联了方法的实现或者 devirtualized 对它的访问，新的实现将不会被使用。
 
 <a name="Lightweight_Generics"></a>
 ## 轻量级泛型

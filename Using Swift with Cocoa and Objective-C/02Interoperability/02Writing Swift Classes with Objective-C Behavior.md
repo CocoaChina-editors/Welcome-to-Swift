@@ -1,6 +1,6 @@
 > 翻译：[halinuya](https://github.com/halinuya)
 
-> 校对：[song-buaa](https://github.com/song-buaa) [ChildhoodAndy](https://github.com/dabing1022)
+> 校对：[song-buaa](https://github.com/song-buaa) [MonicaZhou](https://github.com/MonicaZhou) [ChildhoodAndy](https://github.com/dabing1022)
 
 
 # 使用Objective-C特性编写Swift类
@@ -14,6 +14,7 @@
 -  [集成Interface Builder（Integrating with Interface Builder）](#integrating_with_interface_builder)
 -  [指明属性特性（Specifying Property Attributes）](#specifying_property_attributes)
 -  [实现Core Data Managed Object子类（Implementing Core Data Managed Object Subclasses）](#implementing_core_data_managed_object_subclasses)
+-  [使用带Objective-C API的Swift类名](#using_swift_class_names_with_objective_c_apis)
 
 互用性（互操作性）使开发者可以定义融合了 Objective-C 语言特性的Swift类。编写 Swift 类时，不仅可以继承 Objective-C 语言编写的父类，采用 Objective-C 的协议，还可以利用 Objective-C 的一些其它功能。这意味着，开发者可以基于 Objective-C 中已有的熟悉、可靠的类、方法和框架来创建 Swift 类，并结合 Swift 提供的现代化和更有效的语言特点对其进行优化。
 
@@ -32,6 +33,12 @@ class MySwiftViewController: UIViewController {
 
 开发者能够从 Objective-C 的父类中继承所有的功能。如果开发者要覆盖父类中的方法，不要忘记使用`override`关键字。
 
+### NSCoding协议`NSCoding`协议要求符合的类型实现所需的构造器`init(coder:)`。直接采用`NSCoding`协议的类必须实现这个方法。采用`NSCoding`协议的类的子类，这些类有一个或者多个自定义的构造器或者不带初始化值的属性，也必须实现这个方法。Xcode提供了以下占位实现来提醒：
+
+```required init(coder aDecoder: NSCoder) {	fatalError("init(coder:) has not been implemented")}
+```
+对那些从 Storyboards 里加载的对象，或者用 NSUserDefaults 或 NSKeyedArchiver 类归档到磁盘的对象，你必须提供一个完整的初始化程序的实现。然而，当类型以此种方式无法实例化的时候，你可能并不需要实现构造器。
+
 <a name="adopting_protocols"></a>
 ## 采用协议
 
@@ -45,12 +52,14 @@ class MySwiftViewController: UIViewController, UITableViewDelegate, UITableViewD
 
 Objective-C 协议与 Swift 协议使用上是一致的。如果开发者想在 Swift 代码中引用 `UITableViewDelegate`协议，可以直接使用`UITableViewDelegate`（跟在 Objective-C 中引用`id<UITableViewDelegate>`是等价的）。
 
+因为在 Swift 中，类和协议的命名空间是统一的，Objective-C 里的 NSObject 协议被重新映射到 Swift 里的 NSObjectProtocol。
+
 <a name="writing_initializers_and_deinitializers"></a>
 ## 编写构造器和析构器
 
-Swift 的编译器确保在初始化时，构造器不允许类里有任何未初始化的属性，这样做能够增加代码的安全性和可预测性。另外，与 Objective-C 语言不同，Swift 不提供单独的内存分配方法供开发者调用。当你使用原生的 Swift 初始化方法时（即使是和 Objective-C 类协作），Swift 会将 Objective-C 的初始化方法转换为 Swift 的初始化方法。关于如何实现开发者自定义构造器的更多信息，请查看[构造器](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/14Initialization.md)。
+Swift 的编译器确保在初始化时，构造器不允许类里有任何未初始化的属性，这样做能够增加代码的安全性和可预测性。另外，与 Objective-C 语言不同，Swift 不提供单独的内存分配方法供开发者调用。当你使用原生的 Swift 初始化方法时（即使是和 Objective-C 类协作），Swift 会将 Objective-C 的初始化方法转换为 Swift 的初始化方法。关于如何实现开发者自定义构造器的更多信息，请查看[构造器](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18)。
 
-当开发者希望在类被释放前，执行额外的清理工作时，需要执行一个析构过程来代替`dealloc`方法。在实例被释放前，Swift 会自动调用析构器来执行析构过程。Swift 调用完子类的析构器后，会自动调用父类的析构器。当开发者使用 Objective-C 类或者是继承自 Objective-C 类的 Swift 类时，Swift 也会自动为开发者调用这个类的父类里的`dealloc`方法。关于如何实现开发者自定义析构器的更多信息，请查看[析构器](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/15Deinitialization.md)。
+当开发者希望在类被释放前，执行额外的清理工作时，需要执行一个析构过程来代替`dealloc`方法。在实例被释放前，Swift 会自动调用析构器来执行析构过程。Swift 调用完子类的析构器后，会自动调用父类的析构器。当开发者使用 Objective-C 类或者是继承自 Objective-C 类的 Swift 类时，Swift 也会自动为开发者调用这个类的父类里的`dealloc`方法。关于如何实现开发者自定义析构器的更多信息，请查看[析构器]https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Deinitialization.html#//apple_ref/doc/uid/TP40014097-CH19)。
 
 <a name="integrating_with_interface_builder"></a>
 ## 集成Interface Builder
@@ -116,9 +125,19 @@ Swift 里属性默认都是强类型的。使用`weak`关键字修饰一个属�
 
 ### 拷贝
 
-在 Swift 中，Objective-C 的`copy`特性被转换为`@NSCopying`属性。这一类的属性必须遵守 `NSCopying`协议。更多信息，请查阅[特性](https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/09Classes%20and%20Structures.md)。
+在 Swift 中，Objective-C 的`copy`特性被转换为`@NSCopying`属性。这一类的属性必须遵守 `NSCopying`协议。更多信息，请查阅[特性](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13)。
 
 <a name="implementing_core_data_managed_object_subclasses"></a>
 ## 实现Core Data Managed Object子类
 
 Core Data 提供了基本存储和实现`NSManagedObject`子类的一组属性。在与Core Data 模型中管理对象子类相关的特性或者关系的每个属性定义之前，将`@NSmanaged`特性加入。与 Objective-C 里面的 `@dynamic`特性类似，`@NSManaged`特性告知 Swift 编译器，这个属性的存储和实现将在运行时完成。但是，与`@dynamic`不同的是，`@NSManaged`特性仅在 Core Data 支持中可用。
+
+Swift 类被命名空间化---他们局限于被编译的模块中（最典型的是Target）。为了使用带 Core Data 模型的`NSManagedObject`类的 Swift 子类，在模型实体监视器的类区域里，用模块名字作为类名的前缀。![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/Art/coredatanamespace_2x.png)
+
+<a name="using_swift_class_names_with_objective_c_apis"></a>
+## 使用带Objective-C API的Swift类名
+
+Swift 类的命名基于他们被编译的模块，即使是使用来自 Objective-C 的代码。和 Objective-C 不同的是，所有的类都是全局命名空间的一部分，必须没有相同的名字，Swift 类可以基于他们存在的模块来消除歧义。比如，被称为 MyFramework 框架中的被叫做DataManager 的 Swift 类的全限定名就是 MyFramework.DataManager。一个 Swift 应用目标就是模块本身，所以，在一个叫 MyGreatApp 的应用里，叫 Observer 的 Swift 类的全限定名是 MyGreatApp.Observer。
+为了保存在 Objective-C 代码里使用的 Swift 类，Swift类用他们的全限定名暴漏给 Objective-C 运行时。因此，当你使用那些对 Swift 类的字符串代表起作用的 API，必须包含类的全限定名。比如，当你创建一个基于文档的 Mac 应用，要在应用的 Info.plist 里提供 NSDocument 子类的名字。Swift里，你必须使用文档子类的全名，包括从你的应用或者框架里派生出来的模块名字。	下面的例子中，`NSClassFromString`方法用于检索一个来自字符串代表的类的引用。为了检索 Swift 类，需要使用全限定名，包括应用的名字。
+	
+```	swiftlet myPersonClass:AnyClass(NSClassFromString("MyGreatApp.Person"))```

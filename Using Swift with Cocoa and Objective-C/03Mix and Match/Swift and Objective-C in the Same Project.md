@@ -3,8 +3,6 @@
 > 校对：[ChildhoodAndy](https://github.com/dabing1022)
 
 
-
-
 # 在同个工程中使用 Swift 和 Objective-C
 ------------------------------
 
@@ -15,6 +13,7 @@
 -   [在同个 Framework 的 target 中导入（Importing Code from Within the Same Framework Target）](#importing_code_from_within_the_same_framework_target)
 -   [导入外部 framework（Importing External Frameworks）](#importing_external_frameworks)
 -   [在 Objective-C 中使用 Swift（Using Swift from Objective-C）](#using_swift_from_objective-c)
+-   [为 Objective-C 接口重写 Swift 名称](#overriding_swift_names_for_Objective)
 -   [Product 模块命名（Naming Your Product Module）](#naming_your_product_module)
 -   [问题解决提示（Troubleshooting Tips and Reminders）](#troubleshooting_tips_and_reminders)
 
@@ -48,11 +47,9 @@ Objective-C 和 Swift 文件可以在一个工程中并存，不管这个工程�
 
 #### 在同一 target 中将 Objective-C 代码导入到 Swift 中
 
-1. 在 Objective-C 桥接头文件中，import 任何你想暴露给 Swift 的头文件，例如：
+1. 在 Objective-C 桥接头文件中，`import`任何你想暴露给 Swift 的头文件，例如：
 
 ```objective-c
-// OBJECTIVE-C
-
 #import "XYZCustomCell.h"
 #import "XYZCustomView.h"
 #import "XYZCustomViewController.h"
@@ -65,15 +62,15 @@ Objective-C 和 Swift 文件可以在一个工程中并存，不管这个工程�
 在这个桥接头文件中列出的所有 public 的 Objective-C 头文件都会对 Swift 可见。之后当前 target 的所有 Swift 文件都可以使用这些头文件中的方法，不需要任何 import 语句。用 Swift 语法使用这些 Objective-C 代码，就像使用系统自带的 Swift 类一样。
 
 ```swift
-// SWIFT
-
 let myCell = XYZCustomCell()
 myCell.subtitle = "A custom cell"
 ```
 
-### 将 Swift 导入 Objective-C
+### 将 Swift 导入到 Objective-C
 
-向 Objective-C 中导入Swift 代码时，你依赖 Xcode 生成的头文件来向 Objective-C 暴露 Swift 代码。这是自动生成 Objective-C 头文件，它包含了你的 target 中所有 Swift 代码中定义的接口。可以把这个 Objective-C 头文件看作 Swift 代码的 `umbrella header`。它以 product 模块名加 `-Swift.h` 来命名。关于 product 的模块名，详见[Naming Your Product Module](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_85)。
+当你在将 Swift 代码导入到 Objective-C 中时，你依赖于 Xcode 生成的头文件来将这些文件暴漏给 Objective-C。这个自动生成的文件是一个 Objective-C 头文件，它包含了你的 target 中所有 Swift 代码中定义的接口。可以把这个 Objective-C 头文件看作 Swift 代码的 `umbrella header`。头文件名称以 product 模块名加 `-Swift.h` 来命名。（关于 product 的模块名，详见[Naming Your Product Module](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_85)）。
+
+默认情况下，生成的头文件包含了标记有`public`修饰符的 Swift 声明接口。它还包含那些打上，如果您的应用程序的目标有一个Objective-C的桥接头内部修改。标有private修饰符声明不会出现在所生成的报头。私人声明没有接触到Objective-C的，除非它们被明确标有@IBAction，@IBOutlet，或@objc为好。如果您的应用程序的目标是编译测试启用，单元测试目标可以访问任何声明与内部修饰，仿佛他们与公众修饰符通过预先@testable的产品模块导入语句声明。
 
 你不需要做任何事情来生成这个头文件，只需要将它导入到你的 Objective-C 代码来使用它。注意这个头文件中的 Swift 接口包含了它所使用到的所有 Objective-C 类型。如果你在 Swift 代码中使用你自己的 Objective-C 类型，确保先将对应的 Objective-C 头文件导入到你的 Swift 代码中，然后才将 Swift 自动生成的头文件导入到 Objective-C .m 源文件中来访问 Swift 代码。
 
@@ -82,8 +79,6 @@ myCell.subtitle = "A custom cell"
 - 在相同 target 的 Objective-C .m 源文件中，用下面的语法来导入Swift 代码：
 
 ```objective-c
-// OBJECTIVE-C
-
 #import "ProductModuleName-Swift.h"
 ```
 
@@ -109,7 +104,6 @@ target 中任何 Swift 文件将会对 Objective-C .m 源文件可见，包括�
 确保将框架 target 的 `Build Settings > Packaging > Defines Module` 设置为 `Yes`。然后在你的 `umbrella header` 头文件中导入你想暴露给 Swift 访问的 Objective-C 头文件，例如：
 
 ```objective-c
-// OBJECTIVE-C
 #import <XYZ/XYZCustomCell.h>
 #import <XYZ/XYZCustomView.h>
 #import <XYZ/XYZCustomViewController.h>
@@ -118,8 +112,6 @@ target 中任何 Swift 文件将会对 Objective-C .m 源文件可见，包括�
 Swift 将会看到所有你在 `umbrella header` 中公开暴露出来的头文件，框架 target 中的所有 Swift 文件都可以访问你 Objective-C 文件的内容，不需要任何 import 语句。
 
 ```swift
-// SWIFT
-
 let myCell = XYZCustomCell()
 myCell.subtitle = "A custom cell"
 ```
@@ -153,16 +145,12 @@ myCell.subtitle = "A custom cell"
 用下面的语法将框架导入到不同 target 的 Swift 文件中：
 
 ```swift
-// SWIFT
-
 import FrameworkName
 ```
 
 用下面的语法将框架导入到不同 target 的 Objective-C .m 文件中：
 
 ```objective-c
-// OBJECTIVE-C
-
 @import FrameworkName;
 ```
 
@@ -174,42 +162,41 @@ import FrameworkName
 <a name="using_swift_from_objective-c"></a>
 ## 在 Objective-C 中使用 Swift
 
-当你将 Swift 代码导入 Objective-C 文件之后，用普通的 Objective-C 语法使用 Swift 类。
+当你将 Swift 代码导入 Objective-C 之后，便可用常规的 Objective-C 语法来使用 Swift 类。
 
 ```objective-c
-// OBJECTIVE-C
-
 MySwiftClass *swiftObject = [[MySwiftClass alloc] init];
 [swiftObject swiftMethod];
 ```
 
-Swift 的类或协议必须用 `@Objective-C attribute` 来标记，以便在 Objective-C 中可访问。这个 attribute 告诉编译器这个 Swift 代码可以从 Objective-C 代码中访问。如果你的 Swift 类是 Objective-C 类的子类，编译器会自动为你添加 `@Objective-C attribute`。详见 [Swift Type Compatibility](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-XID_36)。
+Swift 的类或协议必须用 `@objc`属性来标记，以便在 Objective-C 中可访问。这个 属性告诉编译器这块 Swift 代码可以从 Objective-C 代码中访问。如果你的 Swift 类是 Objective-C 类的子类，编译器会自动为你添加 `@objc`。详见 [Swift Type Compatibility](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/InteractingWithObjective-CAPIs.html#//apple_ref/doc/uid/TP40014216-CH4-ID53)。
 
-你可以访问 Swift 类或协议中用 `@Objective-C attribute` 标记过东西，只要它和 Objective-C 兼容。不包括以下这些 Swift 独有的特性：
+你可以访问在 Swift 类或协议中使用用`@objc`属性标记的任何对象，只要该对象与 Objective-C 兼容。不包括以下 Swift 独有的特性：
 
--  Generics - 范型  
+-  范型（Generics）
 
--  Tuples - 元组  
+-  元组（Tuples）
 
--  Enumerations defined in Swift - Swift 中定义的枚举  
+-  Swift 中定义的枚举不包括`Int`原始值类型（Enumerations defined in Swift without Int raw value type）
 
--  Structures defined in Swift - Swift 中定义的结构体  
+-  Swift 中定义的结构体（Structures defined in Swift）   
 
--  Top-level functions defined in Swift - Swift 中定义的顶层函数  
+-  Swift 中定义的顶层函数（Top-level functions defined in Swift）
 
--  Global variables defined in Swift - Swift 中定义的全局变量  
+-  Swift 中定义的全局变量（Global variables defined in Swift）
 
--  Typealiases defined in Swift - Swift 中定义的类型别名  
+-  Swift 中定义的类型别名（Typealiases defined in Swift）
 
--  Swift-style variadics  - Swift风格可变参数
+-  Swift风格可变参数（Swift-style variadics）
 
--  Nested types - 嵌套类型  
+-  嵌套类型（Nested types）
 
--  Curried functions - 柯里化后的函数  
+-  柯里化函数（Curried functions）
 
-例如带有范型类型作为参数，或者返回元组的方法不能在 Objective-C 中使用。
+例如，使用范型类型作为参数，或者返回元组的方法将不能在 Objective-C 中使用。
 
-为了避免循环引用，不要将 Swift 代码导入到 Objective-C 头文件中。但是你可以在 Objective-C 头文件中前向声明（`forward declare`）一个 Swift 类来使用它，然而，注意**不能在 Objective-C 中继承一个 Swift 类**。
+> 注意
+> 你不能在 Objective-C 继承一个 Swift 类。
 
 ### 在 Objective-C 头文件中引用 Swift 类
 
@@ -227,6 +214,38 @@ Swift 的类或协议必须用 `@Objective-C attribute` 来标记，以便在 Ob
 @end
 ```
 
+<a name="overriding_swift_names_for_Objective-C_interfaces"></a>
+## 为 Objective-C 接口重写 Swift 名称
+
+Swift 编译器自动的将 Objective-C 代码作为常规 Swift 代码导入。它将 Objective-C 的类工厂方法作为 Swift 构造器导入，以及将 Objective-C 的枚举类型名称截断处理。
+
+在你的代码中也许存在不能够被自动处理的边界情况。如果你需要更改导入到 Swift 中的 Objective-C 方法，枚举，或者可选 set 值，你可以使用`NS_SWIFT_NAME`宏来自定义导入的声明。
+
+### 类工厂方法
+
+如果 Swift 编译器无法识别类工厂方法，你可以使用`NS_SWIFT_NAME`宏，来正确导入构造器的 Swift 签名。例如：
+
+```objective-c
++ (instancetype)recordWithRPM:(NSUInteger)RPM NS_SWIFT_NAME(init(RPM:));
+```
+
+如果 Swift 编译器错误的将一个方法识别为类工厂方法，你可以使用`NS_SWIFT_NAME`宏，来正确导入构造器的 Swift 签名。例如：
+
+```objective-c
+ (id)recordWithQuality:(double)quality NS_SWIFT_NAME(record(quality:));
+```
+
+### 枚举
+
+默认情况下，Swift 将枚举值的名称前缀做截断来导入枚举。如果要自定义枚举值的名称，你可以使用`NS_SWIFT_NAME`宏来传递 Swift 枚举值名称。例如：
+
+```objective-c
+typedef NS_ENUM(NSInteger, ABCRecordSide) {
+  ABCRecordSideA,
+  ABCRecordSideB NS_SWIFT_NAME("FlipSide"),
+};
+```
+
 <a name="naming_your_product_module"></a>
 ## Product 模块命名
 
@@ -237,10 +256,13 @@ Xcode 为 Swift 代码生成的头文件的名称，以及 Xcode 创建的 Objec
 <a name="troubleshooting_tips_and_reminders"></a>
 ## 问题解决提示
 
-- 把 Swift 和 Objective-C 文件看作相同的代码集合，并注意命名冲突；
-- 如果你用框架，确保 `Build Setting > Pakaging > Defines Module` 设置为 `Yes`；
-- 如果你使用 Objective-C 桥接头文件，确保在 `Build Settings` 中 Objective-C 桥接头文件的 `build setting` 是基于 Swfit 编译器，即 `Code Generation` 含有头文件的路径。这个路径必须是头文件自身的路径，而不是它所在的目录；
-- Xcode 使用你的 product 模块名，而不是 target 名来命名 Objective-C 桥接头文件和为 Swift 自动生成的头文件。详见 [Naming Your Product Module](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_85)；
-- 为了在 Objective-C 中可用， Swift 类必须是 Objective-C 类的子类，或者用 `@Objective-C` 标记；
-- 当你将 Swift 导入到 Objective-C 中时，记住 Objective-C 不会将 Swift 独有的特性翻译成 Objective-C 对应的特性。详见列表 [Using Swift from Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_84)；
-- 如果你在 Swift 代码中使用你自己的 Objective-C 类型，确保先将对应的 Objective-C 头文件导入到你的 Swift 代码中，然后才将 Swift 自动生成的头文件 import 到 Objective-C .m 源文件中来访问 Swift 代码。
+- 把 Swift 和 Objective-C 文件看作相同的代码集合，并注意命名冲突。
+- 如果你使用了框架，确保在`Packaging`下的`Defines Module`编译设置被设置为 `Yes`。
+- 如果你使用了 Objective-C 桥接头文件，确保 Swift 编译器中 Objective-C 桥接头文件的编译设置`Code Generation`有一个与项目相关的头文件的路径。这个路径必须是头文件自身的路径，而不是它所在的目录。
+- Xcode 使用你的工程模块名，而不是以`target`的名称来命名 Objective-C 桥接头文件以及为 Swift 代码 自动生成的头文件。详见 [Naming Your Product Module](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-ID138)。
+- 为了在 Objective-C 中可用， Swift 类必须是 Objective-C 类的子类，或者用 `@objc` 标记。
+- 当你将 Swift 导入到 Objective-C 中时，记住 Objective-C 不会将 Swift 独有的特性转化成 Objective-C 对应的特性。详见列表 [Using Swift from Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-ID136)。
+- 如果你在 Swift 代码中使用你自己的 Objective-C 类型，确保先将对应的 Objective-C 头文件导入到你的 Swift 代码中，然后才将 Swift 自动生成的头文件导入到 Objective-C .m 源文件中来访问 Swift 代码。
+- 用`private`修饰符标记的 Swift 声明不会出现在自动生成的头文件中。私有声明不会暴漏给 Objective-C，除非它们被明确标记有`@IBAction`，`@IBOutlet`或者`@objc`等。
+- 对于应用 targets 而言，如果有 Objective-C 桥接头文件时，被`internal`修饰符标记的声明会出现在自动产生的头文件中。
+- 对于框架 targets 而言，只有被`public`修饰符标记的声明才会出现在自动生成的头文件中。你仍然可以在框架中的 Objective-C 部分使用被`internal`修饰符标记的 Swift 方法和属性，只要它们声明所在的类继承自 Objective-C 类。关于访问级别修饰符的更多信息，请查看[The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097)中的[访问控制(Access Control)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AccessControl.html#//apple_ref/doc/uid/TP40014097-CH41)

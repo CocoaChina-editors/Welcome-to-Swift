@@ -241,7 +241,7 @@ let explicitDouble: Double = 70
     var numbers = [20, 19, 7, 12]
     hasAnyMatches(numbers, lessThanTen)
 
-函数实际上是一种特殊的闭包，你可以使用`{}`来创建一个匿名闭包。使用`in`来分割参数并返回类型。
+函数实际上是一种特殊的闭包，你可以使用`{}`来创建一个匿名闭包。使用`in`来把**函数体**从**参数与返回值**分割开。
 
     numbers.map({
         (number: Int) -> Int in
